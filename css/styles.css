@@ -11233,9 +11233,9 @@ body {
   width: 100%;
   max-width: 7rem;
   height: 0.25rem;
-  background-color: #e4c662;
+  background-color: #67c29c;
   border-radius: 1rem;
-  border-color: #e4c662;
+  border-color: #67c29c;
 }
 .divider-custom .divider-custom-line:first-child {
   margin-right: 1rem;
@@ -11244,7 +11244,7 @@ body {
   margin-left: 1rem;
 }
 .divider-custom .divider-custom-icon {
-  color: #e4c662;
+  color: #67c29c;
   font-size: 2rem;
 }
 .divider-custom.divider-light .divider-custom-line {
