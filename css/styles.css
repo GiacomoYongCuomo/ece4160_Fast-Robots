@@ -44,7 +44,7 @@
   --bs-dark: #212529;
   --bs-black: #000;
   --bs-white: #fff;
-  --bs-primary-rgb: 18, 107, 83;
+  --bs-primary-rgb: 103, 194, 156;
   --bs-secondary-rgb: 116, 100, 161;
   --bs-success-rgb: 103, 194, 156;
   --bs-info-rgb: 28, 171, 196;
@@ -11233,9 +11233,9 @@ body {
   width: 100%;
   max-width: 7rem;
   height: 0.25rem;
-  background-color: #67c29c;
+  background-color: #126b53;
   border-radius: 1rem;
-  border-color: #67c29c;
+  border-color: #000;
 }
 .divider-custom .divider-custom-line:first-child {
   margin-right: 1rem;
@@ -11244,7 +11244,7 @@ body {
   margin-left: 1rem;
 }
 .divider-custom .divider-custom-icon {
-  color: #67c29c;
+  color: #126b53;
   font-size: 2rem;
 }
 .divider-custom.divider-light .divider-custom-line {
