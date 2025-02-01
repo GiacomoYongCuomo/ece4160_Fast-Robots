@@ -302,7 +302,43 @@
                                         <p>As the code shows, the output will be in the form "Robot says ->" + user input. The communication is handled by the Python communication via Bluetooth. </p>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Echo_Python.png" alt="..." />
                                         <li> <h4>SEND_THREE_FLOATS and GET_TIME_MILLIS commands </h4> </li>
-                                        <p class="mb-4">Placeholder</p>
+                                        <p class="mb-4">In this section, I developed the code for sending three float points to the robot. The particularity of this command is that it does not reply to Python, but
+                                        instead it is storing the value internally in the Artemis. Code shown below, as well as an image from the Serial monitor outputting the 3 values sent. </p>
+                                        <code>/* SEND_THREE_FLOATS */ <br>
+                                            case SEND_THREE_FLOATS: <br>
+                                                float float_a, float_b, float_c; <br>
+                                                // Extract the next value from the command string as an integer <br>
+                                                success = robot_cmd.get_next_value(float_a); <br>
+                                                if (!success) return; <br>
+                                                // Extract the next value from the command string as an integer <br>
+                                                success = robot_cmd.get_next_value(float_b); <br>
+                                                if (!success) return; <br>
+                                                // Extract the next value from the command string as an integer <br>
+                                                success = robot_cmd.get_next_value(float_c); <br>
+                                                if (!success) return; <br>
+                                                Serial.print("Three Floats: "); <br>
+                                                Serial.print(float_a); <br>
+                                                Serial.print(", "); <br>
+                                                Serial.print(float_b); <br>
+                                                Serial.print(", "); <br>
+                                                Serial.println(float_c); <br>
+                                                break; <br>
+                                        </code> <br>
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Send_3_float_Arduino.png" alt="..." />
+                                        <p class="mb-4">Additionally, I was tasked to write the GET_TIME_MILLIS command, which when requested through Bluetooth will send the time in milliseconds in that instance.
+                                        The format of the output is "T:123456" where the numbers are the float version of the microseconds of the time the arduino has run for. The following code illustrate its functionality. </p>
+                                        <code>/* GET_TIME_MILLIS */ <br>
+                                            case GET_TIME_MILLIS: <br>
+                                                float now_time; <br>
+                                                now_time = (float) millis(); <br>
+                                                tx_estring_value.clear(); <br>
+                                                tx_estring_value.append("T:"); <br>
+                                                tx_estring_value.append(now_time); <br>
+                                                tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
+                                                Serial.println(tx_estring_value.c_str()); <br>
+                                                break; <br>
+                                        </code> <br>
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Get_Millis_python.png" alt="..." />
                                         <li> <h4>Notification Handler function </h4> </li>
                                         <p class="mb-4">Placeholder</p>
                                         <li> <h4>TIME_LOOP command </h4> </li>
