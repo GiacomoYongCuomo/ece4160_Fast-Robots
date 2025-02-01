@@ -340,9 +340,25 @@
                                         </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Get_Millis_python.png" alt="..." />
                                         <li> <h4>Notification Handler function </h4> </li>
-                                        <p class="mb-4">Placeholder</p>
+                                        <p class="mb-4">Next, I was tasked to create a function to handle outputs from Arduino back to Python. This function went through several iterations, as the next tasks will use this function to show the robot's data.
+                                        The first iteration of the function was just designed to take a response and print it directly. For future iterations, we were going to print both time and temperature measurements so I implemented an alternative print for when temperature is recorded.
+                                        Here is the full code I implemented during the lab.</p>
+                                        <code>#Notification Handler <br>
+                                            def notification_handler(uuid, notification): <br>
+                                                s = ble.bytearray_to_string(notification) <br>
+                                                #Only if temperature is recorded
+                                                if ("|" in s): <br>
+                                                    pieces = s.split("|") <br>
+                                                    print("Timestamp " + pieces[0] + ": current time is " + pieces[1] + " and current temperature is " + pieces[2] + " in F.") <br>
+                                                else: <br>
+                                                    print(s) <br>
+                                        </code> <br>
+                                        <p class="mb-4">This function is going to be used for all next tasks I will talk about. For all of them, to start checking for robot's output we just run the function ble.start_notify(ble.uuid['RX_STRING'], notification_handler) and we end the receiving by running the function
+                                        ble.stop_notify(ble.uuid['RX_STRING']). Both functions check ble.uuid['RX_STRING'] for data sent from the robot so we need to make sure that the data sent is through that channel on the Arduino sides.
+                                        To immediately test out Notification Handler function, I was tasked to receive the time from GET_TIME_MILLIS. Here is the Python section that shows it.</p>
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/notification_handler_millis_python.png" alt="..." />
                                         <li> <h4>TIME_LOOP command </h4> </li>
-                                        <p class="mb-4">Placeholder</p>
+                                        <p class="mb-4"> </p>
                                         <li> <h4>STORE_LOOP and SEND_TIME_DATA commands </h4> </li>
                                         <p class="mb-4">Placeholder</p>
                                         <li> <h4>GET_TEMP_DATA command </h4> </li>
