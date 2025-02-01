@@ -358,7 +358,28 @@
                                         To immediately test out Notification Handler function, I was tasked to receive the time from GET_TIME_MILLIS. Here is the Python section that shows it.</p>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/notification_handler_millis_python.png" alt="..." />
                                         <li> <h4>TIME_LOOP command </h4> </li>
-                                        <p class="mb-4"> </p>
+                                        <p class="mb-4">The next task I developed was the command TIME_LOOP. Its functionality is to send to Python through the notification_handler timestamps from the moment they were requested for a period of time.
+                                        The period of time I decided to collect data was 3 seconds, collecting a total of 81 timestamps. This implies that the program collects 27 messages/second. One particular occurence I found in doing this task was that sometimes the
+                                        number of timestamps were more than 81 and sometimes less. I think this occured depended if the robot was running other commands as that migth impact the availability to collect timestamps.
+                                        Here is the code for TIME_LOOP and its output on Python.</p>
+                                        <code>/* TIME_LOOP */ <br>
+                                            case TIME_LOOP: { <br>
+                                              unsigned long start_time = millis(); <br>
+                                              int count = 0; <br>
+                                              while (millis() - start_time < timestamps_duration){ <br>
+                                                tx_estring_value.clear(); <br>
+                                                tx_estring_value.append("Timestamp "); <br>
+                                                tx_estring_value.append(count); <br>
+                                                tx_estring_value.append(": current time is "); <br>
+                                                tx_estring_value.append((float) millis()); <br>
+                                                tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
+                                                Serial.println(tx_estring_value.c_str()); <br>
+                                                count += 1; <br>
+                                              } <br>
+                                              break; <br>
+                                            } <br>
+                                        </code> <br>
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/time_loop_python.png" alt="..." />
                                         <li> <h4>STORE_LOOP and SEND_TIME_DATA commands </h4> </li>
                                         <p class="mb-4">Placeholder</p>
                                         <li> <h4>GET_TEMP_DATA command </h4> </li>
