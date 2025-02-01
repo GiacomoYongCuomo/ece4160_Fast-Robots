@@ -397,7 +397,26 @@
                                     <ul>
                                       <ul>
                                         <li> <h4>GET_TEMP_DATA command </h4> </li>
-                                        <p class="mb-4">Placeholder</p>
+                                        <p class="mb-4">The final task I needed to develop was to code the command GET_TEMP_DATA. TO implement it, I declared a new array to store temperature datas and as I add timestamps in its array I add temperature measurements at the same time.
+                                        This can be seen from the code developed in STORE_LOOP. Differently from SEND_TIME_DATA, GET_TEMP_DATA sends informations to the Notification Handler in a particular format "count|time|temp" where "|" is used as delimiter to handle the data.
+                                        The code and image below show how the command works.</p>
+                                        <code>/* SEND_TEMP_DATA */ <br>
+                                            case SEND_TEMP_DATA: { <br>
+                                              for (int i = 0; i < array_size; i++) { <br>
+                                                if (timestamps[i] == 0) break; <br>
+                                                tx_estring_value.clear(); <br>
+                                                tx_estring_value.append(i); <br>
+                                                tx_estring_value.append("|"); <br>
+                                                tx_estring_value.append(timestamps[i]); <br>
+                                                tx_estring_value.append("|"); <br>
+                                                tx_estring_value.append(tempstamps[i]); <br>
+                                                tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
+                                                Serial.println(tx_estring_value.c_str()); <br>
+                                              } <br>
+                                              break; <br>
+                                            } <br>
+                                        </code> <br>
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
                                       </ul>
                                     </ul>
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Discussion</h2>
