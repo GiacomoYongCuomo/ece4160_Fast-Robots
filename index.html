@@ -381,9 +381,12 @@
                                         </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/time_loop_python.png" alt="..." />
                                         <li> <h4>STORE_LOOP and SEND_TIME_DATA commands </h4> </li>
-                                        <p class="mb-4">In this next section, I was tasked to store timestamps into an array in arduino and then send it when requested. To do so, I preferred to implement two different command, one to store and one to send.
-                                        My reasoning for doing this is because in a later task we will need to implement the same system for also temperature readings. By modulating the two actions in different commands, I can also store temperature readings by simply adding another array in the STORE_LOOP command.
-                                        I will explain more about this in the next section. The two images below show the functionality of both commands.</p>
+                                        <p class="mb-4">In this next section, I was tasked to store timestamps into an array in Arduino and then send it when requested. To do so, I preferred to implement two different commands, one to store and one to send.
+                                        My reasoning for doing this is because, in a later task, I will need to implement the same system for also temperature readings. By modulating the two actions in different commands, I could store temperature readings by simply adding another array in the STORE_LOOP command.
+                                        I will explain more about this in the next section.<br>
+                                        One critical change I made from this moment on was switch from milliseconds to microseconds under suggestion of the TA in lab. This is because I noticced I was hitting the boundary of the array extremely quickly, despite it being very large.
+                                        I will further discuss my conclusions and some possible solution in the Discussion section.<br>
+                                        The two images below show the functionality of both commands.</p>
                                       </ul>
                                     </ul>
                                     <div class="row">
