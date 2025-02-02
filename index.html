@@ -340,9 +340,9 @@
                                         </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Get_Millis_python.png" alt="..." />
                                         <li> <h4>Notification Handler function </h4> </li>
-                                        <p class="mb-4">Next, I was tasked to create a function to handle outputs from Arduino back to Python. This function went through several iterations, as the next tasks will use this function to show the robot's data.
-                                        The first iteration of the function was just designed to take a response and print it directly. For future iterations, we were going to print both time and temperature measurements so I implemented an alternative print for when temperature is recorded.
-                                        Here is the full code I implemented during the lab.</p>
+                                        <p class="mb-4">Next, I was tasked to create a function to handle outputs from Arduino back in Python. This function went through several iterations, as the next tasks will use this function to show the robot's data.
+                                        The first iteration of the function was just designed to take a response and print it directly. For future iterations, I printed both time and temperature measurements, implementing an alternative print for when temperature is recorded.
+                                        Here is the full code showing its functionality.</p>
                                         <code>#Notification Handler <br>
                                             def notification_handler(uuid, notification): <br>
                                                 s = ble.bytearray_to_string(notification) <br>
