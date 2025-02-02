@@ -283,7 +283,7 @@
                                       Here are the main tasks completed with explanation, supported by code snippets and images of the results.</p>
                                       <ul>
                                         <li> <h4>ECHO command </h4> </li>
-                                        <p class="mb-4">In this section, I was tasked to code the ECHO command for the Artemis Red. This program should output a modified version of whatever the user sends to
+                                        <p class="mb-4">In this section, I was tasked to code the ECHO command for our microncontroller. This program should output a modified version of whatever the user sends to
                                         the the robot. </p>
                                         <code>/* ECHO */ <br>
                                             case ECHO: <br>
@@ -302,8 +302,8 @@
                                         <p>As the code shows, the output will be in the form "Robot says ->" + user input. The communication is handled by the Python communication via Bluetooth. </p>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Echo_Python.png" alt="..." />
                                         <li> <h4>SEND_THREE_FLOATS and GET_TIME_MILLIS commands </h4> </li>
-                                        <p class="mb-4">In this section, I developed the code for sending three float points to the robot. The particularity of this command is that it does not reply to Python, but
-                                        instead it is storing the value internally in the Artemis. Code shown below, as well as an image from the Serial monitor outputting the 3 values sent. </p>
+                                        <p class="mb-4">In this section, I developed the code for sending three float points to the robot. This command does not reply to Python like ECHO, but
+                                        instead it stores the values sent internally in the Artemis. Code shown below, as well as an image from the Serial monitor outputting the 3 values sent. </p>
                                         <code>/* SEND_THREE_FLOATS */ <br>
                                             case SEND_THREE_FLOATS: <br>
                                                 float float_a, float_b, float_c; <br>
