@@ -325,8 +325,8 @@
                                                 break; <br>
                                         </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Send_3_float_Arduino.png" alt="..." />
-                                        <p class="mb-4">Additionally, I was tasked to write the GET_TIME_MILLIS command, which when requested through Bluetooth will send the time in milliseconds in that instance.
-                                        The format of the output is "T:123456" where the numbers are the float version of the microseconds of the time the arduino has run for. The following code illustrate its functionality. </p>
+                                        <p class="mb-4">Additionally, I was tasked to write the GET_TIME_MILLIS command. When called in Python, it will receive the time in milliseconds in that instance.
+                                        The format of the output is "T:123456", where the numbers represent the milliseconds the Arduino has run for in float. The following code illustrate its functionality. </p>
                                         <code>/* GET_TIME_MILLIS */ <br>
                                             case GET_TIME_MILLIS: <br>
                                                 float now_time; <br>
