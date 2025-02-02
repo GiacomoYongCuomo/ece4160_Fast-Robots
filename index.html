@@ -400,8 +400,8 @@
                                     <ul>
                                       <ul>
                                         <li> <h4>GET_TEMP_DATA command </h4> </li>
-                                        <p class="mb-4">The final task I needed to develop was to code the command GET_TEMP_DATA. TO implement it, I declared a new array to store temperature datas and as I add timestamps in its array I add temperature measurements at the same time.
-                                        This can be seen from the code developed in STORE_LOOP. Differently from SEND_TIME_DATA, GET_TEMP_DATA sends informations to the Notification Handler in a particular format "count|time|temp" where "|" is used as delimiter to handle the data.
+                                        <p class="mb-4">The final task I needed to develop was to code the command GET_TEMP_DATA. To implement it, I declared a new array to store temperature datas and, as I add timestamps in its array, I started adding temperature measurements at the same time.
+                                        This can be seen from the code developed in STORE_LOOP. Differently from SEND_TIME_DATA, GET_TEMP_DATA sends informations to the Notification Handler in a particular format: "count|time|temp" where "|" is used as delimiter to handle the data.<br>
                                         The code and image below show how the command works.</p>
                                         <code>/* SEND_TEMP_DATA */ <br>
                                             case SEND_TEMP_DATA: { <br>
