@@ -354,13 +354,13 @@
                                                     print(s) <br>
                                         </code> <br>
                                         <p class="mb-4">This function is going to be used for all next tasks I will talk about. For all of them, to start checking for robot's output we just run the function ble.start_notify(ble.uuid['RX_STRING'], notification_handler) and we end the receiving by running the function
-                                        ble.stop_notify(ble.uuid['RX_STRING']). Both functions check ble.uuid['RX_STRING'] for data sent from the robot so we need to make sure that the data sent is through that channel on the Arduino sides.
+                                        ble.stop_notify(ble.uuid['RX_STRING']). Both functions check ble.uuid['RX_STRING'] for data sent from the robot as it is the receiver. From the Arduino side, we are sending it through the transmitter of the Bluetooth.
                                         To immediately test out Notification Handler function, I was tasked to receive the time from GET_TIME_MILLIS. Here is the Python section that shows it.</p>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/notification_handler_millis_python.png" alt="..." />
                                         <li> <h4>TIME_LOOP command </h4> </li>
-                                        <p class="mb-4">The next task I developed was the command TIME_LOOP. Its functionality is to send to Python through the notification_handler timestamps from the moment they were requested for a period of time.
-                                        The period of time I decided to collect data was 3 seconds, collecting a total of 81 timestamps. This implies that the program collects 27 messages/second. One particular occurence I found in doing this task was that sometimes the
-                                        number of timestamps were more than 81 and sometimes less. I think this occured depended if the robot was running other commands as that migth impact the availability to collect timestamps.
+                                        <p class="mb-4">The next task I developed was the command TIME_LOOP. Its functionality is to send to Python timestamps from the moment they were requested for a period of time of my choice, all through the Notification Handler .
+                                        The period of time I decided to collect data for was 3 seconds, collecting a total of 81 timestamps. This implies that the program collects 27 messages/second. One particular occurence I found in doing this task was that sometimes the
+                                        number of timestamps were more than 81 and sometimes less. I think this depended on the traffic of the Bluetooth, if the robot was running for a while and especially if other commands were requested before.
                                         Here is the code for TIME_LOOP and its output on Python.</p>
                                         <code>/* TIME_LOOP */ <br>
                                             case TIME_LOOP: { <br>
