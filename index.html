@@ -273,12 +273,17 @@
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2>
                                     <ul>
                                       <li> <h4>Lab 1A </h4> </li>
-                                      <p class="mb-4">For the first part of the lab, I run different examples from the Arduino built-in environment and some others from the RedBorad Artemis Nano environment. <br>
-                                      In the following video, I illustrate every example tasked to run.</p>
-                                      <video width="320" height="240" controls>
-                                        <source src="assets\img\Lab1\example_videos.mov" type="video/mov">
-                                        Your browser does not support the video tag.
-                                      </video>
+                                      <div class="row">
+                                          <div class="col">
+                                              <p class="mb-4">For the first part of the lab, I run different examples from the Arduino built-in environment and some others from the RedBorad Artemis Nano environment. <br>
+                                              In the following video, I illustrate every example tasked to run.</p>
+                                          </div>
+                                          <div class="col">
+                                              <video width="320" height="240" controls>
+                                                <source src="assets\img\Lab1\example_videos.mp4" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                              </video>
+                                          </div>
                                     </ul>
                                     <ul>
                                       <li> <h4>Lab 1B </h4> </li>
@@ -437,12 +442,10 @@
                                           The Artemis Nano has 384 kB of RAM. A float takes up 4 bytes of RAM, so we can calculate that 96,000 datapoints can be stored in it (384kB/4B). Since I am storing both timestamps and temperature measurements, this is roughly 48,000 datapoints per measurement.
                                           However, we need to take into account also each string we send as they contain a certain number of bytes per character. This means I have to consider even less than 48,000 that can be sent to the notification handler before RAM runs out. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/Lab1/timestamp_loop_python_millis.png" alt="..." />
-                                    <ul>
-                                      <button class="btn btn-primary" data-bs-dismiss="modal">
+                                    <button class="btn btn-primary" data-bs-dismiss="modal">
                                           <i class="fas fa-xmark fa-fw"></i>
                                           Close Window
-                                      </button>
-                                  </ul>
+                                    </button>
                                 </div>
                             </div>
                         </div>
