@@ -316,23 +316,23 @@
                                         instead it stores the values sent internally in the Artemis. Code shown below, as well as an image from the Serial monitor outputting the 3 values sent. </p>
                                         <code>/* SEND_THREE_FLOATS */ <br>
                                             case SEND_THREE_FLOATS: <br>
-                                                float float_a, float_b, float_c; <br>
-                                                // Extract the next value from the command string as an integer <br>
-                                                success = robot_cmd.get_next_value(float_a); <br>
-                                                if (!success) return; <br>
-                                                // Extract the next value from the command string as an integer <br>
-                                                success = robot_cmd.get_next_value(float_b); <br>
-                                                if (!success) return; <br>
-                                                // Extract the next value from the command string as an integer <br>
-                                                success = robot_cmd.get_next_value(float_c); <br>
-                                                if (!success) return; <br>
-                                                Serial.print("Three Floats: "); <br>
-                                                Serial.print(float_a); <br>
-                                                Serial.print(", "); <br>
-                                                Serial.print(float_b); <br>
-                                                Serial.print(", "); <br>
-                                                Serial.println(float_c); <br>
-                                                break; <br>
+                                            <strong>float float_a, float_b, float_c; <br>
+                                            <strong>// Extract the next value from the command string as an integer <br>
+                                            <strong>success = robot_cmd.get_next_value(float_a); <br>
+                                            <strong>if (!success) return; <br>
+                                            <strong>// Extract the next value from the command string as an integer <br>
+                                            <strong>success = robot_cmd.get_next_value(float_b); <br>
+                                            <strong>if (!success) return; <br>
+                                            <strong>// Extract the next value from the command string as an integer <br>
+                                            <strong>success = robot_cmd.get_next_value(float_c); <br>
+                                            <strong>if (!success) return; <br>
+                                            <strong>Serial.print("Three Floats: "); <br>
+                                            <strong>Serial.print(float_a); <br>
+                                            <strong>Serial.print(", "); <br>
+                                            <strong>Serial.print(float_b); <br>
+                                            <strong>Serial.print(", "); <br>
+                                            <strong>Serial.println(float_c); <br>
+                                            <strong>break; <br>
                                         </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Send_3_float_Arduino.png" alt="..." />
                                         <p class="mb-4">Additionally, I was tasked to write the GET_TIME_MILLIS command. When called in Python, it will receive the time in milliseconds in that instance.
