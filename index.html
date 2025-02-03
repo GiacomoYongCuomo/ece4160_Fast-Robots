@@ -431,17 +431,22 @@
                                       </ul>
                                     </ul>
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Discussion</h2>
-                                    <p class="mb-4">This lab was very instructive on how the Bluetooth communication between the robot and our pc works and how they will communicate data in the future labs. <br>
-                                          During the lab, I was tasked to send data from Arduino to Python both directly in real time but also through a stored array at run time. Those two methods are extremely different. Despite the first one being very fast, it pales in comparison as the second one filled the array almost immediately.
-                                          The reason for this is because the direct sending of data happens at real time, delaying due to the Serial Communication through Bluetooth. This communication is effective when we would like to see replies in real time like for the ECHO command. <br>
-                                          In the other hand, storing the data at run time is way faster as it doesn't delay due to Serial. This can be useful if we are measuring EMU or Time-of-Flight data for use for future adjustments and commands, as in this case having more data to compare may be helpful. <br>
-                                          In regard of the rate at which the Artemis Nano stores data in Arduino, I noticed an issue. When I first started storing timestamps, the array filled up of data extremely fast.
-                                          Additionally, one thing I realised was that by registering the timestamps in milliseconds many entries of the array were the exact same number, as it can be seen by the following image.
-                                          To fix this, under suggestion of the TA, I decided to instead register the data in microseconds as it would give me more informations. Furthermore, it would avoid the issue of filling up the array so rapidly. <br>
-                                          By talking to the TA, I realised that if I wanted to avoid the array to fill up I could calculate the necessary dimension based on the RAM space of the Artemis Nano and the memory used by Arduino to compute.
-                                          The Artemis Nano has 384 kB of RAM. A float takes up 4 bytes of RAM, so we can calculate that 96,000 datapoints can be stored in it (384kB/4B). Since I am storing both timestamps and temperature measurements, this is roughly 48,000 datapoints per measurement.
-                                          However, we need to take into account also each string we send as they contain a certain number of bytes per character. This means I have to consider even less than 48,000 that can be sent to the notification handler before RAM runs out. </p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/Lab1/timestamp_loop_python_millis.png" alt="..." />
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="mb-4">This lab was very instructive on how the Bluetooth communication between the robot and our pc works and how they will communicate data in the future labs. <br>
+                                                  During the lab, I was tasked to send data from Arduino to Python both directly in real time but also through a stored array at run time. Those two methods are extremely different. Despite the first one being very fast, it pales in comparison as the second one filled the array almost immediately.
+                                                  The reason for this is because the direct sending of data happens at real time, delaying due to the Serial Communication through Bluetooth. This communication is effective when we would like to see replies in real time like for the ECHO command. <br>
+                                                  In the other hand, storing the data at run time is way faster as it doesn't delay due to Serial. This can be useful if we are measuring EMU or Time-of-Flight data for use for future adjustments and commands, as in this case having more data to compare may be helpful. <br>
+                                                  In regard of the rate at which the Artemis Nano stores data in Arduino, I noticed an issue. When I first started storing timestamps, the array filled up of data extremely fast.
+                                                  Additionally, one thing I realised was that by registering the timestamps in milliseconds many entries of the array were the exact same number, as it can be seen by the following image. </p>
+                                        </div>
+                                        <div class="col">
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab1/timestamp_loop_python_millis.png" alt="..." />
+                                        </div>
+                                        <p class="mb-4">To fix this, under suggestion of the TA, I decided to instead register the data in microseconds as it would give me more informations. Furthermore, it would avoid the issue of filling up the array so rapidly. <br>
+                                        By talking to the TA, I realised that if I wanted to avoid the array to fill up I could calculate the necessary dimension based on the RAM space of the Artemis Nano and the memory used by Arduino to compute.
+                                        The Artemis Nano has 384 kB of RAM. A float takes up 4 bytes of RAM, so we can calculate that 96,000 datapoints can be stored in it (384kB/4B). Since I am storing both timestamps and temperature measurements, this is roughly 48,000 datapoints per measurement.
+                                        However, we need to take into account also each string we send as they contain a certain number of bytes per character. This means I have to consider even less than 48,000 that can be sent to the notification handler before RAM runs out. </p>
                                     <ul>
                                         <button class="btn btn-primary" data-bs-dismiss="modal">
                                               <i class="fas fa-xmark fa-fw"></i>
