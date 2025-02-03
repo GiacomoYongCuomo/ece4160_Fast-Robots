@@ -442,10 +442,12 @@
                                           The Artemis Nano has 384 kB of RAM. A float takes up 4 bytes of RAM, so we can calculate that 96,000 datapoints can be stored in it (384kB/4B). Since I am storing both timestamps and temperature measurements, this is roughly 48,000 datapoints per measurement.
                                           However, we need to take into account also each string we send as they contain a certain number of bytes per character. This means I have to consider even less than 48,000 that can be sent to the notification handler before RAM runs out. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/Lab1/timestamp_loop_python_millis.png" alt="..." />
-                                    <button class="btn btn-primary" data-bs-dismiss="modal">
-                                          <i class="fas fa-xmark fa-fw"></i>
-                                          Close Window
-                                    </button>
+                                    <ul>
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                              <i class="fas fa-xmark fa-fw"></i>
+                                              Close Window
+                                        </button>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
