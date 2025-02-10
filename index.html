@@ -454,8 +454,25 @@
                                           </div>
                                       </div>
                                       <p class="mb-4">What we can see is that those measurements are quite noisy, which motivates us to check the Fourier Transform for each and decide a cut of frequency for our low pass filter.</p>
-                                      <p class="mb-4">The two Fourier Transforms tell us that the bets possible cut of frequency is 20Hz, which by following the formula () give us a value for alpha of 0.9921.
+                                      <div class="row">
+                                          <div class="col">
+                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/fft_pitch_a.png" alt="..." />
+                                          </div>
+                                          <div class="col">
+                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/fft_roll_a.png" alt="..." />
+                                          </div>
+                                      </div>
+                                      <p class="mb-4">The two Fourier Transforms tell us that the bets possible cut off frequency is 20Hz.
+                                      We then use this frequency and the following two formulas to calculate a value for alpha of 0.9921.
                                       Now we can apply a Low Pass Filter to both pitch and roll and get more precised measurements.</p>
+                                      <div class="row">
+                                          <div class="col">
+                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_a_LPF.png" alt="..." />
+                                          </div>
+                                          <div class="col">
+                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/roll_a_LPF.png" alt="..." />
+                                          </div>
+                                      </div>
                                       <li> <h4>Gyroscope </h4> </li>
                                       <p class="mb-4">Placeholder.</p>
                                       <li> <h4>Sample Data </h4> </li>
