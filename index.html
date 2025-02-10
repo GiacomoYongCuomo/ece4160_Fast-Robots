@@ -245,23 +245,21 @@
                                         <li> <h4>ECHO command </h4> </li>
                                         <p class="mb-4">In this section, I was tasked to code the ECHO command for our microncontroller. This program should output a modified version of whatever the user sends to
                                         the the robot. </p>
-<pre>
-    <code>
-/* ECHO */
-case ECHO:
-    char char_arr[MAX_MSG_SIZE];
-    // Extract the next value from the command string as a character array
-    success = robot_cmd.get_next_value(char_arr);
-    if (!success) return;
-    tx_estring_value.clear();
-    tx_estring_value.append("Robot Says -> ");
-    tx_estring_value.append(char_arr);
-    tx_characteristic_string.writeValue(tx_estring_value.c_str())
-    Serial.print("Robot Says -> ");
-    Serial.println(tx_estring_value.c_str());
-    break;
-    </code>
-</pre>
+                                        <code>
+                                        /* ECHO */
+                                        case ECHO:
+                                            char char_arr[MAX_MSG_SIZE];
+                                            // Extract the next value from the command string as a character array
+                                            success = robot_cmd.get_next_value(char_arr);
+                                            if (!success) return;
+                                            tx_estring_value.clear();
+                                            tx_estring_value.append("Robot Says -> ");
+                                            tx_estring_value.append(char_arr);
+                                            tx_characteristic_string.writeValue(tx_estring_value.c_str())
+                                            Serial.print("Robot Says -> ");
+                                            Serial.println(tx_estring_value.c_str());
+                                            break;
+                                        </code>
                                         <p>As the code shows, the output will be in the form "Robot says ->" + user input. The communication is handled by the Python communication via Bluetooth. </p>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Echo_Python.png" alt="..." />
                                         <li> <h4>SEND_THREE_FLOATS and GET_TIME_MILLIS commands </h4> </li>
