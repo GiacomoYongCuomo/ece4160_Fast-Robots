@@ -248,83 +248,75 @@
                                         <code>
                                           /* ECHO */ <br>
                                           case ECHO: <br>
-                                          &nbsp;char char_arr[MAX_MSG_SIZE]; <br>
-                                          &nbsp;// Extract the next value from the command string as a character array <br>
-                                          &nbsp;success = robot_cmd.get_next_value(char_arr); <br>
-                                          &nbsp;if (!success) return; <br>
-                                          &nbsp;tx_estring_value.clear(); <br>
-                                          &nbsp;tx_estring_value.append("Robot Says -> "); <br>
-                                          &nbsp;tx_estring_value.append(char_arr); <br>
-                                          &nbsp;tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
-                                          &nbsp;Serial.print("Robot Says -> "); <br>
-                                          &nbsp;Serial.println(tx_estring_value.c_str()); <br>
-                                          &nbsp;break; <br>
-                                        </code>
+                                          &nbsp; char char_arr[MAX_MSG_SIZE]; <br>
+                                          &nbsp; // Extract the next value from the command string as a character array <br>
+                                          &nbsp; success = robot_cmd.get_next_value(char_arr); <br>
+                                          &nbsp; if (!success) return; <br>
+                                          &nbsp; tx_estring_value.clear(); <br>
+                                          &nbsp; tx_estring_value.append("Robot Says -> "); <br>
+                                          &nbsp; tx_estring_value.append(char_arr); <br>
+                                          &nbsp; tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
+                                          &nbsp; Serial.print("Robot Says -> "); <br>
+                                          &nbsp; Serial.println(tx_estring_value.c_str()); <br>
+                                          &nbsp; break; <br>
+                                        </code> <br>
                                         <p>As the code shows, the output will be in the form "Robot says ->" + user input. The communication is handled by the Python communication via Bluetooth. </p>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Echo_Python.png" alt="..." />
                                         <li> <h4>SEND_THREE_FLOATS and GET_TIME_MILLIS commands </h4> </li>
                                         <p class="mb-4">In this section, I developed the code for sending three float points to the robot. This command does not reply to Python like ECHO, but
                                         instead it stores the values sent internally in the Artemis. Code shown below, as well as an image from the Serial monitor outputting the 3 values sent. </p>
-<pre>
-    <code>
-/* SEND_THREE_FLOATS */
-case SEND_THREE_FLOATS:
-    float float_a, float_b, float_c;
-    // Extract the next value from the command string as an integer
-    success = robot_cmd.get_next_value(float_a);
-    if (!success) return;
-    // Extract the next value from the command string as an integer
-    success = robot_cmd.get_next_value(float_b);
-    if (!success) return;
-    // Extract the next value from the command string as an integer
-    success = robot_cmd.get_next_value(float_c);
-    if (!success) return;
-    Serial.print("Three Floats: ");
-    Serial.print(float_a);
-    Serial.print(", ");
-    Serial.print(float_b);
-    Serial.print(", ");
-    Serial.println(float_c);
-    break;
-    </code>
-</pre>
+                                        <code>
+                                          /* SEND_THREE_FLOATS */ <br>
+                                          case SEND_THREE_FLOATS: <br>
+                                          &nbsp; float float_a, float_b, float_c; <br>
+                                          &nbsp; // Extract the next value from the command string as an integer <br>
+                                          &nbsp; success = robot_cmd.get_next_value(float_a); <br>
+                                          &nbsp; if (!success) return; <br>
+                                          &nbsp; // Extract the next value from the command string as an integer <br>
+                                          &nbsp; success = robot_cmd.get_next_value(float_b); <br>
+                                          &nbsp; if (!success) return; <br>
+                                          &nbsp; // Extract the next value from the command string as an integer <br>
+                                          &nbsp; success = robot_cmd.get_next_value(float_c); <br>
+                                          &nbsp; if (!success) return; <br>
+                                          &nbsp; Serial.print("Three Floats: "); <br>
+                                          &nbsp; Serial.print(float_a); <br>
+                                          &nbsp; Serial.print(", "); <br>
+                                          &nbsp; Serial.print(float_b); <br>
+                                          &nbsp; Serial.print(", "); <br>
+                                          &nbsp; Serial.println(float_c); <br>
+                                          &nbsp; break; <br>
+                                        </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Send_3_float_Arduino.png" alt="..." />
                                         <p class="mb-4">Additionally, I was tasked to write the GET_TIME_MILLIS command. When called in Python, it will receive the time in milliseconds in that instance.
                                         The format of the output is "T:123456", where the numbers represent the milliseconds the Arduino has run for in float. The following code illustrate its functionality. </p>
-<pre>
-    <code>
-/* GET_TIME_MILLIS */
-case GET_TIME_MILLIS:
-    float now_time;
-    now_time = (float) millis();
-
-    tx_estring_value.clear();
-    tx_estring_value.append("T:");
-    tx_estring_value.append(now_time);
-    tx_characteristic_string.writeValue(tx_estring_value.c_str());
-
-    Serial.println(tx_estring_value.c_str());
-    break;
-    </code>
-</pre>
+                                        <code>
+                                          /* GET_TIME_MILLIS */ <br>
+                                          case GET_TIME_MILLIS: <br>
+                                          &nbsp; float now_time; <br>
+                                          &nbsp; now_time = (float) millis(); <br>
+                                          &nbsp; tx_estring_value.clear(); <br>
+                                          &nbsp; tx_estring_value.append("T:"); <br>
+                                          &nbsp; tx_estring_value.append(now_time); <br>
+                                          &nbsp; tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
+                                          &nbsp; Serial.println(tx_estring_value.c_str()); <br>
+                                          &nbsp; break; <br>
+                                        </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/Get_Millis_python.png" alt="..." />
                                         <li> <h4>Notification Handler function </h4> </li>
                                         <p class="mb-4">Next, I was tasked to create a function to handle outputs from Arduino back in Python. This function went through several iterations, as the next tasks will use this function to show the robot's data.
                                         The first iteration of the function was just designed to take a response and print it directly. For future iterations, I printed both time and temperature measurements, implementing an alternative print for when temperature is recorded.
                                         Here is the full code showing its functionality.</p>
-<pre>
-    <code>
-#Notification Handler
-def notification_handler(uuid, notification):
-    s = ble.bytearray_to_string(notification)
-    #Only if temperature is recorded
-    if ("|" in s):
-        pieces = s.split("|")
-        print("Timestamp " + pieces[0] + ": current time is " + pieces[1] + " and current temperature is " + pieces[2] + " in F.")
-    else:
-        print(s)
-    </code>
-</pre>
+                                        <code>
+                                          #Notification Handler <br>
+                                          def notification_handler(uuid, notification): <br>
+                                          &nbsp; s = ble.bytearray_to_string(notification) <br>
+                                          &nbsp; #Only if temperature is recorded <br>
+                                          &nbsp; if ("|" in s): <br>
+                                          &nbsp; &nbsp; pieces = s.split("|") <br>
+                                          &nbsp; &nbsp; print("Timestamp " + pieces[0] + ": current time is " + pieces[1] + " and current temperature is " + pieces[2] + " in F.") <br>
+                                          &nbsp; else: <br>
+                                          &nbsp; &nbsp; print(s) <br>
+                                        </code> <br>
                                         <p class="mb-4">This function is going to be used for all next tasks I will talk about. For all of them, to start checking for robot's output we just run the function ble.start_notify(ble.uuid['RX_STRING'], notification_handler) and we end the receiving by running the function
                                         ble.stop_notify(ble.uuid['RX_STRING']). Both functions check ble.uuid['RX_STRING'] for data sent from the robot as it is the receiver. From the Arduino side, we are sending it through the transmitter of the Bluetooth.
                                         To immediately test out Notification Handler function, I was tasked to receive the time from GET_TIME_MILLIS. Here is the Python section that shows it.</p>
@@ -334,26 +326,24 @@ def notification_handler(uuid, notification):
                                         The period of time I decided to collect data for was 3 seconds, collecting a total of 81 timestamps. This implies that the program collects 27 messages/second. One particular occurence I found in doing this task was that sometimes the
                                         number of timestamps were more than 81 and sometimes less. I think this depended on the traffic of the Bluetooth, if the robot was running for a while and especially if other commands were requested before.
                                         Here is the code for TIME_LOOP and its output on Python.</p>
-<pre>
-    <code>
-/* TIME_LOOP */
-case TIME_LOOP: {
-  unsigned long start_time = millis();
-  int count = 0;
-  while (millis() - start_time < timestamps_duration){
-    tx_estring_value.clear();
-    tx_estring_value.append("Timestamp ");
-    tx_estring_value.append(count);
-    tx_estring_value.append(": current time is ");
-    tx_estring_value.append((float) millis());
-    tx_characteristic_string.writeValue(tx_estring_value.c_str());
-    Serial.println(tx_estring_value.c_str());
-    count += 1;
-  }
-  break;
-}
-    </code>
-</pre>
+                                        <code>
+                                          /* TIME_LOOP */ <br>
+                                          case TIME_LOOP: { <br>
+                                          &nbsp; unsigned long start_time = millis(); <br>
+                                          &nbsp; int count = 0; <br>
+                                          &nbsp; while (millis() - start_time < timestamps_duration){ <br>
+                                          &nbsp; &nbsp; tx_estring_value.clear(); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append("Timestamp "); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append(count); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append(": current time is "); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append((float) millis()); <br>
+                                          &nbsp; &nbsp; tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
+                                          &nbsp; &nbsp; Serial.println(tx_estring_value.c_str()); <br>
+                                          &nbsp; &nbsp; count += 1; <br>
+                                          &nbsp; } <br>
+                                          &nbsp; break; <br>
+                                          } <br>
+                                        </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/time_loop_python.png" alt="..." />
                                         <li> <h4>STORE_LOOP and SEND_TIME_DATA commands </h4> </li>
                                         <p class="mb-4">In this next section, I was tasked to store timestamps into an array in Arduino and then send it when requested. To do so, I preferred to implement two different commands, one to store and one to send.
@@ -378,25 +368,23 @@ case TIME_LOOP: {
                                         <p class="mb-4">The final task I needed to develop was to code the command GET_TEMP_DATA. To implement it, I declared a new array to store temperature datas and, as I add timestamps in its array, I started adding temperature measurements at the same time.
                                         This can be seen from the code developed in STORE_LOOP. Differently from SEND_TIME_DATA, GET_TEMP_DATA sends informations to the Notification Handler in a particular format: "count|time|temp" where "|" is used as delimiter to handle the data.<br>
                                         The code and image below show how the command works.</p>
-<pre>
-    <code>
-/* SEND_TEMP_DATA */
-case SEND_TEMP_DATA: {
-  for (int i = 0; i < array_size; i++) {
-    if (timestamps[i] == 0) break;
-    tx_estring_value.clear();
-    tx_estring_value.append(i);
-    tx_estring_value.append("|");
-    tx_estring_value.append(timestamps[i]);
-    tx_estring_value.append("|");
-    tx_estring_value.append(tempstamps[i]);
-    tx_characteristic_string.writeValue(tx_estring_value.c_str());
-    Serial.println(tx_estring_value.c_str());
-  }
-  break;
-}
-    </code>
-</pre>
+                                        <code>
+                                          /* SEND_TEMP_DATA */ <br>
+                                          case SEND_TEMP_DATA: { <br>
+                                          &nbsp; for (int i = 0; i < array_size; i++) { <br>
+                                          &nbsp; &nbsp; if (timestamps[i] == 0) break; <br>
+                                          &nbsp; &nbsp; tx_estring_value.clear(); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append(i); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append("|"); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append(timestamps[i]); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append("|"); <br>
+                                          &nbsp; &nbsp; tx_estring_value.append(tempstamps[i]); <br>
+                                          &nbsp; &nbsp; tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
+                                          &nbsp; &nbsp; Serial.println(tx_estring_value.c_str()); <br>
+                                          &nbsp; } <br>
+                                          &nbsp; break; <br>
+                                          } <br>
+                                        </code> <br>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
                                       </ul>
                                     </ul>
