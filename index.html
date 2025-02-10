@@ -499,7 +499,12 @@
                                       </div>
                                       <p class="mb-4">As the images show, the pitch and roll are very precise although the initial position problem was not exactly fixed. I suspect that the cause of this issue is me not taking the measurements correctly, but it's worth noting it for future implementations.</p>
                                       <li> <h4>Sample Data </h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <p class="mb-4">Throughout the entirety of the lab, I implemented sme design choices that definetely influenced the efficiency of the code. <br>
+                                      The first very important decision taken was between calculating data at run time, by storing it in arrays, or in real time, by sending it directly via Bluetooth.
+                                      Although I initally tested all functionality by calculating the angles in real time, I decided to instead store all data in array structs (STORE_IMU) and send it via Bluetooth using another command (SEND_IMU). Both commands are here reported.
+                                      This allowed me to take measurements at a higher rate (roughly 1200 per second) and therefore have more precise graphs when measuring changes in pitch, roll and yaw. <br>
+                                      Another important decision I made was to store each measured value in different struct arrays. This, although expensive in terms of RAM as each array takes a certain amount of memory, allowed me more modularity and limited the risk of filling the array with data. <br>
+                                      Lastly, as viewed by any image posted before, I decided and was able to gather IMU data for 10sec, with the draw back of a longer sending time as it is computational expensive to send roughly 12000 data points, based on the before mentioned sampling rate. </p>
                                       <li> <h4>Record a Stunt </h4> </li>
                                       <p class="mb-4">Placeholder.</p>
                                     </ul>
