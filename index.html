@@ -486,7 +486,17 @@
                                               <img class="img-fluid rounded mb-5" src="assets/img/Lab2/yaw_g.png" alt="..." />
                                           </div>
                                       </div>
-                                      <p class="mb-4">Placholder.</p>
+                                      <p class="mb-4">The most different aspects of these measurements, compared to the one made from the Accelerometer, is that they are way less noise.
+                                      The drawback is that they are subject to not exactly aligh with the normal angles. This can be seen from the pitch as, although the relative angle is a change in 90 degrees in both direction, the initial position is not at the zero angles.
+                                      To mitigate this, we can try applying a complimentary filter to combine the initial precision of the Accelerometer and the noisyless effect of the Gyroscope. This applies only to pitch and roll as the Accelerometer cannot influence yaw in any way.</p>
+                                      <div class="row">
+                                          <div class="col">
+                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_compl.png" alt="..." />
+                                          </div>
+                                          <div class="col">
+                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/roll_compl.png" alt="..." />
+                                          </div>
+                                      </div>
                                       <li> <h4>Sample Data </h4> </li>
                                       <p class="mb-4">Placeholder.</p>
                                       <li> <h4>Record a Stunt </h4> </li>
