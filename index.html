@@ -93,20 +93,7 @@
                           <h2 class="text-primary text-center mb-4">Lab 2</h2>
                       </div>
                   </div>
-                  <!-- Portfolio Item 3-->
-                  <div class="col-md-6 col-lg-4">
-                      <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#Lab3">
-                          <img class="img-fluid" src="assets/img/Lab1/artemis_nano.png" alt="..." />
-                          <h2 class="text-primary text-center mb-4">Lab 3</h2>
-                      </div>
-                  </div>
-                  <!-- Portfolio Item 4-->
-                  <div class="col-md-6 col-lg-4">
-                      <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#Lab4">
-                          <img class="img-fluid" src="assets/img/portfolio/cake.png" alt="..." />
-                          <h2 class="text-primary text-center mb-4">Lab 4</h2>
-                      </div>
-                  </div>
+
               </div>
           </div>
       </section>
@@ -467,108 +454,18 @@ case SEND_TEMP_DATA: {
                                   </div>
                                   <!-- Portfolio Modal - Text-->
                                   <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Prelab</h2>
-                                  <ul>
-                                    <li> <h4>Lab 1A </h4> </li>
-                                    <p class="mb-4">For the rest part of the prelab, I was tasked to download Arduino IDE and setting up the board we would use for all other labs: the SparkFun RedBoard Artemis Nano.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/Lab1/arduino_setup.png" alt="..." />
-                                  </ul>
-                                  <ul>
-                                    <li> <h4>Lab 1B </h4> </li>
-                                    <p class="mb-4">After installing an running all necessary demo code, which I analyse in detail in the next part of the report, I was tasked to setup to set up the environments used to host our Python and Jupiter Lab portion of code.</p>
-                                      <ul>
-                                        <li>Setup newest version of Python and pip, as shown in the image below.</li>
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/python+pip_downloaded.png" alt="..." />
-                                        <li>Setup the virtual environment "FastRobots_ble" and download the codebase ble_robot_1.2, as shown in the image below.</li>
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/code+environment_downloaded.png" alt="..." />
-                                        <li>Load and burn the codebase to discover the MAC address, as shown in the image below.</li>
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/arduino_ble_MAC_address.png" alt="..." />
-                                        <p class="mb-4">Finding the MAC address is extremely important as every Artemis Nano has their unique one, used to establish a Bluetooth connection between the computer and the microcontroller.
-                                        Once I knew the address, I just changed it in the connection file in Python and make sure to create a new unique UUID, Unique Universal Identifier, so to link my Artemis and make my Bluetooth connection with it unique.
-                                        This avoids external connections from other devices when operating the robot. </p>
-                                      </ul>
-                                  </ul>
+                                  <p class="mb-4">Placeholder.</p>
+                                  <img class="img-fluid rounded mb-5" src="assets/img/Lab1/arduino_setup.png" alt="..." />
+
                                   <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2>
-                                  <ul>
-                                    <div class="row">
-                                        <div class="col">
-                                            <li> <h4>Lab 1A </h4> </li>
-                                            <p class="mb-4">For the first part of the lab, I run different examples from the Arduino built-in environment and some others from the RedBorad Artemis Nano environment. <br>
-                                            In the following video, I illustrate every example tasked to run.</p>
-                                        </div>
-                                        <div class="col">
-                                          <video width="350" height="240" controls>
-                                            <source src="assets\img\Lab1\example_videos.mp4" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                          </video>
-                                        </div>
-                                  </ul>
-                                  <ul>
-                                    <li> <h4>Lab 1B </h4> </li>
-                                    <p class="mb-4">In this second half of the lab, I was tasked to write different commands and functionsd in both Arduino and Jupyter Lab to showcase the functionality of Bluetooth connection between Artemis Nano and our pc. <br>
-                                    Here are the main tasks completed with explanation, supported by code snippets and images of the results.</p>
-                                    <ul>
-                                      <li> <h4>ECHO command </h4> </li>
-                                      <p class="mb-4">In this section, I was tasked to code the ECHO command for our microncontroller. This program should output a modified version of whatever the user sends to
-                                      the the robot. </p>
-                                      <p class="mb-4">This function is going to be used for all next tasks I will talk about. For all of them, to start checking for robot's output we just run the function ble.start_notify(ble.uuid['RX_STRING'], notification_handler) and we end the receiving by running the function
-                                      ble.stop_notify(ble.uuid['RX_STRING']). Both functions check ble.uuid['RX_STRING'] for data sent from the robot as it is the receiver. From the Arduino side, we are sending it through the transmitter of the Bluetooth.
-                                      To immediately test out Notification Handler function, I was tasked to receive the time from GET_TIME_MILLIS. Here is the Python section that shows it.</p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab1/notification_handler_millis_python.png" alt="..." />
-                                      <li> <h4>TIME_LOOP command </h4> </li>
-                                      <p class="mb-4">The next task I developed was the command TIME_LOOP. Its functionality is to send to Python timestamps from the moment they were requested for a period of time of my choice, all through the Notification Handler .
-                                      The period of time I decided to collect data for was 3 seconds, collecting a total of 81 timestamps. This implies that the program collects 27 messages/second. One particular occurence I found in doing this task was that sometimes the
-                                      number of timestamps were more than 81 and sometimes less. I think this depended on the traffic of the Bluetooth, if the robot was running for a while and especially if other commands were requested before.
-                                      Here is the code for TIME_LOOP and its output on Python.</p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab1/time_loop_python.png" alt="..." />
-                                      <li> <h4>STORE_LOOP and SEND_TIME_DATA commands </h4> </li>
-                                      <p class="mb-4">In this next section, I was tasked to store timestamps into an array in Arduino and then send it when requested. To do so, I preferred to implement two different commands, one to store and one to send.
-                                      My reasoning for doing this is because, in a later task, I will need to implement the same system for also temperature readings. By modulating the two actions in different commands, I could store temperature readings by simply adding another array in the STORE_LOOP command.
-                                      I will explain more about this in the next section.<br>
-                                      One critical change I made from this moment on was switch from milliseconds to microseconds under suggestion of the TA in lab. This is because I noticced I was hitting the boundary of the array extremely quickly, despite it being very large.
-                                      I will further discuss my conclusions and some possible solution in the Discussion section.<br>
-                                      The two images below show the functionality of both commands.</p>
-                                    </ul>
-                                  </ul>
-                                  <div class="row">
-                                      <div class="col">
-                                          <img class="img-fluid rounded mb-5" src="assets/img/Lab1/store_loop_arduino.png" alt="..." />
-                                      </div>
-                                      <div class="col">
-                                          <img class="img-fluid rounded mb-5" src="assets/img/Lab1/time_array_python.png" alt="..." />
-                                      </div>
-                                  </div>
-                                  <ul>
-                                    <ul>
-                                      <li> <h4>GET_TEMP_DATA command </h4> </li>
-                                      <p class="mb-4">The final task I needed to develop was to code the command GET_TEMP_DATA. To implement it, I declared a new array to store temperature datas and, as I add timestamps in its array, I started adding temperature measurements at the same time.
-                                      This can be seen from the code developed in STORE_LOOP. Differently from SEND_TIME_DATA, GET_TEMP_DATA sends informations to the Notification Handler in a particular format: "count|time|temp" where "|" is used as delimiter to handle the data.<br>
-                                      The code and image below show how the command works.</p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
-                                    </ul>
-                                  </ul>
+                                  <p class="mb-4">Placeholder.</p>
+
                                   <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Discussion</h2>
-                                  <div class="row">
-                                      <div class="col">
-                                          <p class="mb-4">This lab was very instructive on how the Bluetooth communication between the robot and our pc works and how they will communicate data in the future labs. <br>
-                                                During the lab, I was tasked to send data from Arduino to Python both directly in real time but also through a stored array at run time. Those two methods are extremely different. Despite the first one being very fast, it pales in comparison as the second one filled the array almost immediately.
-                                                The reason for this is because the direct sending of data happens at real time, delaying due to the Serial Communication through Bluetooth. This communication is effective when we would like to see replies in real time like for the ECHO command. <br>
-                                                In the other hand, storing the data at run time is way faster as it doesn't delay due to Serial. This can be useful if we are measuring EMU or Time-of-Flight data for use for future adjustments and commands, as in this case having more data to compare may be helpful. </p>
-                                      </div>
-                                      <div class="col">
-                                          <img class="img-fluid rounded mb-5" src="assets/img/Lab1/timestamp_loop_python_millis.png" alt="..." />
-                                      </div>
-                                      <p class="mb-4">In regard of the rate at which the Artemis Nano stores data in Arduino, I noticed an issue. When I first started storing timestamps, the array filled up of data extremely fast.
-                                      Additionally, one thing I realised was that by registering the timestamps in milliseconds many entries of the array were the exact same number, as it can be seen by the following image.
-                                      To fix this, under suggestion of the TA, I decided to instead register the data in microseconds as it would give me more informations. Furthermore, it would avoid the issue of filling up the array so rapidly. <br>
-                                      By talking to the TA, I realised that if I wanted to avoid the array to fill up I could calculate the necessary dimension based on the RAM space of the Artemis Nano and the memory used by Arduino to compute.
-                                      The Artemis Nano has 384 kB of RAM. A float takes up 4 bytes of RAM, so we can calculate that 96,000 datapoints can be stored in it (384kB/4B). Since I am storing both timestamps and temperature measurements, this is roughly 48,000 datapoints per measurement.
-                                      However, we need to take into account also each string we send as they contain a certain number of bytes per character. This means I have to consider even less than 48,000 that can be sent to the notification handler before RAM runs out. </p>
-                                  <ul>
-                                      <button class="btn btn-primary" data-bs-dismiss="modal">
-                                            <i class="fas fa-xmark fa-fw"></i>
+                                  <p class="mb-4">Placeholder. </p>
+                                  <button class="btn btn-primary" data-bs-dismiss="modal">
+                                    <i class="fas fa-xmark fa-fw"></i>
                                             Close Window
-                                      </button>
-                                  </ul>
+                                  </button>
                               </div>
                           </div>
                       </div>
