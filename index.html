@@ -459,9 +459,9 @@
                                       <code>
                                         // Accelerometer <br>
                                         pitch_a = atan2(myICM.accX(),myICM.accZ())*180/M_PI; <br>
-                                        //pitch_a = (((pitch_a - pitch_a_rawlow)*refer_range)/pitch_a_range) + refer_low;     //calibration <br>
+                                        //pitch_a = (((pitch_a - pitch_a_rawlow)*refer_range)/pitch_a_range) + refer_low;&nbsp;//calibration <br>
                                         roll_a  = atan2(myICM.accY(),myICM.accZ())*180/M_PI; <br>
-                                        //roll_a = (((roll_a - roll_a_rawlow)*refer_range)/roll_a_range) + refer_low;        //calibration <br>
+                                        //roll_a = (((roll_a - roll_a_rawlow)*refer_range)/roll_a_range) + refer_low;&nbsp;//calibration <br>
                                       </code> <br>
                                       <div class="row">
                                           <div class="col">
@@ -483,6 +483,14 @@
                                       <p class="mb-4">The two Fourier Transforms tell us that the bets possible cut off frequency is 20Hz.
                                       We then use this frequency and the following two formulas to calculate a value for alpha of 0.9921.
                                       Now we can apply a Low Pass Filter to both pitch and roll and get more precised measurements.</p>
+                                      <code>
+                                        //Low Pass Filter <br>
+                                        const float alpha = 0.9921; <br>
+                                        pitch_a_LPF[n] = alpha*pitch_a + (1-alpha)*pitch_a_LPF[n-1]; <br>
+                                        pitch_a_LPF[n-1] = pitch_a_LPF[n]; <br>
+                                        roll_a_LPF[n] = alpha*roll_a + (1-alpha)*roll_a_LPF[n-1]; <br>
+                                        roll_a_LPF[n-1] = roll_a_LPF[n]; <br>
+                                      </code> <br>
                                       <div class="row">
                                           <div class="col">
                                               <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_a_LPF.png" alt="..." />
@@ -493,6 +501,14 @@
                                       </div>
                                       <li> <h4>Gyroscope </h4> </li>
                                       <p class="mb-4">For the next part of the lab, I checked the functionality of the Gyroscope. I then measured the pitch, roll and yaw using it.</p>
+                                      <code>
+                                        // Gyroscope <br>
+                                        dt = (micros()-last_time)/1000000.; <br>
+                                        last_time = micros(); <br>
+                                        pitch_g = pitch_g + myICM.gyrY()*dt; <br>
+                                        roll_g = roll_g + myICM.gyrX()*dt; <br>
+                                        yaw_g = yaw_g + myICM.gyrZ()*dt; <br>
+                                      </code> <br>
                                       <div class="row">
                                           <div class="col">
                                               <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_g.png" alt="..." />
@@ -507,6 +523,11 @@
                                       <p class="mb-4">The most different aspects of these measurements, compared to the one made from the Accelerometer, is that they are way less noise.
                                       The drawback is that they are subject to not exactly aligh with the normal angles. This can be seen from the pitch as, although the relative angle is a change in 90 degrees in both direction, the initial position is not at the zero angles.
                                       To mitigate this, we can try applying a complimentary filter to combine the initial precision of the Accelerometer and the noisyless effect of the Gyroscope. This applies only to pitch and roll as the Accelerometer cannot influence yaw in any way.</p>
+                                      <code>
+                                        // Complementary Filter <br>
+                                        pitch = (pitch + pitch_g)*(1-alpha) + pitch_a*alpha; <br>
+                                        roll = (roll + roll_g)*(1-alpha) + roll_a*alpha; <br>
+                                      </code> <br>
                                       <div class="row">
                                           <div class="col">
                                               <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_compl.png" alt="..." />
