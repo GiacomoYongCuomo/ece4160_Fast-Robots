@@ -600,8 +600,12 @@
                                     <!-- Portfolio Modal - Text-->
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Prelab</h2> <br>
                                     <ul>
-                                      <li> <h4>I2C Sensor Address</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <li> <h4>I2C Sensor Address< and Conflict with Two ToFs Snesors/h4> </li>
+                                      <p class="mb-4">From the beginning of the lab, by running the example code in Example1_wire_I2C, I found the I2C address associated to one of the ToF sensor we have.
+                                      The example code showed that the sensor has address 0x29 instead of the default 0x52. This is because, when connected and running, the LSB is continuously toggled between read and write with consequence
+                                      of having the I2C address bit-shifted by one to the right. <br>
+                                      Another challenge to face regarding I2C addresses is that both ToF sensors have the same address, so we need to change address to one of them to differentiate their measurements and to be able to run them concurrently.
+                                      To do so, we hardwire to the Artemis Nano a wire from any GPIO, in my case A0, to the XSHUT pin in one of the ToF. By setting it LOW, as it is active low, it internally changes the I2C address of the sensor and allows two to be connected at the same time.</p>
                                       <li> <h4>Using Two Sensors on the robot</h4> </li>
                                       <p class="mb-4">Placeholder.</p>
                                       <li> <h4>Wiring</h4> </li>
