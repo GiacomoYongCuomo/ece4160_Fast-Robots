@@ -605,26 +605,34 @@
                                       The example code showed that the sensor has address 0x29 instead of the default 0x52. This is because, when connected and running, the LSB is continuously toggled between read and write with consequence
                                       of having the I2C address bit-shifted by one to the right. <br>
                                       Another challenge to face regarding I2C addresses is that both ToF sensors have the same address, so we need to change address to one of them to differentiate their measurements and to be able to run them concurrently.
-                                      To do so, we hardwire to the Artemis Nano a wire from any GPIO, in my case A0, to the XSHUT pin in one of the ToF. By setting it LOW, as it is active low, it internally changes the I2C address of the sensor and allows two to be connected at the same time.</p>
-                                      <li> <h4>Using Two Sensors on the robot</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      To do so, we hard-wire the XSHUT pin in one of the ToF to any GPIO on the Artemis Nano, in my case A0. By setting it LOW, as it is active low, it internally changes the I2C address of the sensor and allows two to be connected at the same time.</p>
+                                      <li> <h4>Robot Layout</h4> </li>
+                                      <p class="mb-4">Now that we are getting used to the various sensors, it's time to think about where they will physically live on the robot. I decided to place my ToFs one on the front and one on the side (probably right side). This will allow me to identify obstacles immediately in front of me, avoiding collisions when navigating the space, and on the side.
+                                      The main drawback is that one of the side will be blind for the car, which I plan to overcome by doing 90 degrees stationary turns so to map my surroundings. </p>
                                       <li> <h4>Wiring</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <p class="mb-4">IMAGE.</p>
                                     </ul>
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Lab Tasks</h2> <br>
                                     <ul>
                                       <li> <h4>ToF Sensor Connection</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <p class="mb-4">IMAGE</p>
                                       <li> <h4>I2C Scanning</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <p class="mb-4">As explained in the prelab, the first step to prepare the ToF was finding its I2C address. Using the Example1_wire_I2C file, I found out the address was 0x29, which is teh default address 0x52 bit-shifted right by one.
+                                      This makes the LSB to dropped, which is the one that continuously toggles between read and write. </p>
+                                      <p class="mb-4">IMAGE</p>
                                       <li> <h4>Chosen Mode</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <p class="mb-4">The next step was to choose the ranging mode that I wanted my sensors to have. After roughly testing the various modes, I decided to settle on the Long mode (4m range) as it will allow me to range obstacle further away with enough accuracy.
+                                      As the image below shows, RESULTS. For my second ToF sensor, the one on the side, I may opted for short ranging but some experimentation with the car would be needed. </p>
+                                      <p class="mb-4">IMAGE</p>
                                       <li> <h4>Two ToF Sensors and IMU</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <p class="mb-4">After testing one ToF, I hooked up both ToF and IMU sensors all together. From the image, you can see that all three were successfully connected and ready to work in parallel.</p>
+                                      <p class="mb-4">IMAGE</p>
                                       <li> <h4>ToF Sensor Speed</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <p class="mb-4">From the beginning, I decided to store any measurements on struct arrays before sending it via Bluetooth. This would allow me a faster measurement recording and hopefully more precise. To not waste any time in looking for measurements, I collected them only when a sensor was ready.
+                                      This was possible through functions like myICM.dataReady() for the IMU and TOF_one.checkForDataReady() for each ToF sensor. When those flags were true, then measurements were recorded. Based on the results, I notice that the loop was roughly 12 times faster than each sensor (12 consecutives measurement were exactly the same with the same timestamps).
+                                      The limiting factor was () as it was teh slower sensor.</p>
                                       <li> <h4>IMU vs Time and ToFs vs Time Graphs</h4> </li>
-                                      <p class="mb-4">Placeholder.</p>
+                                      <p class="mb-4">IMAGE</p>
                                     </ul>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                       <i class="fas fa-xmark fa-fw"></i>
