@@ -590,7 +590,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-primary text-uppercase text-center mb-0">Lab 2</h2>
+                                    <h2 class="portfolio-modal-title text-primary text-uppercase text-center mb-0">Lab 3</h2>
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
@@ -598,133 +598,29 @@
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Portfolio Modal - Text-->
+                                    <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Prelab</h2> <br>
+                                    <ul>
+                                      <li> <h4>I2C Sensor Address</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
+                                      <li> <h4>Using Two Sensors on the robot</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
+                                      <li> <h4>Wiring</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
+                                    </ul>
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Lab Tasks</h2> <br>
                                     <ul>
-                                      <li> <h4>Set Up the IMU</h4> </li>
-                                      <p class="mb-4">To begin the lab, I had to install the necessary library to run the IMU and connect it to the board.
-                                      By running the IMU example code, we notice that by moving the IMU around different values for either the Accelerometer or Gyroscope change.
-                                      Within the code, it is important to understand the variable AD0_VAL which is set to 1 by default. When set to 1, it allows communication through the SPI channel, which is impossible when set to 0.
-                                      The video and image below show the functionality of the IMU.</p>
-                                      <div class="row">
-                                          <div class="col">
-                                            <video width="350" height="240" controls>
-                                              <source src="assets\img\Lab2\IMU_example.mp4" type="video/mp4">
-                                              Your browser does not support the video tag.
-                                            </video>                                          </div>
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/IMU_wiring.png" alt="..." />
-                                          </div>
-                                      </div>
-
-                                      <li> <h4>Accelerometer </h4> </li>
-                                      <p class="mb-4">For the first part of the lab, I tested the accuracy and functionality of the Accelerometer.
-                                      The following set of images show the pitch and roll taken before any type of calibration or low pass filtering.</p>
-                                      <code>
-                                        // Accelerometer <br>
-                                        pitch_a = atan2(myICM.accX(),myICM.accZ())*180/M_PI; <br>
-                                        //pitch_a = (((pitch_a - pitch_a_rawlow)*refer_range)/pitch_a_range) + refer_low;&nbsp;//calibration <br>
-                                        roll_a  = atan2(myICM.accY(),myICM.accZ())*180/M_PI; <br>
-                                        //roll_a = (((roll_a - roll_a_rawlow)*refer_range)/roll_a_range) + refer_low;&nbsp;//calibration <br>
-                                      </code> <br>
-                                      <div class="row">
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_a.png" alt="..." />
-                                          </div>
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/roll_a.png" alt="..." />
-                                          </div>
-                                      </div>
-                                      <p class="mb-4">What we can see is that those measurements are quite noisy, which motivates us to check the Fourier Transform for each and decide a cut of frequency for our low pass filter.</p>
-                                      <div class="row">
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/fft_pitch_a.png" alt="..." />
-                                          </div>
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/fft_roll_a.png" alt="..." />
-                                          </div>
-                                      </div>
-                                      <p class="mb-4">The two Fourier Transforms tell us that the bets possible cut off frequency is 20Hz.
-                                      We then use this frequency and the following two formulas to calculate a value for alpha of 0.9921.
-                                      Now we can apply a Low Pass Filter to both pitch and roll and get more precised measurements.</p>
-                                      <code>
-                                        //Low Pass Filter <br>
-                                        const float alpha = 0.9921; <br>
-                                        pitch_a_LPF[n] = alpha*pitch_a + (1-alpha)*pitch_a_LPF[n-1]; <br>
-                                        pitch_a_LPF[n-1] = pitch_a_LPF[n]; <br>
-                                        roll_a_LPF[n] = alpha*roll_a + (1-alpha)*roll_a_LPF[n-1]; <br>
-                                        roll_a_LPF[n-1] = roll_a_LPF[n]; <br>
-                                      </code> <br>
-                                      <div class="row">
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_a_LPF.png" alt="..." />
-                                          </div>
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/roll_a_LPF.png" alt="..." />
-                                          </div>
-                                      </div>
-                                      <li> <h4>Gyroscope </h4> </li>
-                                      <p class="mb-4">For the next part of the lab, I checked the functionality of the Gyroscope. I then measured the pitch, roll and yaw using it.</p>
-                                      <code>
-                                        // Gyroscope <br>
-                                        dt = (micros()-last_time)/1000000.; <br>
-                                        last_time = micros(); <br>
-                                        pitch_g = pitch_g + myICM.gyrY()*dt; <br>
-                                        roll_g = roll_g + myICM.gyrX()*dt; <br>
-                                        yaw_g = yaw_g + myICM.gyrZ()*dt; <br>
-                                      </code> <br>
-                                      <div class="row">
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_g.png" alt="..." />
-                                          </div>
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/roll_g.png" alt="..." />
-                                          </div>
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/yaw_g.png" alt="..." />
-                                          </div>
-                                      </div>
-                                      <p class="mb-4">The most different aspects of these measurements, compared to the one made from the Accelerometer, is that they are way less noise.
-                                      The drawback is that they are subject to not exactly aligh with the normal angles. This can be seen from the pitch as, although the relative angle is a change in 90 degrees in both direction, the initial position is not at the zero angles.
-                                      To mitigate this, we can try applying a complimentary filter to combine the initial precision of the Accelerometer and the noisyless effect of the Gyroscope. This applies only to pitch and roll as the Accelerometer cannot influence yaw in any way.</p>
-                                      <code>
-                                        // Complementary Filter <br>
-                                        pitch = (pitch + pitch_g)*(1-alpha) + pitch_a*alpha; <br>
-                                        roll = (roll + roll_g)*(1-alpha) + roll_a*alpha; <br>
-                                      </code> <br>
-                                      <div class="row">
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/pitch_compl.png" alt="..." />
-                                          </div>
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/roll_compl.png" alt="..." />
-                                          </div>
-                                      </div>
-                                      <p class="mb-4">As the images show, the pitch and roll are very precise although the initial position problem was not exactly fixed. I suspect that the cause of this issue is me not taking the measurements correctly, but it's worth noting it for future implementations.</p>
-                                      <li> <h4>Sample Data </h4> </li>
-                                      <p class="mb-4">Throughout the entirety of the lab, I implemented sme design choices that definetely influenced the efficiency of the code. <br>
-                                      The first very important decision taken was between calculating data at run time, by storing it in arrays, or in real time, by sending it directly via Bluetooth.
-                                      Although I initally tested all functionality by calculating the angles in real time, I decided to instead store all data in array structs (STORE_IMU) and send it via Bluetooth using another command (SEND_IMU). Both commands are here reported.
-                                      This allowed me to take measurements at a higher rate (roughly 1200 per second) and therefore have more precise graphs when measuring changes in pitch, roll and yaw. </p>
-                                      <div class="row">
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/store_imu.png" alt="..." />
-                                          </div>
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/send_imu.png" alt="..." />
-                                          </div>
-                                      </div>
-                                      <p class="mb-4">Another important decision I made was to store each measured value in different struct arrays. This, although expensive in terms of RAM as each array takes a certain amount of memory, allowed me more modularity and limited the risk of filling the array with data.
-                                      Lastly, as viewed by any image posted before, I decided and was able to gather IMU data for 10sec, with the draw back of a longer sending time as it is computational expensive to send roughly 12000 data points, based on the before mentioned sampling rate. </p>
-                                      <div class="row">
-                                          <div class="col">
-                                              <img class="img-fluid rounded mb-5" src="assets/img/Lab2/struct_arrays.png" alt="..." />
-                                          </div>
-                                      </div>
-                                      <li> <h4>Record a Stunt </h4> </li>
-                                      <video width="350" height="240" controls>
-                                        <source src="assets\img\Lab2\car_stunt.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                      </video>
+                                      <li> <h4>ToF Sensor Connection</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
+                                      <li> <h4>I2C Scanning</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
+                                      <li> <h4>Chosen Mode</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
+                                      <li> <h4>2 ToF Sensors</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
+                                      <li> <h4>Using Two Sensors on the robot</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
+                                      <li> <h4>Wiring</h4> </li>
+                                      <p class="mb-4">Placeholder.</p>
                                     </ul>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                       <i class="fas fa-xmark fa-fw"></i>
