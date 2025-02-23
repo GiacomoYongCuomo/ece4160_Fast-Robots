@@ -619,14 +619,14 @@
                                       <li> <h4>I2C Scanning</h4> </li>
                                       <p class="mb-4">As explained in the prelab, the first step to prepare the ToF was finding its I2C address. Using the Example1_wire_I2C file, I found out the address was 0x29, which is teh default address 0x52 bit-shifted right by one.
                                       This makes the LSB to dropped, which is the one that continuously toggles between read and write. </p>
-                                      <p class="mb-4">IMAGE</p>
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab3/I2C_address.png" alt="..." />
                                       <li> <h4>Chosen Mode</h4> </li>
                                       <p class="mb-4">The next step was to choose the ranging mode that I wanted my sensors to have. After roughly testing the various modes, I decided to settle on the Long mode (4m range) as it will allow me to range obstacle further away with enough accuracy.
                                       As the image below shows, RESULTS. For my second ToF sensor, the one on the side, I may opted for short ranging but some experimentation with the car would be needed. </p>
                                       <p class="mb-4">IMAGE</p>
                                       <li> <h4>Two ToF Sensors and IMU</h4> </li>
                                       <p class="mb-4">After testing one ToF, I hooked up both ToF and IMU sensors all together. From the image, you can see that all three were successfully connected and ready to work in parallel.</p>
-                                      <p class="mb-4">IMAGE</p>
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab3/sensors_together.png" alt="..." />
                                       <li> <h4>ToF Sensor Speed</h4> </li>
                                       <p class="mb-4">From the beginning, I decided to store any measurements on struct arrays before sending it via Bluetooth. This would allow me a faster measurement recording and hopefully more precise. To not waste any time in looking for measurements, I collected them only when a sensor was ready.
                                       This was possible through functions like myICM.dataReady() for the IMU and TOF_one.checkForDataReady() for each ToF sensor. When those flags were true, then measurements were recorded. Based on the results, I notice that the loop was roughly 12 times faster than each sensor (12 consecutives measurement were exactly the same with the same timestamps).
