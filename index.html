@@ -621,9 +621,11 @@
                                       This makes the LSB to dropped, which is the one that continuously toggles between read and write. </p>
                                       <img class="img-fluid rounded mb-5" src="assets/img/Lab3/I2C_address.png" alt="..." />
                                       <li> <h4>Chosen Mode</h4> </li>
-                                      <p class="mb-4">The next step was to choose the ranging mode that I wanted my sensors to have. After roughly testing the various modes, I decided to settle on the Long mode (4m range) as it will allow me to range obstacle further away with enough accuracy.
-                                      As the image below shows, RESULTS. For my second ToF sensor, the one on the side, I may opted for short ranging but some experimentation with the car would be needed. </p>
-                                      <p class="mb-4">IMAGE</p>
+                                      <p class="mb-4">The next step was to choose the ranging mode that I wanted my sensors to have. After roughly testing the various modes, I decided to settle on the Long Mode (4m range) as it will allow me to range obstacle further away with enough accuracy.
+                                      As the image below shows, the ToF sensor manages to have consistent results independently of teh light, at least for our robot purpose. On the other end, it show a lose of accuracy in complete dark when measuring further away, with the gain of a better standard deviation and therefore precision on the measurements.
+                                      The results also show a very high imprecision for the middle range in complete light and a maybe worst accuracy in the further range. In general, this experiment made me realise the limitations of these sensors, how to use them on my robot and what the best conditions to use them are. <br>
+                                      For my second ToF sensor, the one on the side, I may opted for short ranging but some experimentation with the car would be needed. </p>
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab3/ToF_chosen_mode.png" alt="..." />
                                       <li> <h4>Two ToF Sensors and IMU</h4> </li>
                                       <p class="mb-4">After testing one ToF, I hooked up both ToF and IMU sensors all together. From the image, you can see that all three were successfully connected and ready to work in parallel.</p>
                                       <img class="img-fluid rounded mb-5" src="assets/img/Lab3/sensors_together.png" alt="..." />
