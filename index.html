@@ -721,12 +721,41 @@
                                         So by rapid calculation, each motor will roughly receive 17-18V from the battery given. Below is also the snippet of code used to test the motor.</p>
                                         <div class=row>
                                           <div class=col>
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab4/wiring_motor_drive_with_oscilloscope.png" alt="..." />
                                           </div>
                                           <div class=col>
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab4/3.7V_oscilloscope.png" alt="..." />
                                           </div>
                                         </div>
+                                        <code>
+                                          void setup() { <br>
+                                          &nbsp;  //Motor 1 --> left from front <br>
+                                          &nbsp;  pinMode(A1, OUTPUT); <br>
+                                          &nbsp;  pinMode(A2, OUTPUT); <br>
+                                           <br>
+                                          &nbsp;  //Motor 2 --> right from front <br>
+                                          &nbsp;  pinMode(A3, OUTPUT); <br>
+                                          &nbsp;  pinMode(A5, OUTPUT); <br>
+                                          &nbsp;  Serial.begin(9600); <br>
+                                          &nbsp;} <br>
+                                           <br>
+                                          &nbsp;void loop() { <br>
+                                          &nbsp;  // Car going forward <br>
+                                          &nbsp;  Serial.println("Forward"); <br>
+                                          &nbsp;  forward(); <br>
+                                          &nbsp;  delay(2000); <br>
+                                          &nbsp;  stop_forward(); <br>
+                                          &nbsp;  delay(2000); <br>
+                                          &nbsp;} <br>
+                                           <br>
+                                          &nbsp;void forward() { <br>
+                                          &nbsp;  //Motor 1 counterclockwise, Motor 2 clockwise <br>
+                                          &nbsp;  for (int i = min_speed; i < speed; i++) { <br>
+                                          &nbsp;    analogWrite(A2, 0); <br>
+                                          &nbsp;    analogWrite(A1, i); <br>
+                                          &nbsp;  } <br>
+                                          &nbsp;} <br>
+                                        </code> <br>
                                       <li> <h4>Testing both Motors </h4> </li>
                                         <p class="mb-4">Placeholder. </p>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
