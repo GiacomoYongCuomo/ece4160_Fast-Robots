@@ -755,17 +755,93 @@
                                           &nbsp;    analogWrite(A1, i); <br>
                                           &nbsp;  } <br>
                                           &nbsp;} <br>
+                                           <br>
+                                          &nbsp;void stop_forward() { <br>
+                                          &nbsp;  analogWrite(A5, 0); <br>
+                                          &nbsp;  analogWrite(A1, 0); <br>
+                                          &nbsp;} <br>
                                         </code> <br>
                                       <li> <h4>Testing both Motors </h4> </li>
-                                        <p class="mb-4">Placeholder. </p>
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
+                                        <p class="mb-4">The following video shows how both motors are able to run powered by the battery provided. </p>
+                                        <p class="mb-4">VIDEO </p>
                                       <li> <h4>Car Layout </h4> </li>
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.png" alt="..." />
                                       <li> <h4>Lower limit PWM and Calibration </h4> </li>
                                         <p class="mb-4">Placeholder. </p>
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
+                                        <p class="mb-4">VIDEO </p>
                                       <li> <h4>Open Loop Control </h4> </li>
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab1/temp_loop_python.png" alt="..." />
+                                        <p class="mb-4">At last, I implemented some code for turning and implemented an open loop control. </p>
+                                        <div class=row>
+                                          <div class=col>
+                                            <code>
+                                              &nbsp;void setup() { <br>
+                                              &nbsp;  //Motor 1 --> left from front <br>
+                                              &nbsp;  pinMode(A1, OUTPUT); <br>
+                                              &nbsp;  pinMode(A2, OUTPUT); <br>
+                                               <br>
+                                              &nbsp;  //Motor 2 --> right from front <br>
+                                              &nbsp;  pinMode(A3, OUTPUT); <br>
+                                              &nbsp;  pinMode(A5, OUTPUT); <br>
+                                              &nbsp;  Serial.begin(9600); <br>
+                                              &nbsp;} <br>
+                                               <br>
+                                              &nbsp;void loop() { <br>
+                                              &nbsp;  // Car going forward <br>
+                                              &nbsp;  Serial.println("Forward"); <br>
+                                              &nbsp;  forward(); <br>
+                                              &nbsp;  delay(2000); <br>
+                                              &nbsp;  stop_forward(); <br>
+                                              &nbsp;  delay(2000); <br>
+                                              &nbsp;  turn_right_90(); <br>
+                                              &nbsp;  turn_left_90(); <br>
+                                              &nbsp;  turn_left_90(); <br>
+                                              &nbsp;  turn_right_90(); <br>
+                                              &nbsp;  forward(); <br>
+                                              &nbsp;  delay(2000); <br>
+                                              &nbsp;  stop_forward(); <br>
+                                              &nbsp;  delay(10000); <br>
+                                              &nbsp;} <br>
+                                               <br>
+                                              &nbsp;void forward() { <br>
+                                              &nbsp;  //Motor 1 counterclockwise, Motor 2 clockwise <br>
+                                              &nbsp;  for (int i = min_speed; i < speed; i++) { <br>
+                                              &nbsp;    analogWrite(A2, 0); <br>
+                                              &nbsp;    analogWrite(A1, i); <br>
+                                              &nbsp;  } <br>
+                                              &nbsp;} <br>
+                                               <br>
+                                              &nbsp;void stop_forward() { <br>
+                                              &nbsp;  analogWrite(A5, 0); <br>
+                                              &nbsp;  analogWrite(A1, 0); <br>
+                                              &nbsp;} <br>
+                                               <br>
+                                              &nbsp;void turn_right_90() { <br>
+                                              &nbsp;  analogWrite(A3, 0); <br>
+                                              &nbsp;  analogWrite(A5, turn_speed); <br>
+                                              &nbsp;  analogWrite(A1, 0); <br>
+                                              &nbsp;  analogWrite(A2, turn_speed); <br>
+                                              &nbsp;  delay(750); <br>
+                                              &nbsp;  analogWrite(A5, 0); <br>
+                                              &nbsp;  analogWrite(A2, 0); <br>
+                                              &nbsp;  delay(250); <br>
+                                              &nbsp;} <br>
+                                               <br>
+                                              &nbsp;void turn_left_90() { <br>
+                                              &nbsp;  analogWrite(A5, 0); <br>
+                                              &nbsp;  analogWrite(A3, turn_speed); <br>
+                                              &nbsp;  analogWrite(A2, 0); <br>
+                                              &nbsp;  analogWrite(A1, turn_speed); <br>
+                                              &nbsp;  delay(750); <br>
+                                              &nbsp;  analogWrite(A3, 0); <br>
+                                              &nbsp;  analogWrite(A1, 0); <br>
+                                              &nbsp;  delay(250); <br>
+                                              &nbsp;} <br>
+                                            </code> <br>
+                                          </div>
+                                        <div class=col>
+                                          <p class="mb-4">VIDEO </p>
+                                        </div>
+                                      </div>
                                     </ul>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
