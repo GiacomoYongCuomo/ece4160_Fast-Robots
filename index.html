@@ -757,7 +757,6 @@
                                           &nbsp;} <br>
                                            <br>
                                           &nbsp;void stop_forward() { <br>
-                                          &nbsp;  analogWrite(A5, 0); <br>
                                           &nbsp;  analogWrite(A1, 0); <br>
                                           &nbsp;} <br>
                                         </code> <br>
@@ -802,46 +801,48 @@
                                               &nbsp;  delay(10000); <br>
                                               &nbsp;} <br>
                                                <br>
-                                              &nbsp;void forward() { <br>
-                                              &nbsp;  //Motor 1 counterclockwise, Motor 2 clockwise <br>
-                                              &nbsp;  for (int i = min_speed; i < speed; i++) { <br>
-                                              &nbsp;    analogWrite(A2, 0); <br>
-                                              &nbsp;    analogWrite(A1, i); <br>
-                                              &nbsp;  } <br>
-                                              &nbsp;} <br>
-                                               <br>
-                                              &nbsp;void stop_forward() { <br>
-                                              &nbsp;  analogWrite(A5, 0); <br>
-                                              &nbsp;  analogWrite(A1, 0); <br>
-                                              &nbsp;} <br>
-                                               <br>
-                                              &nbsp;void turn_right_90() { <br>
-                                              &nbsp;  analogWrite(A3, 0); <br>
-                                              &nbsp;  analogWrite(A5, turn_speed); <br>
-                                              &nbsp;  analogWrite(A1, 0); <br>
-                                              &nbsp;  analogWrite(A2, turn_speed); <br>
-                                              &nbsp;  delay(750); <br>
-                                              &nbsp;  analogWrite(A5, 0); <br>
-                                              &nbsp;  analogWrite(A2, 0); <br>
-                                              &nbsp;  delay(250); <br>
-                                              &nbsp;} <br>
-                                               <br>
-                                              &nbsp;void turn_left_90() { <br>
-                                              &nbsp;  analogWrite(A5, 0); <br>
-                                              &nbsp;  analogWrite(A3, turn_speed); <br>
-                                              &nbsp;  analogWrite(A2, 0); <br>
-                                              &nbsp;  analogWrite(A1, turn_speed); <br>
-                                              &nbsp;  delay(750); <br>
-                                              &nbsp;  analogWrite(A3, 0); <br>
-                                              &nbsp;  analogWrite(A1, 0); <br>
-                                              &nbsp;  delay(250); <br>
-                                              &nbsp;} <br>
                                             </code> <br>
                                           </div>
                                         <div class=col>
-                                          <p class="mb-4">VIDEO </p>
+                                          <code>
+                                            &nbsp;void forward() { <br>
+                                            &nbsp;  //Motor 1 counterclockwise, Motor 2 clockwise <br>
+                                            &nbsp;  for (int i = min_speed; i < speed; i++) { <br>
+                                            &nbsp;    analogWrite(A2, 0); <br>
+                                            &nbsp;    analogWrite(A1, i); <br>
+                                            &nbsp;  } <br>
+                                            &nbsp;} <br>
+                                             <br>
+                                            &nbsp;void stop_forward() { <br>
+                                            &nbsp;  analogWrite(A5, 0); <br>
+                                            &nbsp;  analogWrite(A1, 0); <br>
+                                            &nbsp;} <br>
+                                             <br>
+                                            &nbsp;void turn_right_90() { <br>
+                                            &nbsp;  analogWrite(A3, 0); <br>
+                                            &nbsp;  analogWrite(A5, turn_speed); <br>
+                                            &nbsp;  analogWrite(A1, 0); <br>
+                                            &nbsp;  analogWrite(A2, turn_speed); <br>
+                                            &nbsp;  delay(750); <br>
+                                            &nbsp;  analogWrite(A5, 0); <br>
+                                            &nbsp;  analogWrite(A2, 0); <br>
+                                            &nbsp;  delay(250); <br>
+                                            &nbsp;} <br>
+                                             <br>
+                                            &nbsp;void turn_left_90() { <br>
+                                            &nbsp;  analogWrite(A5, 0); <br>
+                                            &nbsp;  analogWrite(A3, turn_speed); <br>
+                                            &nbsp;  analogWrite(A2, 0); <br>
+                                            &nbsp;  analogWrite(A1, turn_speed); <br>
+                                            &nbsp;  delay(750); <br>
+                                            &nbsp;  analogWrite(A3, 0); <br>
+                                            &nbsp;  analogWrite(A1, 0); <br>
+                                            &nbsp;  delay(250); <br>
+                                            &nbsp;} <br>
+                                          </code> <br>
                                         </div>
                                       </div>
+                                      <p class="mb-4">VIDEO </p>
                                     </ul>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
