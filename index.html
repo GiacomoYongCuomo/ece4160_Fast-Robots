@@ -752,21 +752,22 @@
                                             </code> <br>
                                           </div>
                                           <div class=col>
+                                            <code>
+                                              &nbsp;void forward() { <br>
+                                              &nbsp;  //Motor 1 counterclockwise, Motor 2 clockwise <br>
+                                              &nbsp;  for (int i = min_speed; i < speed; i++) { <br>
+                                              &nbsp;    analogWrite(A2, 0); <br>
+                                              &nbsp;    analogWrite(A1, i); <br>
+                                              &nbsp;  } <br>
+                                              &nbsp;} <br>
+                                               <br>
+                                              &nbsp;void stop_forward() { <br>
+                                              &nbsp;  analogWrite(A1, 0); <br>
+                                              &nbsp;} <br>
+                                               <br>
+                                            </code> <br>
                                           </div>
-                                        <code>
-                                          &nbsp;void forward() { <br>
-                                          &nbsp;  //Motor 1 counterclockwise, Motor 2 clockwise <br>
-                                          &nbsp;  for (int i = min_speed; i < speed; i++) { <br>
-                                          &nbsp;    analogWrite(A2, 0); <br>
-                                          &nbsp;    analogWrite(A1, i); <br>
-                                          &nbsp;  } <br>
-                                          &nbsp;} <br>
-                                           <br>
-                                          &nbsp;void stop_forward() { <br>
-                                          &nbsp;  analogWrite(A1, 0); <br>
-                                          &nbsp;} <br>
-                                           <br>
-                                        </code> <br>
+                                        </div>
                                       <li> <h4>Testing both Motors </h4> </li>
                                         <p class="mb-4">The following video shows how both motors are able to run powered by the battery provided. </p>
                                         <p class="mb-4">VIDEO </p>
