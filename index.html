@@ -691,30 +691,6 @@
                                       <p class="mb-4">One of the specifications for our car was to have the Artemis and the two motor drivers hooked to separate batteries. The reason for this is because we want to power the two motor drivers as much as possible.
                                       In doing so, we can ensure higher speed and also we ensure that the drivers and the Artemis are always powered independently for both voltage safety and to ensure that our code is consistently running. </p>
                                     </ul>
-                                    <!--
-                                    <video width="350" height="240" controls>
-                                      <source src="assets\img\Lab1\example_videos.mp4" type="video/mp4">
-                                      Your browser does not support the video tag.
-                                    </video>
-
-                                    <code>
-                                      /* SEND_TEMP_DATA */ <br>
-                                      case SEND_TEMP_DATA: { <br>
-                                      &nbsp; for (int i = 0; i < array_size; i++) { <br>
-                                      &nbsp; &nbsp; if (timestamps[i] == 0) break; <br>
-                                      &nbsp; &nbsp; tx_estring_value.clear(); <br>
-                                      &nbsp; &nbsp; tx_estring_value.append(i); <br>
-                                      &nbsp; &nbsp; tx_estring_value.append("|"); <br>
-                                      &nbsp; &nbsp; tx_estring_value.append(timestamps[i]); <br>
-                                      &nbsp; &nbsp; tx_estring_value.append("|"); <br>
-                                      &nbsp; &nbsp; tx_estring_value.append(tempstamps[i]); <br>
-                                      &nbsp; &nbsp; tx_characteristic_string.writeValue(tx_estring_value.c_str()); <br>
-                                      &nbsp; &nbsp; Serial.println(tx_estring_value.c_str()); <br>
-                                      &nbsp; } <br>
-                                      &nbsp; break; <br>
-                                      } <br>
-                                    </code> <br>
-                                    -->
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2> <br>
                                     <ul>
                                       <li> <h4>Testing one Motor Driver </h4> </li>
@@ -775,7 +751,8 @@
                                         <video width="350" height="240" controls>
                                           <source src="assets\img\Lab4\both_motor_working.mp4" type="video/mp4">
                                           Your browser does not support the video tag.
-                                        </video>                                      <li> <h4>Car Layout </h4> </li>
+                                        </video> <br>
+                                      <li> <h4>Car Layout </h4> </li>
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
                                       <li> <h4>Lower limit PWM and Calibration </h4> </li>
                                         <p class="mb-4">The next step in lab was to discover the lower PWM value limit in both scenario os going straight and curving. Some considerations I noticed while testing is that the car has an inherent mechanical limitation based on the internal gears condition.
@@ -785,7 +762,8 @@
                                         <video width="350" height="240" controls>
                                           <source src="assets\img\Lab4\car_straight_path.mp4" type="video/mp4">
                                           Your browser does not support the video tag.
-                                        </video>                                      <li> <h4>Open Loop Control </h4> </li>
+                                        </video> <br>
+                                      <li> <h4>Open Loop Control </h4> </li>
                                         <p class="mb-4">At last, I implemented some code for turning and implemented an open loop control. </p>
                                         <div class=row>
                                           <div class=col>
@@ -861,7 +839,8 @@
                                       <video width="350" height="240" controls>
                                         <source src="assets\img\Lab4\car_curves.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
-                                      </video>                                    </ul>
+                                      </video> <br>
+                                    </ul>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
