@@ -933,7 +933,12 @@
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2> <br>
                                     <ul>
                                       <li> <h4>PID Discussion </h4> </li>
-                                        <p class="mb-4">Placeholder. </p>
+                                        <p class="mb-4">Through various iterations, I developed a PD control system. As both graphs and video, show I managed to tune my PD controller to stop exactly at 1ft (304mm) from the wall.
+                                        My process was to increment Kp until I almost crashed the car, finding a value that would stop the car just before the wall (overshooting) and would reverse creating then an oscillation scenario.
+                                        I then introduced Kd, tuning until it would slow the car down when reaching the wall. I continued with the same process for different iterations to achieve better speed. <br>
+                                        Additionally, I implemented the code so that the distance values used to calculate the PWM values would be updated depending on the ToF sampling rate.
+                                        If the sensor had a new measurement, the distance would simply be the sensor output, otherwise the distance would be calculated by linear extrapolation using the two most recent distance measurements from the sensor.
+                                        The linear extrapolation allowed me to speed up the car as we wouldn't be limited to just the PWM calculated whena sensor data was available.</p>
                                         <div class="row">
                                           <div class="col">
                                             <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
