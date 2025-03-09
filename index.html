@@ -911,22 +911,21 @@
                                             &nbsp;  // Read data <br>
                                             &nbsp;  read_data(); <br>
                                             &nbsp;  if (case_n == 2) { <br>
-                                            &nbsp;    if (millis() - start_time > data_duration) { <br>
-                                            &nbsp;      TOF_one.stopRanging(); <br>
-                                            &nbsp;      motors_stop(); <br>
-                                            &nbsp;      //send_PID(); <br>
-                                            &nbsp;      set_point, Kp, Kd; <br>
-                                            &nbsp;      start_time, index_PID; <br>
-                                            &nbsp;      distance, distance_last_one, distance_last_two; <br>
-                                            &nbsp;      time_last_one, time_last_two; <br>
-                                            &nbsp;      error_value, Kd_error; <br>
-                                            &nbsp;      speed, dist_flag; <br>
-                                            &nbsp;      last_time, last_distance, last_error; <br>
-                                            &nbsp;      case_n = -1; <br>
-                                            &nbsp;      digitalWrite(LED_BUILTIN, 0); <br>
-                                            &nbsp;    } else { <br>
-                                            &nbsp;      pid_distance_aim(); <br>
-                                            &nbsp;    } <br>
+                                            &nbsp;&nbsp;    if (millis() - start_time > data_duration) { <br>
+                                            &nbsp;&nbsp;&nbsp;      TOF_one.stopRanging(); <br>
+                                            &nbsp;&nbsp;&nbsp;      motors_stop(); <br>
+                                            &nbsp;&nbsp;&nbsp;      set_point, Kp, Kd; <br>
+                                            &nbsp;&nbsp;&nbsp;      start_time, index_PID; <br>
+                                            &nbsp;&nbsp;&nbsp;      distance, distance_last_one, distance_last_two; <br>
+                                            &nbsp;&nbsp;&nbsp;      time_last_one, time_last_two; <br>
+                                            &nbsp;&nbsp;&nbsp;      error_value, Kd_error; <br>
+                                            &nbsp;&nbsp;&nbsp;      speed, dist_flag; <br>
+                                            &nbsp;&nbsp;&nbsp;      last_time, last_distance, last_error; <br>
+                                            &nbsp;&nbsp;&nbsp;      case_n = -1; <br>
+                                            &nbsp;&nbsp;&nbsp;      digitalWrite(LED_BUILTIN, 0); <br>
+                                            &nbsp;&nbsp;    } else { <br>
+                                            &nbsp;&nbsp;&nbsp;      pid_distance_aim(); <br>
+                                            &nbsp;&nbsp;    } <br>
                                             &nbsp;  } <br>
                                             &nbsp;} <br>
                                       </code> <br>
