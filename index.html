@@ -938,7 +938,13 @@
                                         I then introduced Kd, tuning until it would slow the car down when reaching the wall. I continued with the same process for different iterations to achieve better speed. <br>
                                         Additionally, I implemented the code so that the distance values used to calculate the PWM values would be updated depending on the ToF sampling rate.
                                         If the sensor had a new measurement, the distance would simply be the sensor output, otherwise the distance would be calculated by linear extrapolation using the two most recent distance measurements from the sensor.
-                                        The linear extrapolation allowed me to speed up the car as we wouldn't be limited to just the PWM calculated whena sensor data was available.</p>
+                                        The linear extrapolation allowed me to speed up the car as we wouldn't be limited to just the PWM calculated whena sensor data was available. <br>
+                                        Due to many issue with the Bluetooth disconnecting most of the time (unfortunately this issue is still going on), the following graph are just an example of what the ToF vs Time and PWM vs Time data are when the car drives.
+                                        As it can be seen, apart for the first measurements which are imprecise due to the ToF tuning, the ToF vs Time show an exponential settling around 304mm as the car gets nearer.
+                                        Similarly, the PWM values (which I called speed) oscillates positively and negatively (indicating forward and reverse) around the minimum PWM value I found, which is 45. <br>
+                                        The two videos below show two occasions the car reached destination in two different places. For the videos, I used different PD values (Kp=0.28 and Kd=75 left, Kp=0.3 and Kd=45 right).
+                                        The two different performances indicate how important the environment is to be able to tune the machine, which is consistent in the same terrain but not in different. <br>
+                                        My preferred setting were for Kp = 0.3 and Kd = 75, which yielded the most consistent and fastest results. </p>
                                         <div class="row">
                                           <div class="col">
                                             <code>
@@ -993,10 +999,10 @@
                                         </div>
                                         <div class="row">
                                           <div class="col">
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab5/distance_kd.png" alt="..." />
                                           </div>
                                           <div class="col">
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab5/speed_kd.png" alt="..." />
                                           </div>
                                         </div>
                                         <div class="row align-content-center">
