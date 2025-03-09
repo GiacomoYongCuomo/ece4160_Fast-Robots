@@ -942,7 +942,7 @@
                                         <div class="row">
                                           <div class="col">
                                             <code>
-                                              &nbsp;void pid_distance_aim() { <br>
+                                              void pid_distance_aim() { <br>
                                               &nbsp;if (TOF_one.checkForDataReady()) { <br>
                                               &nbsp;&nbsp;  distance = TOF_one.getDistance(); <br>
                                               &nbsp;&nbsp;  TOF_one.clearInterrupt(); <br>
@@ -966,7 +966,11 @@
                                               &nbsp;Kd_error = (last_error - error_value)/(last_time - millis()); <br>
                                               &nbsp;last_error = error_value; <br>
                                               &nbsp;last_time = millis(); <br>
-                                              <br>
+                                            </code> <br>
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
+                                          </div>
+                                          <div class="col">
+                                            <code>
                                               &nbsp;speed = Kp*error_value + Kd*Kd_error; <br>
                                               &nbsp;if (speed > 1000) speed = 1000;   //limits speed output <br>
                                               &nbsp;if (int(error_value) <= tol && int(error_value) > (-tol)) motors_stop(); <br>
@@ -978,17 +982,14 @@
                                               &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255); <br>
                                               &nbsp;&nbsp;  reverse(speed); <br>
                                               &nbsp;} <br>
-                                              &nbsp;&nbsp;if (index_PID < array_size_data) { <br>
+                                              &nbsp;if (index_PID < array_size_data) { <br>
                                               &nbsp;&nbsp;  PID_data[index_PID].time = (float) (millis() - start_time); <br>
                                               &nbsp;&nbsp;  PID_data[index_PID].distance = distance; <br>
                                               &nbsp;&nbsp;  PID_data[index_PID].speed = speed; <br>
                                               &nbsp;&nbsp;  index_PID += 1; <br>
-                                              &nbsp;&nbsp;} <br>
                                               &nbsp;} <br>
-                                            </code> <br>
-                                          </div>
-                                          <div class="col">
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
+                                              } <br>
+                                            </code>
                                             <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
                                           </div>
                                         </div>
