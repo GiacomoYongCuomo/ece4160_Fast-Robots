@@ -941,9 +941,54 @@
                                         The linear extrapolation allowed me to speed up the car as we wouldn't be limited to just the PWM calculated whena sensor data was available.</p>
                                         <div class="row">
                                           <div class="col">
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
+                                            <code>
+                                              &nbsp;void pid_distance_aim() {
+                                              &nbsp;if (TOF_one.checkForDataReady()) {
+                                              &nbsp;&nbsp;  distance = TOF_one.getDistance();
+                                              &nbsp;&nbsp;  TOF_one.clearInterrupt();
+                                              &nbsp;&nbsp;  if (dist_flag == 0) {
+                                              &nbsp;&nbsp;&nbsp;    distance_last_one = distance;
+                                              &nbsp;&nbsp;&nbsp;    time_last_one = millis();
+                                              &nbsp;&nbsp;  } else if (dist_flag == 1) {
+                                              &nbsp;&nbsp;&nbsp;    distance_last_two = distance;
+                                              &nbsp;&nbsp;&nbsp;    time_last_two = millis();
+                                              &nbsp;&nbsp;  } else {
+                                              &nbsp;&nbsp;&nbsp;    distance_last_one = distance_last_two;
+                                              &nbsp;&nbsp;&nbsp;    time_last_one = time_last_two;
+                                              &nbsp;&nbsp;&nbsp;    distance_last_two = distance;
+                                              &nbsp;&nbsp;&nbsp;    time_last_two = millis();
+                                              &nbsp;&nbsp;  }
+                                              &nbsp;&nbsp;  dist_flag += 1;
+                                              &nbsp;} else {
+                                              &nbsp;&nbsp;  distance = distance_last_two + float((distance_last_two - distance_last_one)/(time_last_two - time_last_one))*(millis() - time_last_one);
+                                              &nbsp;}
+                                              &nbsp;error_value = set_point - distance;
+                                              &nbsp;Kd_error = (last_error - error_value)/(last_time - millis());
+                                              &nbsp;last_error = error_value;
+                                              &nbsp;last_time = millis();
+                                              <br>
+                                              &nbsp;speed = Kp*error_value + Kd*Kd_error;
+                                              &nbsp;if (speed > 1000) speed = 1000;   //limits speed output
+                                              &nbsp;if (int(error_value) <= tol && int(error_value) > (-tol)) motors_stop();
+                                              &nbsp;if (speed < 0) {
+                                              &nbsp;&nbsp;  speed = abs(speed);
+                                              &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255);
+                                              &nbsp;&nbsp;  forward(speed);
+                                              &nbsp;} else if (speed > 0) {
+                                              &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255);
+                                              &nbsp;&nbsp;  reverse(speed);
+                                              &nbsp;}
+                                              &nbsp;&nbsp;if (index_PID < array_size_data) {
+                                              &nbsp;&nbsp;  PID_data[index_PID].time = (float) (millis() - start_time);
+                                              &nbsp;&nbsp;  PID_data[index_PID].distance = distance;
+                                              &nbsp;&nbsp;  PID_data[index_PID].speed = speed;
+                                              &nbsp;&nbsp;  index_PID += 1;
+                                              &nbsp;&nbsp;}
+                                              &nbsp;}
+                                            </code> <br>
                                           </div>
                                           <div class="col">
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
                                             <img class="img-fluid rounded mb-5" src="assets/img/Lab4/car_schematic.jpg" alt="..." />
                                           </div>
                                         </div>
