@@ -885,9 +885,7 @@
                                       To collect values, and later on send them, as fast as possible I implemented teh whole code in the main loop, which runs only when the Artemis receives the right command.
                                       To implement this, I created a flag with an int value associated with it so whenever the command is received, the flag receive the right value to be able to run. This allows the Bluetooth to be supported the whole time.
                                       To store as many values as possible for the graphs, I stored all data in arrays and then send it back on a second moment.</p>
-                                      <div class="row">
-                                        <div class="col">
-                                          <code>
+                                      <code>
                                             &nbsp;/*PID_DISTANCE_AIM*/ <br>
                                             &nbsp;case PID_DISTANCE_AIM: { <br>
                                             &nbsp;  // Extract the next value from the command string as an integer <br>
@@ -904,10 +902,7 @@
                                             &nbsp;  digitalWrite(LED_BUILTIN, 1); <br>
                                             &nbsp;  break; <br>
                                             &nbsp;} <br>
-                                          </code> <br>
-                                        </div>
-                                        <div class="col">
-                                          <code>
+                                            <br>
                                             &nbsp;//Inside the loop <br>
                                             &nbsp;// While central is connected <br>
                                             &nbsp;while (central.connected()) { <br>
@@ -934,9 +929,7 @@
                                             &nbsp;    } <br>
                                             &nbsp;  } <br>
                                             &nbsp;} <br>
-                                          </code> <br>
-                                        </div>
-                                      </div>
+                                      </code> <br>
                                     </ul>
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2> <br>
                                     <ul>
