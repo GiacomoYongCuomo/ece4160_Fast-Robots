@@ -942,49 +942,49 @@
                                         <div class="row">
                                           <div class="col">
                                             <code>
-                                              &nbsp;void pid_distance_aim() {
-                                              &nbsp;if (TOF_one.checkForDataReady()) {
-                                              &nbsp;&nbsp;  distance = TOF_one.getDistance();
-                                              &nbsp;&nbsp;  TOF_one.clearInterrupt();
-                                              &nbsp;&nbsp;  if (dist_flag == 0) {
-                                              &nbsp;&nbsp;&nbsp;    distance_last_one = distance;
-                                              &nbsp;&nbsp;&nbsp;    time_last_one = millis();
-                                              &nbsp;&nbsp;  } else if (dist_flag == 1) {
-                                              &nbsp;&nbsp;&nbsp;    distance_last_two = distance;
-                                              &nbsp;&nbsp;&nbsp;    time_last_two = millis();
-                                              &nbsp;&nbsp;  } else {
-                                              &nbsp;&nbsp;&nbsp;    distance_last_one = distance_last_two;
-                                              &nbsp;&nbsp;&nbsp;    time_last_one = time_last_two;
-                                              &nbsp;&nbsp;&nbsp;    distance_last_two = distance;
-                                              &nbsp;&nbsp;&nbsp;    time_last_two = millis();
-                                              &nbsp;&nbsp;  }
-                                              &nbsp;&nbsp;  dist_flag += 1;
-                                              &nbsp;} else {
-                                              &nbsp;&nbsp;  distance = distance_last_two + float((distance_last_two - distance_last_one)/(time_last_two - time_last_one))*(millis() - time_last_one);
-                                              &nbsp;}
-                                              &nbsp;error_value = set_point - distance;
-                                              &nbsp;Kd_error = (last_error - error_value)/(last_time - millis());
-                                              &nbsp;last_error = error_value;
-                                              &nbsp;last_time = millis();
+                                              &nbsp;void pid_distance_aim() { <br>
+                                              &nbsp;if (TOF_one.checkForDataReady()) { <br>
+                                              &nbsp;&nbsp;  distance = TOF_one.getDistance(); <br>
+                                              &nbsp;&nbsp;  TOF_one.clearInterrupt(); <br>
+                                              &nbsp;&nbsp;  if (dist_flag == 0) { <br>
+                                              &nbsp;&nbsp;&nbsp;    distance_last_one = distance; <br>
+                                              &nbsp;&nbsp;&nbsp;    time_last_one = millis(); <br>
+                                              &nbsp;&nbsp;  } else if (dist_flag == 1) { <br>
+                                              &nbsp;&nbsp;&nbsp;    distance_last_two = distance; <br>
+                                              &nbsp;&nbsp;&nbsp;    time_last_two = millis(); <br>
+                                              &nbsp;&nbsp;  } else { <br>
+                                              &nbsp;&nbsp;&nbsp;    distance_last_one = distance_last_two; <br>
+                                              &nbsp;&nbsp;&nbsp;    time_last_one = time_last_two; <br>
+                                              &nbsp;&nbsp;&nbsp;    distance_last_two = distance; <br>
+                                              &nbsp;&nbsp;&nbsp;    time_last_two = millis(); <br>
+                                              &nbsp;&nbsp;  } <br>
+                                              &nbsp;&nbsp;  dist_flag += 1; <br>
+                                              &nbsp;} else { <br>
+                                              &nbsp;&nbsp;  distance = distance_last_two + float((distance_last_two - distance_last_one)/(time_last_two - time_last_one))*(millis() - time_last_one); <br>
+                                              &nbsp;} <br>
+                                              &nbsp;error_value = set_point - distance; <br>
+                                              &nbsp;Kd_error = (last_error - error_value)/(last_time - millis()); <br>
+                                              &nbsp;last_error = error_value; <br>
+                                              &nbsp;last_time = millis(); <br>
                                               <br>
-                                              &nbsp;speed = Kp*error_value + Kd*Kd_error;
-                                              &nbsp;if (speed > 1000) speed = 1000;   //limits speed output
-                                              &nbsp;if (int(error_value) <= tol && int(error_value) > (-tol)) motors_stop();
-                                              &nbsp;if (speed < 0) {
-                                              &nbsp;&nbsp;  speed = abs(speed);
-                                              &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255);
-                                              &nbsp;&nbsp;  forward(speed);
-                                              &nbsp;} else if (speed > 0) {
-                                              &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255);
-                                              &nbsp;&nbsp;  reverse(speed);
-                                              &nbsp;}
-                                              &nbsp;&nbsp;if (index_PID < array_size_data) {
-                                              &nbsp;&nbsp;  PID_data[index_PID].time = (float) (millis() - start_time);
-                                              &nbsp;&nbsp;  PID_data[index_PID].distance = distance;
-                                              &nbsp;&nbsp;  PID_data[index_PID].speed = speed;
-                                              &nbsp;&nbsp;  index_PID += 1;
-                                              &nbsp;&nbsp;}
-                                              &nbsp;}
+                                              &nbsp;speed = Kp*error_value + Kd*Kd_error; <br>
+                                              &nbsp;if (speed > 1000) speed = 1000;   //limits speed output <br>
+                                              &nbsp;if (int(error_value) <= tol && int(error_value) > (-tol)) motors_stop(); <br>
+                                              &nbsp;if (speed < 0) { <br>
+                                              &nbsp;&nbsp;  speed = abs(speed); <br>
+                                              &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255); <br>
+                                              &nbsp;&nbsp;  forward(speed); <br>
+                                              &nbsp;} else if (speed > 0) { <br>
+                                              &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255); <br>
+                                              &nbsp;&nbsp;  reverse(speed); <br>
+                                              &nbsp;} <br>
+                                              &nbsp;&nbsp;if (index_PID < array_size_data) { <br>
+                                              &nbsp;&nbsp;  PID_data[index_PID].time = (float) (millis() - start_time); <br>
+                                              &nbsp;&nbsp;  PID_data[index_PID].distance = distance; <br>
+                                              &nbsp;&nbsp;  PID_data[index_PID].speed = speed; <br>
+                                              &nbsp;&nbsp;  index_PID += 1; <br>
+                                              &nbsp;&nbsp;} <br>
+                                              &nbsp;} <br>
                                             </code> <br>
                                           </div>
                                           <div class="col">
