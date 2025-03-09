@@ -880,7 +880,11 @@
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Prelab</h2> <br>
                                     <ul>
                                       <li> <h4>Data via Bluetooth </h4> </li>
-                                      <p class="mb-4">Placeholder. </p>
+                                      <p class="mb-4">To send data fast enough, I decided to create two new commands. The first one, PID_DISTANCE_AIM, takes three variables (point_set, Kp, Kd).
+                                      The second one, PID_DATA, takes no variables but it is responsible to send time, distance measurements and pwm values back for graphing purpose.
+                                      To collect values, and later on send them, as fast as possible I implemented teh whole code in the main loop, which runs only when the Artemis receives the right command.
+                                      To implement this, I created a flag with an int value associated with it so whenever the command is received, the flag receive the right value to be able to run. This allows the Bluetooth to be supported the whole time.
+                                      To store as many values as possible for the graphs, I stored all data in arrays and then send it back on a second moment.</p>
                                       <img class="img-fluid rounded mb-5" src="assets/img/Lab4/wiring_diagram.jpg" alt="..." />
                                     </ul>
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2> <br>
