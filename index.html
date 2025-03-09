@@ -885,7 +885,58 @@
                                       To collect values, and later on send them, as fast as possible I implemented teh whole code in the main loop, which runs only when the Artemis receives the right command.
                                       To implement this, I created a flag with an int value associated with it so whenever the command is received, the flag receive the right value to be able to run. This allows the Bluetooth to be supported the whole time.
                                       To store as many values as possible for the graphs, I stored all data in arrays and then send it back on a second moment.</p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab4/wiring_diagram.jpg" alt="..." />
+                                      <div class="row">
+                                        <div class="col">
+                                          <code>
+                                            &nbsp;/*PID_DISTANCE_AIM*/ <br>
+                                            &nbsp;case PID_DISTANCE_AIM: { <br>
+                                            &nbsp;  // Extract the next value from the command string as an integer <br>
+                                            &nbsp;  success = robot_cmd.get_next_value(set_point); <br>
+                                            &nbsp;  if (!success) return; <br>
+                                            &nbsp;  success = robot_cmd.get_next_value(Kp); <br>
+                                            &nbsp;  if (!success) return; <br>
+                                            &nbsp;  success = robot_cmd.get_next_value(Kd); <br>
+                                            &nbsp;  if (!success) return; <br>
+                                            &nbsp;  start_time = millis(); <br>
+                                            &nbsp;  last_time = millis(); <br>
+                                            &nbsp;  TOF_one.startRanging(); <br>
+                                            &nbsp;  case_n = 2; <br>
+                                            &nbsp;  digitalWrite(LED_BUILTIN, 1); <br>
+                                            &nbsp;  break; <br>
+                                            &nbsp;} <br>
+                                          </code> <br>
+                                        </div>
+                                        <div class="col">
+                                          <code>
+                                            &nbsp;//Inside the loop <br>
+                                            &nbsp;// While central is connected <br>
+                                            &nbsp;while (central.connected()) { <br>
+                                            &nbsp;  // Send data <br>
+                                            &nbsp;  write_data(); <br>
+                                            &nbsp;  // Read data <br>
+                                            &nbsp;  read_data(); <br>
+                                            &nbsp;  if (case_n == 2) { <br>
+                                            &nbsp;    if (millis() - start_time > data_duration) { <br>
+                                            &nbsp;      TOF_one.stopRanging(); <br>
+                                            &nbsp;      motors_stop(); <br>
+                                            &nbsp;      //send_PID(); <br>
+                                            &nbsp;      set_point, Kp, Kd; <br>
+                                            &nbsp;      start_time, index_PID; <br>
+                                            &nbsp;      distance, distance_last_one, distance_last_two; <br>
+                                            &nbsp;      time_last_one, time_last_two; <br>
+                                            &nbsp;      error_value, Kd_error; <br>
+                                            &nbsp;      speed, dist_flag; <br>
+                                            &nbsp;      last_time, last_distance, last_error; <br>
+                                            &nbsp;      case_n = -1; <br>
+                                            &nbsp;      digitalWrite(LED_BUILTIN, 0); <br>
+                                            &nbsp;    } else { <br>
+                                            &nbsp;      pid_distance_aim(); <br>
+                                            &nbsp;    } <br>
+                                            &nbsp;  } <br>
+                                            &nbsp;} <br>
+                                          </code> <br>
+                                        </div>
+                                      </div>
                                     </ul>
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2> <br>
                                     <ul>
