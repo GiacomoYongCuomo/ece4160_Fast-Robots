@@ -926,25 +926,25 @@
                                         &nbsp;  BLEDevice central = BLE.central(); <br>
                                         &nbsp;  // If a central is connected to the peripheral <br>
                                         &nbsp;  if (central) { <br>
-                                        &nbsp;    Serial.print("Connected to: "); <br>
-                                        &nbsp;    Serial.println(central.address()); <br>
-                                        &nbsp;    // While central is connected <br>
-                                        &nbsp;    while (central.connected()) { <br>
-                                        &nbsp;      // Send data <br>
-                                        &nbsp;      write_data(); <br>
-                                        &nbsp;      // Read data <br>
-                                        &nbsp;      read_data(); <br>
-                                        &nbsp;      if (angle_stat_flag) { <br>
-                                        &nbsp;        pid_stationary(); <br>
-                                        &nbsp;      } <br>
-                                        &nbsp;      //rest of loop()... <br>
+                                        &nbsp;&nbsp;    Serial.print("Connected to: "); <br>
+                                        &nbsp;&nbsp;    Serial.println(central.address()); <br>
+                                        &nbsp;&nbsp;    // While central is connected <br>
+                                        &nbsp;&nbsp;    while (central.connected()) { <br>
+                                        &nbsp;&nbsp;      // Send data <br>
+                                        &nbsp;&nbsp;      write_data(); <br>
+                                        &nbsp;&nbsp;      // Read data <br>
+                                        &nbsp;&nbsp;      read_data(); <br>
+                                        &nbsp;&nbsp;      if (angle_stat_flag) { <br>
+                                        &nbsp;&nbsp;        pid_stationary(); <br>
+                                        &nbsp;&nbsp;      } <br>
+                                        &nbsp;&nbsp;      //rest of loop()... <br>
                                         &nbsp;    } <br>
                                         &nbsp;    Serial.println("Disconnected"); <br>
                                         &nbsp;    motors_stop(); <br>
                                         &nbsp;    angle_stat_flag = 0; <br>
                                         &nbsp;    for (int i = 0; i < 2; i++) { <br>
-                                        &nbsp;      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); <br>
-                                        &nbsp;      delay(1000); <br>
+                                        &nbsp;&nbsp;      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); <br>
+                                        &nbsp;&nbsp;      delay(1000); <br>
                                         &nbsp;    } <br>
                                         &nbsp;  } <br>
                                         &nbsp;} <br>
