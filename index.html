@@ -930,22 +930,22 @@
                                         &nbsp;&nbsp;    Serial.println(central.address()); <br>
                                         &nbsp;&nbsp;    // While central is connected <br>
                                         &nbsp;&nbsp;    while (central.connected()) { <br>
-                                        &nbsp;&nbsp;      // Send data <br>
-                                        &nbsp;&nbsp;      write_data(); <br>
-                                        &nbsp;&nbsp;      // Read data <br>
-                                        &nbsp;&nbsp;      read_data(); <br>
-                                        &nbsp;&nbsp;      if (angle_stat_flag) { <br>
-                                        &nbsp;&nbsp;        pid_stationary(); <br>
-                                        &nbsp;&nbsp;      } <br>
-                                        &nbsp;&nbsp;      //rest of loop()... <br>
-                                        &nbsp;    } <br>
-                                        &nbsp;    Serial.println("Disconnected"); <br>
-                                        &nbsp;    motors_stop(); <br>
-                                        &nbsp;    angle_stat_flag = 0; <br>
-                                        &nbsp;    for (int i = 0; i < 2; i++) { <br>
-                                        &nbsp;&nbsp;      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); <br>
-                                        &nbsp;&nbsp;      delay(1000); <br>
-                                        &nbsp;    } <br>
+                                        &nbsp;&nbsp;&nbsp;      // Send data <br>
+                                        &nbsp;&nbsp;&nbsp;      write_data(); <br>
+                                        &nbsp;&nbsp;&nbsp;      // Read data <br>
+                                        &nbsp;&nbsp;&nbsp;      read_data(); <br>
+                                        &nbsp;&nbsp;&nbsp;      if (angle_stat_flag) { <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;        pid_stationary(); <br>
+                                        &nbsp;&nbsp;&nbsp;      } <br>
+                                        &nbsp;&nbsp;&nbsp;      //rest of loop()... <br>
+                                        &nbsp;&nbsp;    } <br>
+                                        &nbsp;&nbsp;    Serial.println("Disconnected"); <br>
+                                        &nbsp;&nbsp;    motors_stop(); <br>
+                                        &nbsp;&nbsp;    angle_stat_flag = 0; <br>
+                                        &nbsp;&nbsp;    for (int i = 0; i < 2; i++) { <br>
+                                        &nbsp;&nbsp;&nbsp;      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); <br>
+                                        &nbsp;&nbsp;&nbsp;      delay(1000); <br>
+                                        &nbsp;&nbsp;    } <br>
                                         &nbsp;  } <br>
                                         &nbsp;} <br>
                                       </code> <br>
