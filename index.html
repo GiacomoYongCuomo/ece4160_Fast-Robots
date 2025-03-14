@@ -953,67 +953,58 @@
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2> <br>
                                     <ul>
                                       <li> <h4>PID Discussion </h4> </li>
-                                        <p class="mb-4">Through various iterations, I developed a PD control system. As both graphs and video, show I managed to tune my PD controller to stop exactly at 1ft (304mm) from the wall.
-                                        My process was to increment Kp until I almost crashed the car, finding a value that would stop the car just before the wall (overshooting) and would reverse creating then an oscillation scenario.
-                                        I then introduced Kd, tuning until it would slow the car down when reaching the wall. I continued with the same process for different iterations to achieve better speed. <br>
-                                        Additionally, I implemented the code so that the distance values used to calculate the PWM values would be updated depending on the ToF sampling rate.
-                                        If the sensor had a new measurement, the distance would simply be the sensor output, otherwise the distance would be calculated by linear extrapolation using the two most recent distance measurements from the sensor.
-                                        The linear extrapolation allowed me to speed up the car as we wouldn't be limited to just the PWM calculated whena sensor data was available. <br>
-                                        Due to many issue with the Bluetooth disconnecting most of the time (unfortunately this issue is still going on), the following graph are just an example of what the ToF vs Time and PWM vs Time data are when the car drives.
-                                        As it can be seen, apart for the first measurements which are imprecise due to the ToF tuning, the ToF vs Time show an exponential settling around 304mm as the car gets nearer.
-                                        Similarly, the PWM values (which I called speed) oscillates positively and negatively (indicating forward and reverse) around the minimum PWM value I found, which is 45. <br>
-                                        The two videos below show two occasions the car reached destination in two different places. For the videos, I used different PD values (Kp=0.28 and Kd=75 left, Kp=0.3 and Kd=45 right).
-                                        The two different performances indicate how important the environment is to be able to tune the machine, which is consistent in the same terrain but not in different. <br>
-                                        My preferred setting were for Kp = 0.3 and Kd = 75, which yielded the most consistent and fastest results. </p>
+                                        <p class="mb-4">Through various iterations, I developed a PD control system. As both graphs and video show, I managed to tune my PD controller to always come back to a decided angle I request even when moved by external forces. The decided angle for these tests was zero.
+                                        My process was to increment Kp until it started oscillating, finding a value that would almost stop the car but the momentum would make teh car keep going (overshooting).
+                                        I then introduced Kd, tuning until it would slow the car down when reaching the indicated angle. I continued with the same process for different iterations to achieve better speed and accuracy. <br>
+                                        I implemented the code so that the angle values used to calculate the PWM values would be updated depending on the IMU sampling rate, using the yaw value calculated through the DMP process to minimize drift. This resulted in very effective and precise measurements, although showed a built in biased at the beginning of measuring.
+                                        What I noticed was that the car would start measuring yaw at zero degrees but would keep increasing until settling around 3-5 degrees giving a constant biased. To mitigate this behaviour, I added a tolerance factor for which the car would not move if the angle was within that tolerance. <br>
+                                        GRAPHS DISCUSSION <br>
+                                        VIDEO DISCUSSION </p>
                                         <div class="row">
                                           <div class="col">
                                             <code>
-                                              void pid_distance_aim() { <br>
-                                              &nbsp;if (TOF_one.checkForDataReady()) { <br>
-                                              &nbsp;&nbsp;  distance = TOF_one.getDistance(); <br>
-                                              &nbsp;&nbsp;  TOF_one.clearInterrupt(); <br>
-                                              &nbsp;&nbsp;  if (dist_flag == 0) { <br>
-                                              &nbsp;&nbsp;&nbsp;    distance_last_one = distance; <br>
-                                              &nbsp;&nbsp;&nbsp;    time_last_one = millis(); <br>
-                                              &nbsp;&nbsp;  } else if (dist_flag == 1) { <br>
-                                              &nbsp;&nbsp;&nbsp;    distance_last_two = distance; <br>
-                                              &nbsp;&nbsp;&nbsp;    time_last_two = millis(); <br>
-                                              &nbsp;&nbsp;  } else { <br>
-                                              &nbsp;&nbsp;&nbsp;    distance_last_one = distance_last_two; <br>
-                                              &nbsp;&nbsp;&nbsp;    time_last_one = time_last_two; <br>
-                                              &nbsp;&nbsp;&nbsp;    distance_last_two = distance; <br>
-                                              &nbsp;&nbsp;&nbsp;    time_last_two = millis(); <br>
-                                              &nbsp;&nbsp;  } <br>
-                                              &nbsp;&nbsp;  dist_flag += 1; <br>
-                                              &nbsp;} else { <br>
-                                              &nbsp;&nbsp;  distance = distance_last_two + float((distance_last_two - distance_last_one)/(time_last_two - time_last_one))*(millis() - time_last_one); <br>
+                                              void pid_stationary() { <br>
+                                              &nbsp;  icm_20948_DMP_data_t data; <br>
+                                              &nbsp;  myICM.readDMPdataFromFIFO(&data); <br>
+                                              <br>
+                                              &nbsp;  // Is valid data available? <br>
+                                              &nbsp;  if ((myICM.status == ICM_20948_Stat_Ok) || (myICM.status == ICM_20948_Stat_FIFOMoreDataAvail)) { <br>
+                                              &nbsp;      // We have asked for GRV data so we should receive Quat6 <br>
+                                              &nbsp;      if ((data.header & DMP_header_bitmap_Quat6) > 0) { <br>
+                                              &nbsp;        double q1 = ((double)data.Quat6.Data.Q1) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
+                                              &nbsp;        double q2 = ((double)data.Quat6.Data.Q2) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
+                                              &nbsp;        double q3 = ((double)data.Quat6.Data.Q3) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
+                                              &nbsp;        // Convert the quaternion to Euler angles <br>
+                                              &nbsp;        double q0 = sqrt(1.0 - ((q1 * q1) + (q2 * q2) + (q3 * q3))); <br>
+                                              &nbsp;        // yaw (z-axis rotation) <br>
+                                              &nbsp;        double t3 = +2.0 * (q0 * (-q3) + q2 * q1); <br>
+                                              &nbsp;        double t4 = +1.0 - 2.0 * (q1 * q1 + (-q3) * (-q3)); <br>
+                                              &nbsp;        angle = atan2(t3, t4) * 180.0 / PI; <br>
+                                              &nbsp;      } <br>
+                                              &nbsp;  } <br>
+                                              &nbsp;  error_angle = set_point_angle - angle; <br>
+                                              &nbsp;  Kd_error_angle = (last_error_angle - error_angle)/(last_time_angle - millis()); <br>
+                                              &nbsp;  last_error_angle = error_angle; <br>
+                                              &nbsp;  last_time_angle = millis(); <br>
+                                              <br>
+                                              &nbsp;  speed_angle = Kp_angle*error_angle + Kd_angle*Kd_error_angle; <br>
+                                              &nbsp;  if (speed_angle > 1000) speed_angle = 1000;   //limits speed output <br>
+                                              &nbsp;  if (int(error_angle) <= tol && int(error_angle) > (-tol)) motors_stop(); <br>
+                                              &nbsp;  if (speed_angle < 0) { <br>
+                                              &nbsp;    speed_angle = abs(speed_angle); <br>
+                                              &nbsp;    speed_angle = map(speed_angle, 0, 1000, min_speed_turn, 255); <br>
+                                              &nbsp;    turn_left(speed_angle); <br>
+                                              &nbsp;  } else if (speed_angle > 0) { <br>
+                                              &nbsp;    speed_angle = map(speed_angle, 0, 1000, min_speed_turn, 255); <br>
+                                              &nbsp;    turn_right(speed_angle); <br>
+                                              &nbsp;  } <br>
+                                              &nbsp;  if (index_angle < array_size_data) { <br>
+                                              &nbsp;    PID_angle[index_angle].time = (float) (millis() - start_time_angle); <br>
+                                              &nbsp;    PID_angle[index_angle].sensor = angle <br>
+                                              &nbsp;    PID_angle[index_angle].speed = speed_angle; <br>
+                                              &nbsp;    index_angle += 1; <br>
+                                              &nbsp;  } <br>
                                               &nbsp;} <br>
-                                              &nbsp;error_value = set_point - distance; <br>
-                                              &nbsp;Kd_error = (last_error - error_value)/(last_time - millis()); <br>
-                                              &nbsp;last_error = error_value; <br>
-                                              &nbsp;last_time = millis(); <br>
-                                            </code> <br>
-                                          </div>
-                                          <div class="col">
-                                            <code>
-                                              &nbsp;speed = Kp*error_value + Kd*Kd_error; <br>
-                                              &nbsp;if (speed > 1000) speed = 1000;   //limits speed output <br>
-                                              &nbsp;if (int(error_value) <= tol && int(error_value) > (-tol)) motors_stop(); <br>
-                                              &nbsp;if (speed < 0) { <br>
-                                              &nbsp;&nbsp;  speed = abs(speed); <br>
-                                              &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255); <br>
-                                              &nbsp;&nbsp;  forward(speed); <br>
-                                              &nbsp;} else if (speed > 0) { <br>
-                                              &nbsp;&nbsp;  speed = map(speed, 0, 1000, min_speed, 255); <br>
-                                              &nbsp;&nbsp;  reverse(speed); <br>
-                                              &nbsp;} <br>
-                                              &nbsp;if (index_PID < array_size_data) { <br>
-                                              &nbsp;&nbsp;  PID_data[index_PID].time = (float) (millis() - start_time); <br>
-                                              &nbsp;&nbsp;  PID_data[index_PID].distance = distance; <br>
-                                              &nbsp;&nbsp;  PID_data[index_PID].speed = speed; <br>
-                                              &nbsp;&nbsp;  index_PID += 1; <br>
-                                              &nbsp;} <br>
-                                              } <br>
                                             </code> <br>
                                           </div>
                                         </div>
