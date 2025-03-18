@@ -958,8 +958,9 @@
                                         I then introduced Kd, tuning until it would slow the car down when reaching the indicated angle. I continued with the same process for different iterations to achieve better speed and accuracy. <br>
                                         I implemented the code so that the angle values used to calculate the PWM values would be updated depending on the IMU sampling rate, using the yaw value calculated through the DMP process to minimize drift. This resulted in very effective and precise measurements, although showed a built in biased at the beginning of measuring.
                                         What I noticed was that the car would start measuring yaw at zero degrees but would keep increasing until settling around 3-5 degrees giving a constant biased. To mitigate this behaviour, I added a tolerance factor for which the car would not move if the angle was within that tolerance. <br>
-                                        GRAPHS DISCUSSION <br>
-                                        VIDEO DISCUSSION </p>
+                                        Reported below are the graphs for Angle vs Time from the IMU and PWM vs Time calculated for each new angle measured. In the first image, each spike represent a kick or movement of the car from the desired angle we want it to point (in this case 0 degrees). Each spike can either be positive or positive depending if the kick was right or left, and to recover from the spike the car gets back to its original position, plateauing at the desired angle.
+                                        On the second image we can see that for each spike we had we have a spike on PWM values, which with the same behavior settles back to initial condition. To notice that for my car the minimal PWM value to move the car is 100. <br>
+                                        The following video shows the behavior before explained. </p>
                                         <div class="row">
                                           <div class="col">
                                             <code>
@@ -1010,10 +1011,10 @@
                                         </div>
                                         <div class="row">
                                           <div class="col">
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab6/angle_kd.png" alt="..." />
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab6/angle_kd_2.png" alt="..." />
                                           </div>
                                           <div class="col">
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab6/speed_kd.png" alt="..." />
+                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab6/speed_kd_2.png" alt="..." />
                                           </div>
                                         </div>
                                         <div class="row align-content-center">
