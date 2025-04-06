@@ -1130,71 +1130,9 @@
                                     </ul>
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2> <br>
                                     <ul>
-                                      <li> <h4>PID Discussion </h4> </li>
-                                        <p class="mb-4">Through various iterations, I developed a PD control system. As both graphs and video show, I managed to tune my PD controller to always come back to a decided angle I request even when moved by external forces. The decided angle for these tests was zero.
-                                        My process was to increment Kp until it started oscillating, finding a value that would almost stop the car but the momentum would make teh car keep going (overshooting).
-                                        I then introduced Kd, tuning until it would slow the car down when reaching the indicated angle. I continued with the same process for different iterations to achieve better speed and accuracy. <br>
-                                        I implemented the code so that the angle values used to calculate the PWM values would be updated depending on the IMU sampling rate, using the yaw value calculated through the DMP process to minimize drift. This resulted in very effective and precise measurements, although showed a built in biased at the beginning of measuring.
-                                        What I noticed was that the car would start measuring yaw at zero degrees but would keep increasing until settling around 3-5 degrees giving a constant biased. To mitigate this behaviour, I added a tolerance factor for which the car would not move if the angle was within that tolerance. <br>
-                                        Reported below are the graphs for Angle vs Time from the IMU and PWM vs Time calculated for each new angle measured. In the first image, each spike represent a kick or movement of the car from the desired angle we want it to point (in this case 0 degrees). Each spike can either be positive or positive depending if the kick was right or left, and to recover from the spike the car gets back to its original position, plateauing at the desired angle.
-                                        On the second image we can see that for each spike we had we have a spike on PWM values, which with the same behavior settles back to initial condition. To notice that for my car the minimal PWM value to move the car is 100. <br>
-                                        The following video shows the behavior before explained. </p>
-                                        <div class="row">
-                                          <div class="col">
-                                            <code>
-                                              void pid_stationary() { <br>
-                                              &nbsp;  icm_20948_DMP_data_t data; <br>
-                                              &nbsp;  myICM.readDMPdataFromFIFO(&data); <br>
-                                              <br>
-                                              &nbsp;  // Is valid data available? <br>
-                                              &nbsp;  if ((myICM.status == ICM_20948_Stat_Ok) || (myICM.status == ICM_20948_Stat_FIFOMoreDataAvail)) { <br>
-                                              &nbsp;&nbsp;      // We have asked for GRV data so we should receive Quat6 <br>
-                                              &nbsp;&nbsp;      if ((data.header & DMP_header_bitmap_Quat6) > 0) { <br>
-                                              &nbsp;&nbsp;&nbsp;        double q1 = ((double)data.Quat6.Data.Q1) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
-                                              &nbsp;&nbsp;&nbsp;        double q2 = ((double)data.Quat6.Data.Q2) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
-                                              &nbsp;&nbsp;&nbsp;        double q3 = ((double)data.Quat6.Data.Q3) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
-                                              &nbsp;&nbsp;&nbsp;        // Convert the quaternion to Euler angles <br>
-                                              &nbsp;&nbsp;&nbsp;        double q0 = sqrt(1.0 - ((q1 * q1) + (q2 * q2) + (q3 * q3))); <br>
-                                              &nbsp;&nbsp;&nbsp;        // yaw (z-axis rotation) <br>
-                                              &nbsp;&nbsp;&nbsp;        double t3 = +2.0 * (q0 * (-q3) + q2 * q1); <br>
-                                              &nbsp;&nbsp;&nbsp;        double t4 = +1.0 - 2.0 * (q1 * q1 + (-q3) * (-q3)); <br>
-                                              &nbsp;&nbsp;&nbsp;        angle = atan2(t3, t4) * 180.0 / PI; <br>
-                                              &nbsp;&nbsp;      } <br>
-                                              &nbsp;  } <br>
-                                              &nbsp;  error_angle = set_point_angle - angle; <br>
-                                              &nbsp;  Kd_error_angle = (last_error_angle - error_angle)/(last_time_angle - millis()); <br>
-                                              &nbsp;  last_error_angle = error_angle; <br>
-                                              &nbsp;  last_time_angle = millis(); <br>
-                                              <br>
-                                              &nbsp;  speed_angle = Kp_angle*error_angle + Kd_angle*Kd_error_angle; <br>
-                                              &nbsp;  if (speed_angle > 1000) speed_angle = 1000;   //limits speed output <br>
-                                              &nbsp;  if (int(error_angle) <= tol && int(error_angle) > (-tol)) motors_stop(); <br>
-                                              &nbsp;  if (speed_angle < 0) { <br>
-                                              &nbsp;&nbsp;    speed_angle = abs(speed_angle); <br>
-                                              &nbsp;&nbsp;    speed_angle = map(speed_angle, 0, 1000, min_speed_turn, 255); <br>
-                                              &nbsp;&nbsp;    turn_left(speed_angle); <br>
-                                              &nbsp;  } else if (speed_angle > 0) { <br>
-                                              &nbsp;&nbsp;    speed_angle = map(speed_angle, 0, 1000, min_speed_turn, 255); <br>
-                                              &nbsp;&nbsp;    turn_right(speed_angle); <br>
-                                              &nbsp;  } <br>
-                                              &nbsp;  if (index_angle < array_size_data) { <br>
-                                              &nbsp;&nbsp;    PID_angle[index_angle].time = (float) (millis() - start_time_angle); <br>
-                                              &nbsp;&nbsp;    PID_angle[index_angle].sensor = angle <br>
-                                              &nbsp;&nbsp;    PID_angle[index_angle].speed = speed_angle; <br>
-                                              &nbsp;&nbsp;    index_angle += 1; <br>
-                                              &nbsp;  } <br>
-                                              &nbsp;} <br>
-                                            </code> <br>
-                                          </div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="col">
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab6/angle_kd_2.png" alt="..." />
-                                          </div>
-                                          <div class="col">
-                                            <img class="img-fluid rounded mb-5" src="assets/img/Lab6/speed_kd_2.png" alt="..." />
-                                          </div>
-                                        </div>
+                                      <li> <h4>Kalman Filter in Arduino </h4> </li>
+                                        <p class="mb-4">Placeholder. </p>
+                                        
                                         <div class="row align-content-center">
                                           <video width="320" height="240" controls>
                                             <source src="assets\img\Lab6\car_turning.mp4" type="video/mp4">
