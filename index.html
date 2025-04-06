@@ -1067,7 +1067,7 @@
                                       <p class="mb-4">The first step was finding the drag and momentum of the car. From the data I collected in Lab5, I started by plotting a velocity vs time graph. This was done to observe around what value the velocity would be at steady state.
                                       Below here is the velocity graph I got, and based on the general shape I observed it follows an exponential trend which reaches steady state in between the red lines. From this informations, I calculated the steady state speed to be -0.2337.
                                       This value would be very important because it would have repercussions on the Arduino implementation of the Kalman Filter. <br>
-                                      Using this velocity and teh corresponding PWM value at steady state (63), I compared data and calculated the time at 90% to be 2.024sec. Using this 3 data, I calculated drag and momentum to be: </p>
+                                      Using this velocity and the corresponding PWM value at steady state (63), I compared data and calculated the time at 90% to be 2.024sec. Using this 3 data, I calculated drag and momentum to be: </p>
                                       <math display="block">
                                         <mrow>
                                           <mi>d</mi>
@@ -1120,6 +1120,7 @@
                                           <mn>-0.0037611</mn>
                                         </mrow>
                                       </math>
+                                      <p class="mb-4"> </p>
                                       <code>
                                         &nbsp;/*START_PID_STATIONARY*/ <br>
                                         &nbsp;case START_PID_STATIONARY: { <br>
