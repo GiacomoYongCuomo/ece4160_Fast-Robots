@@ -129,7 +129,6 @@
                       </div>
                   </div>
 
-
               </div>
           </div>
       </section>
@@ -1042,7 +1041,7 @@
                 </div>
             </div>
           </div>
-        <!-- Portfolio Modal 6-->
+        <!-- Portfolio Modal 7-->
         <div class="portfolio-modal modal fade" id="Lab7" tabindex="-1" aria-labelledby="Lab7" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -1162,6 +1161,106 @@
                                           </video>
                                         </div>
                                     </ul>
+                                    <button class="btn btn-primary" data-bs-dismiss="modal">
+                                        <i class="fas fa-xmark fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        <!-- Portfolio Modal 8-->
+        <div class="portfolio-modal modal fade" id="Lab8" tabindex="-1" aria-labelledby="Lab8" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-primary text-uppercase text-center mb-0">Lab 8</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Flip Stunt</h2> <br>
+                                    <p class="mb-4">For this lab, we were tasked to perform a stunt with our car using all the infrastructure we have built so far. The stunt I decided to perform is a flip.
+                                    The car would run forward full speed, with the ToF sensor and Kalman Filter outputting the current distance from teh wall we were. Thanks to that data, I would reverse at full speed to initiate the flip and come back to the starting point. <br>
+                                    The were different ways to complete this stunt, but I found the easiest and most straightforward to keep it open-loop for its entirety. So both going forward and backward would be at max speed, with a time constraint to avoid crashing into object when coming back.
+                                    I did plan to add PD control for the way back, but it resulted difficult to implement within the lab time. (CHECK IF IT WORKS) <br>
+                                    Here below is the code I used, with also graphs showing the Distance vs Time and PWM vs Time during the whole stunt. Most importantly, here are three well done flips and one blooper at the end for your enjoyment. </p>
+                                    <code>
+                                      &nbsp;void flip() {
+                                      &nbsp;        if (TOF_one.checkForDataReady()) {
+                                      &nbsp;          distance = TOF_one.getDistance();
+                                      &nbsp;          TOF_one.clearInterrupt();
+                                      &nbsp;          TOF_one.stopRanging();
+                                      &nbsp;          TOF_one.startRanging();
+                                      &nbsp;        } else {
+                                      &nbsp;          distance = -1.0;
+                                      &nbsp;        }
+                                      &nbsp;        kf(mu, sigma, u, distance);
+                                      &nbsp;        if (!flip_flag) {
+                                      &nbsp;          if (mu(0,0) > flip_point) {
+                                      &nbsp;            forward(flip_speed);
+                                      &nbsp;            if (index_dist < array_size_data) {
+                                      &nbsp;              PID_dist[index_dist].time = (float) (millis() - start_time_flip);
+                                      &nbsp;              PID_dist[index_dist].sensor = mu(0,0);
+                                      &nbsp;              PID_dist[index_dist].speed = flip_speed;
+                                      &nbsp;              index_dist += 1;
+                                      &nbsp;            }
+                                      &nbsp;          } else {
+                                      &nbsp;            flip_flag = 1;
+                                      &nbsp;          }
+                                      &nbsp;        } else {
+                                      &nbsp;          reverse(255);
+                                      &nbsp;          if (index_dist < array_size_data) {
+                                      &nbsp;            PID_dist[index_dist].time = (float) (millis() - start_time_flip);
+                                      &nbsp;            PID_dist[index_dist].sensor = mu(0,0);
+                                      &nbsp;            PID_dist[index_dist].speed = -255;
+                                      &nbsp;            index_dist += 1;
+                                      &nbsp;          }
+                                      &nbsp;          count_flip += 1;
+                                      &nbsp;          if (count_flip == delay_n) {
+                                      &nbsp;            mu(0,0) = init_pos - mu(0,0);
+                                      &nbsp;            start_time_dist = millis();
+                                      &nbsp;            last_time_dist = millis();
+                                      &nbsp;            flip_flag = 1;
+                                      &nbsp;            case_n = 2;
+                                      &nbsp;          }
+                                      &nbsp;          /*
+                                      &nbsp;          motors_stop();
+                                      &nbsp;          send_PID_dist();
+                                      &nbsp;          flip_point;
+                                      &nbsp;          flip_flag;
+                                      &nbsp;          flip_speed, delay_n;
+                                      &nbsp;          count_flip;
+                                      &nbsp;          case_n = -1;
+                                      &nbsp;          */
+                                      &nbsp;        }
+                                      &nbsp;      }
+                                    </code> <br>
+                                    <div class="row">
+                                      <div class="col">
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab7/distance_kalman.png" alt="..." />
+                                      </div>
+                                      <div class="col">
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab7/pwm_kalman.png" alt="..." />
+                                      </div>
+                                    </div>
+                                    <div class="row align-content-center">
+                                      <video width="320" height="240" controls>
+                                        <source src="assets\img\Lab7\kalman_car.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                      </video>
+                                    </div>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
