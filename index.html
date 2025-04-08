@@ -879,7 +879,117 @@
             </div>
         </div>
         <!-- Portfolio Modal 5-->
-        <div class="portfolio-modal modal fade" id="Lab5" tabindex="-1" aria-labelledby="Lab5" aria-hidden="true"></div>
+        <div class="portfolio-modal modal fade" id="Lab5" tabindex="-1" aria-labelledby="Lab5" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                  <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                  <div class="modal-body pb-5">
+                      <div class="container">
+                          <div class="row justify-content-center">
+                              <div class="col-lg-8">
+                                  <!-- Portfolio Modal - Title-->
+                                  <h2 class="portfolio-modal-title text-primary text-uppercase text-center mb-0">Lab 8</h2>
+                                  <!-- Icon Divider-->
+                                  <div class="divider-custom">
+                                      <div class="divider-custom-line"></div>
+                                      <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                      <div class="divider-custom-line"></div>
+                                  </div>
+                                  <!-- Portfolio Modal - Text-->
+                                  <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Flip Stunt</h2> <br>
+                                  <p class="mb-4">For this lab, we were tasked to perform a stunt with our car using all the infrastructure we have built so far. The stunt I decided to perform is a flip.
+                                  The car would run forward full speed, with the ToF sensor and Kalman Filter outputting the current distance from teh wall we were. Thanks to that data, I would reverse at full speed to initiate the flip and come back to the starting point. <br>
+                                  The were different ways to complete this stunt, but I found the easiest and most straightforward to keep it open-loop for its entirety. So both going forward and backward would be at max speed, with a time constraint to avoid crashing into object when coming back.
+                                  I did plan to add PD control for the way back, but it resulted difficult to implement within the lab time. (CHECK IF IT WORKS) <br>
+                                  Here below is the code I used, with also graphs showing the Distance vs Time and PWM vs Time during the whole stunt. <br>
+                                  Most importantly, here are three well done flips and one blooper at the end for your enjoyment. By analysing the best run (the first one), my car travelled 1.8m (6ft) in 1.13sec for a speed of 1.59m/sec.</p>
+                                  <code>
+                                    &nbsp;void flip() { <br>
+                                    &nbsp;        if (TOF_one.checkForDataReady()) { <br>
+                                    &nbsp;&nbsp;          distance = TOF_one.getDistance(); <br>
+                                    &nbsp;&nbsp;          TOF_one.clearInterrupt(); <br>
+                                    &nbsp;&nbsp;          TOF_one.stopRanging(); <br>
+                                    &nbsp;&nbsp;          TOF_one.startRanging(); <br>
+                                    &nbsp;        } else { <br>
+                                    &nbsp;&nbsp;          distance = -1.0; <br>
+                                    &nbsp;        } <br>
+                                    &nbsp;        kf(mu, sigma, u, distance); <br>
+                                    &nbsp;        if (!flip_flag) { <br>
+                                    &nbsp;&nbsp;          if (mu(0,0) > flip_point) { <br>
+                                    &nbsp;&nbsp;&nbsp;            forward(flip_speed); <br>
+                                    &nbsp;&nbsp;&nbsp;            if (index_dist < array_size_data) { <br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].time = (float) (millis() - start_time_flip); <br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].sensor = mu(0,0); <br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].speed = flip_speed; <br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;              index_dist += 1; <br>
+                                    &nbsp;&nbsp;&nbsp;            } <br>
+                                    &nbsp;&nbsp;          } else { <br>
+                                    &nbsp;&nbsp;&nbsp;            flip_flag = 1; <br>
+                                    &nbsp;&nbsp;          } <br>
+                                    &nbsp;        } else { <br>
+                                    &nbsp;&nbsp;          reverse(255); <br>
+                                    &nbsp;&nbsp;          if (index_dist < array_size_data) { <br>
+                                    &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].time = (float) (millis() - start_time_flip); <br>
+                                    &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].sensor = mu(0,0); <br>
+                                    &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].speed = -255; <br>
+                                    &nbsp;&nbsp;&nbsp;            index_dist += 1; <br>
+                                    &nbsp;&nbsp;          } <br>
+                                    &nbsp;&nbsp;          count_flip += 1; <br>
+                                    &nbsp;&nbsp;          if (count_flip == delay_n) { <br>
+                                    &nbsp;&nbsp;&nbsp;          motors_stop(); <br>
+                                    &nbsp;&nbsp;&nbsp;          send_PID_dist(); <br>
+                                    &nbsp;&nbsp;&nbsp;          flip_point; <br>
+                                    &nbsp;&nbsp;&nbsp;          flip_flag; <br>
+                                    &nbsp;&nbsp;&nbsp;          flip_speed, delay_n; <br>
+                                    &nbsp;&nbsp;&nbsp;          count_flip; <br>
+                                    &nbsp;&nbsp;&nbsp;          case_n = -1; <br>
+                                    &nbsp;&nbsp;          } <br>
+                                    &nbsp;        } <br>
+                                    &nbsp;} <br>
+                                  </code> <br>
+                                  <div class="row">
+                                    <div class="col">
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab8/distance_flip.png" alt="..." />
+                                    </div>
+                                    <div class="col">
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab8/pwm_flip.png" alt="..." />
+                                    </div>
+                                  </div>
+                                  <div class="row align-content-center">
+                                    <video width="320" height="240" controls>
+                                      <source src="assets\img\Lab8\flip_1.mp4" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </div>
+                                  <div class="row align-content-center">
+                                    <video width="320" height="240" controls>
+                                      <source src="assets\img\Lab8\flip_2.mp4" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </div>
+                                  <div class="row align-content-center">
+                                    <video width="320" height="240" controls>
+                                      <source src="assets\img\Lab8\flip_3.mp4" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </div>
+                                  <div class="row align-content-center">
+                                    <video width="320" height="240" controls>
+                                      <source src="assets\img\Lab8\flip_blooper.mp4" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </div>
+                                  <button class="btn btn-primary" data-bs-dismiss="modal">
+                                      <i class="fas fa-xmark fa-fw"></i>
+                                      Close Window
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
         <!-- Portfolio Modal 6-->
         <div class="portfolio-modal modal fade" id="Lab6" tabindex="-1" aria-labelledby="Lab6" aria-hidden="true">
             <div class="modal-dialog modal-xl">
