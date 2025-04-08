@@ -888,7 +888,7 @@
                           <div class="row justify-content-center">
                               <div class="col-lg-8">
                                   <!-- Portfolio Modal - Title-->
-                                  <h2 class="portfolio-modal-title text-primary text-uppercase text-center mb-0">Lab 8</h2>
+                                  <h2 class="portfolio-modal-title text-primary text-uppercase text-center mb-0">Lab 6</h2>
                                   <!-- Icon Divider-->
                                   <div class="divider-custom">
                                       <div class="divider-custom-line"></div>
@@ -896,89 +896,144 @@
                                       <div class="divider-custom-line"></div>
                                   </div>
                                   <!-- Portfolio Modal - Text-->
-                                  <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Flip Stunt</h2> <br>
-                                  <p class="mb-4">For this lab, we were tasked to perform a stunt with our car using all the infrastructure we have built so far. The stunt I decided to perform is a flip.
-                                  The car would run forward full speed, with the ToF sensor and Kalman Filter outputting the current distance from teh wall we were. Thanks to that data, I would reverse at full speed to initiate the flip and come back to the starting point. <br>
-                                  The were different ways to complete this stunt, but I found the easiest and most straightforward to keep it open-loop for its entirety. So both going forward and backward would be at max speed, with a time constraint to avoid crashing into object when coming back.
-                                  I did plan to add PD control for the way back, but it resulted difficult to implement within the lab time. (CHECK IF IT WORKS) <br>
-                                  Here below is the code I used, with also graphs showing the Distance vs Time and PWM vs Time during the whole stunt. <br>
-                                  Most importantly, here are three well done flips and one blooper at the end for your enjoyment. By analysing the best run (the first one), my car travelled 1.8m (6ft) in 1.13sec for a speed of 1.59m/sec.</p>
-                                  <code>
-                                    &nbsp;void flip() { <br>
-                                    &nbsp;        if (TOF_one.checkForDataReady()) { <br>
-                                    &nbsp;&nbsp;          distance = TOF_one.getDistance(); <br>
-                                    &nbsp;&nbsp;          TOF_one.clearInterrupt(); <br>
-                                    &nbsp;&nbsp;          TOF_one.stopRanging(); <br>
-                                    &nbsp;&nbsp;          TOF_one.startRanging(); <br>
-                                    &nbsp;        } else { <br>
-                                    &nbsp;&nbsp;          distance = -1.0; <br>
-                                    &nbsp;        } <br>
-                                    &nbsp;        kf(mu, sigma, u, distance); <br>
-                                    &nbsp;        if (!flip_flag) { <br>
-                                    &nbsp;&nbsp;          if (mu(0,0) > flip_point) { <br>
-                                    &nbsp;&nbsp;&nbsp;            forward(flip_speed); <br>
-                                    &nbsp;&nbsp;&nbsp;            if (index_dist < array_size_data) { <br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].time = (float) (millis() - start_time_flip); <br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].sensor = mu(0,0); <br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].speed = flip_speed; <br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;              index_dist += 1; <br>
-                                    &nbsp;&nbsp;&nbsp;            } <br>
-                                    &nbsp;&nbsp;          } else { <br>
-                                    &nbsp;&nbsp;&nbsp;            flip_flag = 1; <br>
-                                    &nbsp;&nbsp;          } <br>
-                                    &nbsp;        } else { <br>
-                                    &nbsp;&nbsp;          reverse(255); <br>
-                                    &nbsp;&nbsp;          if (index_dist < array_size_data) { <br>
-                                    &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].time = (float) (millis() - start_time_flip); <br>
-                                    &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].sensor = mu(0,0); <br>
-                                    &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].speed = -255; <br>
-                                    &nbsp;&nbsp;&nbsp;            index_dist += 1; <br>
-                                    &nbsp;&nbsp;          } <br>
-                                    &nbsp;&nbsp;          count_flip += 1; <br>
-                                    &nbsp;&nbsp;          if (count_flip == delay_n) { <br>
-                                    &nbsp;&nbsp;&nbsp;          motors_stop(); <br>
-                                    &nbsp;&nbsp;&nbsp;          send_PID_dist(); <br>
-                                    &nbsp;&nbsp;&nbsp;          flip_point; <br>
-                                    &nbsp;&nbsp;&nbsp;          flip_flag; <br>
-                                    &nbsp;&nbsp;&nbsp;          flip_speed, delay_n; <br>
-                                    &nbsp;&nbsp;&nbsp;          count_flip; <br>
-                                    &nbsp;&nbsp;&nbsp;          case_n = -1; <br>
-                                    &nbsp;&nbsp;          } <br>
-                                    &nbsp;        } <br>
-                                    &nbsp;} <br>
-                                  </code> <br>
-                                  <div class="row">
-                                    <div class="col">
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab8/distance_flip.png" alt="..." />
-                                    </div>
-                                    <div class="col">
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab8/pwm_flip.png" alt="..." />
-                                    </div>
-                                  </div>
-                                  <div class="row align-content-center">
-                                    <video width="320" height="240" controls>
-                                      <source src="assets\img\Lab8\flip_1.mp4" type="video/mp4">
-                                      Your browser does not support the video tag.
-                                    </video>
-                                  </div>
-                                  <div class="row align-content-center">
-                                    <video width="320" height="240" controls>
-                                      <source src="assets\img\Lab8\flip_2.mp4" type="video/mp4">
-                                      Your browser does not support the video tag.
-                                    </video>
-                                  </div>
-                                  <div class="row align-content-center">
-                                    <video width="320" height="240" controls>
-                                      <source src="assets\img\Lab8\flip_3.mp4" type="video/mp4">
-                                      Your browser does not support the video tag.
-                                    </video>
-                                  </div>
-                                  <div class="row align-content-center">
-                                    <video width="320" height="240" controls>
-                                      <source src="assets\img\Lab8\flip_blooper.mp4" type="video/mp4">
-                                      Your browser does not support the video tag.
-                                    </video>
-                                  </div>
+                                  <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Prelab</h2> <br>
+                                  <ul>
+                                    <li> <h4>Data via Bluetooth </h4> </li>
+                                    <p class="mb-4">To send data fast enough, I decided to create two new commands. The first one, START_PID_STATIONARY, takes three variables (point_set, Kp, Kd).
+                                    The second one, STOP_PID_STATIONARY, takes no variables but it is responsible to stop the motors and send back time and angle measurements and pwm values via Bluetooth.
+                                    To collect values, and later on send them, as fast as possible I implemented the whole code in the main loop. When I send the first command, the implementation runs indefinitely until the second command is sent.
+                                    When the first command is sent, all variables are use to implement PD control and a flag is activated so to allow the code below to be sent forever. While it runs, also other Bluetooth commands are possible to be sent, like the PD control implemented in Lab 5.
+                                    For graphic purpose, when I send the second command all motors are turned off and all the data collected so far is sent back. </p>
+                                    <code>
+                                      &nbsp;/*START_PID_STATIONARY*/ <br>
+                                      &nbsp;case START_PID_STATIONARY: { <br>
+                                      &nbsp;  // Extract the next value from the command string as an integer <br>
+                                      &nbsp;  success = robot_cmd.get_next_value(set_point_angle); <br>
+                                      &nbsp;  if (!success) return; <br>
+                                      &nbsp;  success = robot_cmd.get_next_value(Kp_angle); <br>
+                                      &nbsp;  if (!success) return; <br>
+                                      &nbsp;  success = robot_cmd.get_next_value(Kd_angle); <br>
+                                      &nbsp;  if (!success) return; <br>
+                                      &nbsp;  start_time_angle = millis(); <br>
+                                      &nbsp;  last_time_angle = millis(); <br>
+                                      &nbsp;  angle_stat_flag = 1;    //flag for loop() <br>
+                                      &nbsp;  break; <br>
+                                      &nbsp;} <br>
+                                      &nbsp;/*STOP_PID_STATIONARY*/ <br>
+                                      &nbsp;case STOP_PID_STATIONARY: { <br>
+                                      &nbsp;  motors_stop(); <br>
+                                      &nbsp;  send_PID_angle(); <br>
+                                      &nbsp;  set_point_angle, Kp_angle, Kd_angle, angle; <br>
+                                      &nbsp;  start_time_angle, last_time_angle; <br>
+                                      &nbsp;  index_angle, error_angle, Kd_error_angle, last_error_angle; <br>
+                                      &nbsp;  speed_angle; <br>
+                                      &nbsp;  angle_stat_flag = 0; <br>
+                                      &nbsp;  break; <br>
+                                      &nbsp;} <br>
+                                      <br>
+                                      &nbsp;void loop() { <br>
+                                      &nbsp;  // Listen for connections <br>
+                                      &nbsp;  BLEDevice central = BLE.central(); <br>
+                                      &nbsp;  // If a central is connected to the peripheral <br>
+                                      &nbsp;  if (central) { <br>
+                                      &nbsp;&nbsp;    Serial.print("Connected to: "); <br>
+                                      &nbsp;&nbsp;    Serial.println(central.address()); <br>
+                                      &nbsp;&nbsp;    // While central is connected <br>
+                                      &nbsp;&nbsp;    while (central.connected()) { <br>
+                                      &nbsp;&nbsp;&nbsp;      // Send data <br>
+                                      &nbsp;&nbsp;&nbsp;      write_data(); <br>
+                                      &nbsp;&nbsp;&nbsp;      // Read data <br>
+                                      &nbsp;&nbsp;&nbsp;      read_data(); <br>
+                                      &nbsp;&nbsp;&nbsp;      if (angle_stat_flag) { <br>
+                                      &nbsp;&nbsp;&nbsp;&nbsp;        pid_stationary(); <br>
+                                      &nbsp;&nbsp;&nbsp;      } <br>
+                                      &nbsp;&nbsp;&nbsp;      //rest of loop()... <br>
+                                      &nbsp;&nbsp;    } <br>
+                                      &nbsp;&nbsp;    Serial.println("Disconnected"); <br>
+                                      &nbsp;&nbsp;    motors_stop(); <br>
+                                      &nbsp;&nbsp;    angle_stat_flag = 0; <br>
+                                      &nbsp;&nbsp;    for (int i = 0; i < 2; i++) { <br>
+                                      &nbsp;&nbsp;&nbsp;      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); <br>
+                                      &nbsp;&nbsp;&nbsp;      delay(1000); <br>
+                                      &nbsp;&nbsp;    } <br>
+                                      &nbsp;  } <br>
+                                      &nbsp;} <br>
+                                    </code> <br>
+                                  </ul>
+                                  <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Tasks</h2> <br>
+                                  <ul>
+                                    <li> <h4>PID Discussion </h4> </li>
+                                      <p class="mb-4">Through various iterations, I developed a PD control system. As both graphs and video show, I managed to tune my PD controller to always come back to a decided angle I request even when moved by external forces. The decided angle for these tests was zero.
+                                      My process was to increment Kp until it started oscillating, finding a value that would almost stop the car but the momentum would make teh car keep going (overshooting).
+                                      I then introduced Kd, tuning until it would slow the car down when reaching the indicated angle. I continued with the same process for different iterations to achieve better speed and accuracy. <br>
+                                      I implemented the code so that the angle values used to calculate the PWM values would be updated depending on the IMU sampling rate, using the yaw value calculated through the DMP process to minimize drift. This resulted in very effective and precise measurements, although showed a built in biased at the beginning of measuring.
+                                      What I noticed was that the car would start measuring yaw at zero degrees but would keep increasing until settling around 3-5 degrees giving a constant biased. To mitigate this behaviour, I added a tolerance factor for which the car would not move if the angle was within that tolerance. <br>
+                                      Reported below are the graphs for Angle vs Time from the IMU and PWM vs Time calculated for each new angle measured. In the first image, each spike represent a kick or movement of the car from the desired angle we want it to point (in this case 0 degrees). Each spike can either be positive or positive depending if the kick was right or left, and to recover from the spike the car gets back to its original position, plateauing at the desired angle.
+                                      On the second image we can see that for each spike we had we have a spike on PWM values, which with the same behavior settles back to initial condition. To notice that for my car the minimal PWM value to move the car is 100. <br>
+                                      The following video shows the behavior before explained. </p>
+                                      <div class="row">
+                                        <div class="col">
+                                          <code>
+                                            void pid_stationary() { <br>
+                                            &nbsp;  icm_20948_DMP_data_t data; <br>
+                                            &nbsp;  myICM.readDMPdataFromFIFO(&data); <br>
+                                            <br>
+                                            &nbsp;  // Is valid data available? <br>
+                                            &nbsp;  if ((myICM.status == ICM_20948_Stat_Ok) || (myICM.status == ICM_20948_Stat_FIFOMoreDataAvail)) { <br>
+                                            &nbsp;&nbsp;      // We have asked for GRV data so we should receive Quat6 <br>
+                                            &nbsp;&nbsp;      if ((data.header & DMP_header_bitmap_Quat6) > 0) { <br>
+                                            &nbsp;&nbsp;&nbsp;        double q1 = ((double)data.Quat6.Data.Q1) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
+                                            &nbsp;&nbsp;&nbsp;        double q2 = ((double)data.Quat6.Data.Q2) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
+                                            &nbsp;&nbsp;&nbsp;        double q3 = ((double)data.Quat6.Data.Q3) / 1073741824.0; // Convert to double. Divide by 2^30 <br>
+                                            &nbsp;&nbsp;&nbsp;        // Convert the quaternion to Euler angles <br>
+                                            &nbsp;&nbsp;&nbsp;        double q0 = sqrt(1.0 - ((q1 * q1) + (q2 * q2) + (q3 * q3))); <br>
+                                            &nbsp;&nbsp;&nbsp;        // yaw (z-axis rotation) <br>
+                                            &nbsp;&nbsp;&nbsp;        double t3 = +2.0 * (q0 * (-q3) + q2 * q1); <br>
+                                            &nbsp;&nbsp;&nbsp;        double t4 = +1.0 - 2.0 * (q1 * q1 + (-q3) * (-q3)); <br>
+                                            &nbsp;&nbsp;&nbsp;        angle = atan2(t3, t4) * 180.0 / PI; <br>
+                                            &nbsp;&nbsp;      } <br>
+                                            &nbsp;  } <br>
+                                            &nbsp;  error_angle = set_point_angle - angle; <br>
+                                            &nbsp;  Kd_error_angle = (last_error_angle - error_angle)/(last_time_angle - millis()); <br>
+                                            &nbsp;  last_error_angle = error_angle; <br>
+                                            &nbsp;  last_time_angle = millis(); <br>
+                                            <br>
+                                            &nbsp;  speed_angle = Kp_angle*error_angle + Kd_angle*Kd_error_angle; <br>
+                                            &nbsp;  if (speed_angle > 1000) speed_angle = 1000;   //limits speed output <br>
+                                            &nbsp;  if (int(error_angle) <= tol && int(error_angle) > (-tol)) motors_stop(); <br>
+                                            &nbsp;  if (speed_angle < 0) { <br>
+                                            &nbsp;&nbsp;    speed_angle = abs(speed_angle); <br>
+                                            &nbsp;&nbsp;    speed_angle = map(speed_angle, 0, 1000, min_speed_turn, 255); <br>
+                                            &nbsp;&nbsp;    turn_left(speed_angle); <br>
+                                            &nbsp;  } else if (speed_angle > 0) { <br>
+                                            &nbsp;&nbsp;    speed_angle = map(speed_angle, 0, 1000, min_speed_turn, 255); <br>
+                                            &nbsp;&nbsp;    turn_right(speed_angle); <br>
+                                            &nbsp;  } <br>
+                                            &nbsp;  if (index_angle < array_size_data) { <br>
+                                            &nbsp;&nbsp;    PID_angle[index_angle].time = (float) (millis() - start_time_angle); <br>
+                                            &nbsp;&nbsp;    PID_angle[index_angle].sensor = angle <br>
+                                            &nbsp;&nbsp;    PID_angle[index_angle].speed = speed_angle; <br>
+                                            &nbsp;&nbsp;    index_angle += 1; <br>
+                                            &nbsp;  } <br>
+                                            &nbsp;} <br>
+                                          </code> <br>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col">
+                                          <img class="img-fluid rounded mb-5" src="assets/img/Lab6/angle_kd_2.png" alt="..." />
+                                        </div>
+                                        <div class="col">
+                                          <img class="img-fluid rounded mb-5" src="assets/img/Lab6/speed_kd_2.png" alt="..." />
+                                        </div>
+                                      </div>
+                                      <div class="row align-content-center">
+                                        <video width="320" height="240" controls>
+                                          <source src="assets\img\Lab6\car_turning.mp4" type="video/mp4">
+                                          Your browser does not support the video tag.
+                                        </video>
+                                      </div>
+                                  </ul>
                                   <button class="btn btn-primary" data-bs-dismiss="modal">
                                       <i class="fas fa-xmark fa-fw"></i>
                                       Close Window
