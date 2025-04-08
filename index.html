@@ -1203,55 +1203,55 @@
                                     I did plan to add PD control for the way back, but it resulted difficult to implement within the lab time. (CHECK IF IT WORKS) <br>
                                     Here below is the code I used, with also graphs showing the Distance vs Time and PWM vs Time during the whole stunt. Most importantly, here are three well done flips and one blooper at the end for your enjoyment. </p>
                                     <code>
-                                      &nbsp;void flip() {
-                                      &nbsp;        if (TOF_one.checkForDataReady()) {
-                                      &nbsp;          distance = TOF_one.getDistance();
-                                      &nbsp;          TOF_one.clearInterrupt();
-                                      &nbsp;          TOF_one.stopRanging();
-                                      &nbsp;          TOF_one.startRanging();
-                                      &nbsp;        } else {
-                                      &nbsp;          distance = -1.0;
-                                      &nbsp;        }
-                                      &nbsp;        kf(mu, sigma, u, distance);
-                                      &nbsp;        if (!flip_flag) {
-                                      &nbsp;          if (mu(0,0) > flip_point) {
-                                      &nbsp;            forward(flip_speed);
-                                      &nbsp;            if (index_dist < array_size_data) {
-                                      &nbsp;              PID_dist[index_dist].time = (float) (millis() - start_time_flip);
-                                      &nbsp;              PID_dist[index_dist].sensor = mu(0,0);
-                                      &nbsp;              PID_dist[index_dist].speed = flip_speed;
-                                      &nbsp;              index_dist += 1;
-                                      &nbsp;            }
-                                      &nbsp;          } else {
-                                      &nbsp;            flip_flag = 1;
-                                      &nbsp;          }
-                                      &nbsp;        } else {
-                                      &nbsp;          reverse(255);
-                                      &nbsp;          if (index_dist < array_size_data) {
-                                      &nbsp;            PID_dist[index_dist].time = (float) (millis() - start_time_flip);
-                                      &nbsp;            PID_dist[index_dist].sensor = mu(0,0);
-                                      &nbsp;            PID_dist[index_dist].speed = -255;
-                                      &nbsp;            index_dist += 1;
-                                      &nbsp;          }
-                                      &nbsp;          count_flip += 1;
-                                      &nbsp;          if (count_flip == delay_n) {
-                                      &nbsp;            mu(0,0) = init_pos - mu(0,0);
-                                      &nbsp;            start_time_dist = millis();
-                                      &nbsp;            last_time_dist = millis();
-                                      &nbsp;            flip_flag = 1;
-                                      &nbsp;            case_n = 2;
-                                      &nbsp;          }
-                                      &nbsp;          /*
-                                      &nbsp;          motors_stop();
-                                      &nbsp;          send_PID_dist();
-                                      &nbsp;          flip_point;
-                                      &nbsp;          flip_flag;
-                                      &nbsp;          flip_speed, delay_n;
-                                      &nbsp;          count_flip;
-                                      &nbsp;          case_n = -1;
-                                      &nbsp;          */
-                                      &nbsp;        }
-                                      &nbsp;      }
+                                      &nbsp;void flip() { <br>
+                                      &nbsp;        if (TOF_one.checkForDataReady()) { <br>
+                                      &nbsp;          distance = TOF_one.getDistance(); <br>
+                                      &nbsp;          TOF_one.clearInterrupt(); <br>
+                                      &nbsp;          TOF_one.stopRanging(); <br>
+                                      &nbsp;          TOF_one.startRanging(); <br>
+                                      &nbsp;        } else { <br>
+                                      &nbsp;          distance = -1.0; <br>
+                                      &nbsp;        } <br>
+                                      &nbsp;        kf(mu, sigma, u, distance); <br>
+                                      &nbsp;        if (!flip_flag) { <br>
+                                      &nbsp;          if (mu(0,0) > flip_point) { <br>
+                                      &nbsp;            forward(flip_speed); <br>
+                                      &nbsp;            if (index_dist < array_size_data) { <br>
+                                      &nbsp;              PID_dist[index_dist].time = (float) (millis() - start_time_flip); <br>
+                                      &nbsp;              PID_dist[index_dist].sensor = mu(0,0); <br>
+                                      &nbsp;              PID_dist[index_dist].speed = flip_speed; <br>
+                                      &nbsp;              index_dist += 1; <br>
+                                      &nbsp;            } <br>
+                                      &nbsp;          } else { <br>
+                                      &nbsp;            flip_flag = 1; <br>
+                                      &nbsp;          } <br>
+                                      &nbsp;        } else { <br>
+                                      &nbsp;          reverse(255); <br>
+                                      &nbsp;          if (index_dist < array_size_data) { <br>
+                                      &nbsp;            PID_dist[index_dist].time = (float) (millis() - start_time_flip); <br>
+                                      &nbsp;            PID_dist[index_dist].sensor = mu(0,0); <br>
+                                      &nbsp;            PID_dist[index_dist].speed = -255; <br>
+                                      &nbsp;            index_dist += 1; <br>
+                                      &nbsp;          } <br>
+                                      &nbsp;          count_flip += 1; <br>
+                                      &nbsp;          if (count_flip == delay_n) { <br>
+                                      &nbsp;            mu(0,0) = init_pos - mu(0,0); <br>
+                                      &nbsp;            start_time_dist = millis(); <br>
+                                      &nbsp;            last_time_dist = millis(); <br>
+                                      &nbsp;            flip_flag = 1; <br>
+                                      &nbsp;            case_n = 2; <br>
+                                      &nbsp;          } <br>
+                                      &nbsp;          /* <br>
+                                      &nbsp;          motors_stop(); <br>
+                                      &nbsp;          send_PID_dist(); <br>
+                                      &nbsp;          flip_point; <br>
+                                      &nbsp;          flip_flag; <br>
+                                      &nbsp;          flip_speed, delay_n; <br>
+                                      &nbsp;          count_flip; <br>
+                                      &nbsp;          case_n = -1; <br>
+                                      &nbsp;          */ <br>
+                                      &nbsp;        } <br>
+                                      &nbsp;      } <br>
                                     </code> <br>
                                     <div class="row">
                                       <div class="col">
