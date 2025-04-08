@@ -1236,20 +1236,20 @@
                                       &nbsp;&nbsp;          } <br>
                                       &nbsp;&nbsp;          count_flip += 1; <br>
                                       &nbsp;&nbsp;          if (count_flip == delay_n) { <br>
-                                      &nbsp;&nbsp;&nbsp;            mu(0,0) = init_pos - mu(0,0); <br>
-                                      &nbsp;&nbsp;&nbsp;            start_time_dist = millis(); <br>
-                                      &nbsp;&nbsp;&nbsp;            last_time_dist = millis(); <br>
-                                      &nbsp;&nbsp;&nbsp;            flip_flag = 1; <br>
-                                      &nbsp;&nbsp;&nbsp;            case_n = 2; <br>
+                                      &nbsp;&nbsp;&nbsp;          motors_stop(); <br>
+                                      &nbsp;&nbsp;&nbsp;          send_PID_dist(); <br>
+                                      &nbsp;&nbsp;&nbsp;          flip_point; <br>
+                                      &nbsp;&nbsp;&nbsp;          flip_flag; <br>
+                                      &nbsp;&nbsp;&nbsp;          flip_speed, delay_n; <br>
+                                      &nbsp;&nbsp;&nbsp;          count_flip; <br>
+                                      &nbsp;&nbsp;&nbsp;          case_n = -1; <br>
                                       &nbsp;&nbsp;          } <br>
                                       &nbsp;&nbsp;          /* <br>
-                                      &nbsp;&nbsp;          motors_stop(); <br>
-                                      &nbsp;&nbsp;          send_PID_dist(); <br>
-                                      &nbsp;&nbsp;          flip_point; <br>
-                                      &nbsp;&nbsp;          flip_flag; <br>
-                                      &nbsp;&nbsp;          flip_speed, delay_n; <br>
-                                      &nbsp;&nbsp;          count_flip; <br>
-                                      &nbsp;&nbsp;          case_n = -1; <br>
+                                      &nbsp;&nbsp;          mu(0,0) = init_pos - mu(0,0); <br>
+                                      &nbsp;&nbsp;          start_time_dist = millis(); <br>
+                                      &nbsp;&nbsp;          last_time_dist = millis(); <br>
+                                      &nbsp;&nbsp;          flip_flag = 1; <br>
+                                      &nbsp;&nbsp;          case_n = 2; <br>
                                       &nbsp;&nbsp;          */ <br>
                                       &nbsp;        } <br>
                                       &nbsp;} <br>
