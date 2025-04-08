@@ -1231,11 +1231,11 @@
                                     </div>
                                     <!-- Portfolio Modal - Text-->
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Kalman Filter on Python</h2> <br>
-                                    <p class="mb-4">For this lab, we were tasked to develop an efficient Kalman Filter for our car. Since the hard task, we started by implementing and tuning the Kalman Filter on Python using Lab5 data colòlected previously. </p>
+                                    <p class="mb-4">For this lab, we were tasked to develop an efficient Kalman Filter for our car. Since the hard task, we started by implementing and tuning the Kalman Filter on Python using Lab5 data collected previously. </p>
                                     <ul>
                                       <li> <h4>Drag and Momentum </h4> </li>
-                                      <p class="mb-4">The first step was finding the drag and momentum of the car. From the data I collected in Lab5, I started by plotting a velocity vs time graph. This was done to observe around what value the velocity would be at steady state.
-                                      Below here is the velocity graph I got, and based on the general shape I observed it follows an exponential trend which reaches steady state in between the red lines. From this informations, I calculated the steady state speed to be -0.2337.
+                                      <p class="mb-4">The first step was finding the drag and momentum of the car. From the data I collected in Lab5, I started by plotting a Velocity vs Time graph. This was done to observe around what value the velocity would be at steady state.
+                                      Below here is the velocity graph I got, and based on the general shape I observed it follows an exponential trend which reaches steady state in between the red lines. From this informations, I calculated the steady state speed to be -0.2337m/sec.
                                       This value would be very important because it would have repercussions on the Arduino implementation of the Kalman Filter. <br>
                                       Using this velocity and the corresponding PWM value at steady state (63), I compared data and calculated the time at 90% to be 2.024sec. Using this 3 data, I calculated drag and momentum to be: </p>
                                       <math display="block">
@@ -1291,11 +1291,11 @@
                                         </mrow>
                                       </math> <br>
                                       <img class="img-fluid rounded mb-5" src="assets/img/Lab7/speed_graph.png" alt="..." />
-                                      <p class="mb-4">The next steps are to calculate the A and B matrix using the d and m values found. We use those matrices to then calculate their discretized version using the sampling time from the loop of my Arduino program.
+                                      <p class="mb-4">The next steps were to calculate the A and B matrix using the d and m values found. We use those matrices to then calculate their discretized version using the sampling time from the loop of my Arduino program.
                                       This is fundamental as we want to program the Kalman Filter to be fast as our loop. Moreover, I also initialised the C matrix, the initial guess for the state vector and the covariance matrices for process and sensor noises. Here below are reported with also their values. </p>
                                       <img class="img-fluid rounded mb-5" src="assets/img/Lab7/parameters_kalman.png" alt="..." />
                                       <li> <h4>Implementation </h4> </li>
-                                      <p class="mb-4">Now it is the moment to implement the actual Kalman Filter. Starting from the demo code provided, I implemented the Kalman Filter as shown in the image below. Additionally here reported are also images for the output og my Kalman Filter depending on different parameteres. </p>
+                                      <p class="mb-4">Now it is the moment to implement the actual Kalman Filter. Starting from the demo code provided, I implemented the Kalman Filter as shown in the image below. Additionally here reported are also images for the output of my Kalman Filter depending on different parameters. </p>
                                       <img class="img-fluid rounded mb-5" src="assets/img/Lab7/kf_python.png" alt="..." />
                                       <p class="mb-4">This graph on the left is obtained with the default parameteres found before. The middle graph is obtained with the sensor noise covariance extremely high, showing more trust on the model. The right graph is obtained with the process noise covariance extremely high, showing more trust in the sensor meauserements.</p>
                                       <div class="row">
@@ -1313,10 +1313,12 @@
                                     <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Kalman Filter in Arduino</h2> <br>
                                     <ul>
                                       <li> <h4>Kalman Filter in Arduino </h4> </li>
-                                        <p class="mb-4">Now that we have a functioning Kalman Filter, I implemented it on Arduino using the BasicLinearAlgebra library. Setting up the same matrices explained before, I ran the car and see its behaviour.
-                                        The following graphs are the Distance vs Time and PWM vs Time using the Kalman Filter to speed up the distance calculations. The video illustrates the car behaviour. <br>
-                                        As you can see in the first graph, the line representing the distance measurements oscillates once it reaches the goal distance. The reason for this behaviour is that even if we reached the desired goal, the Kalman Filter still tries to getr closer to the wall following the same trend (decreasing values) which led us here.
-                                        When then it receives a ToF measurement, it snaps back into place as we gave more trust to our measurement. From the video, the car doesn't move while in this state although the motors try to since they are still receiving some non-zero pwm values. </p>
+                                        <p class="mb-4">Now that we have a functioning Kalman Filter, I implemented it on Arduino using the BasicLinearAlgebra library. Setting up the same matrices explained before, I ran the car and see its behavior.
+                                        The following graphs are the Distance vs Time and PWM vs Time using the Kalman Filter to speed up the distance calculations. The video illustrates the car behavior. <br>
+                                        As you can see in the first graph, the line representing the distance measurements oscillates once it reaches the goal distance. The reason for this behavior is that even if we reached the desired goal, the Kalman Filter still tries to getr closer to the wall following the same trend (decreasing values) which led us here.
+                                        When then it receives a ToF measurement, it snaps back into place as we gave more trust to our measurement. From the video, the car doesn't move while in this state although the motors try to since they are still receiving some non-zero pwm values. <br>
+                                        Another challenge I faced during this lab was tuning the right values for the matrices of the Kalman Filter. As mentioned before, the critical adjustment I had to do was to tune better my steady state velocity calculations, as it then propagated in the B matrix.
+                                        Through testing, I found a progressively lower speed, lowering than the value of the B matrix increasing the accuracy of my predictions in between ToF measurements. </p>
                                         <div class="row">
                                           <div class="col">
                                             <img class="img-fluid rounded mb-5" src="assets/img/Lab7/distance_kalman.png" alt="..." />
