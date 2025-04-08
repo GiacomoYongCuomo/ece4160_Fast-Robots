@@ -1201,7 +1201,8 @@
                                     The car would run forward full speed, with the ToF sensor and Kalman Filter outputting the current distance from teh wall we were. Thanks to that data, I would reverse at full speed to initiate the flip and come back to the starting point. <br>
                                     The were different ways to complete this stunt, but I found the easiest and most straightforward to keep it open-loop for its entirety. So both going forward and backward would be at max speed, with a time constraint to avoid crashing into object when coming back.
                                     I did plan to add PD control for the way back, but it resulted difficult to implement within the lab time. (CHECK IF IT WORKS) <br>
-                                    Here below is the code I used, with also graphs showing the Distance vs Time and PWM vs Time during the whole stunt. Most importantly, here are three well done flips and one blooper at the end for your enjoyment. </p>
+                                    Here below is the code I used, with also graphs showing the Distance vs Time and PWM vs Time during the whole stunt. <br>
+                                    Most importantly, here are three well done flips and one blooper at the end for your enjoyment. By analysing the best run (the first one), my car travelled 1.8m (6ft) in 1.13sec for a speed of 1.59m/sec.</p>
                                     <code>
                                       &nbsp;void flip() { <br>
                                       &nbsp;        if (TOF_one.checkForDataReady()) { <br>
@@ -1255,15 +1256,33 @@
                                     </code> <br>
                                     <div class="row">
                                       <div class="col">
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab7/distance_kalman.png" alt="..." />
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab8/distance_flip.png" alt="..." />
                                       </div>
                                       <div class="col">
-                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab7/pwm_kalman.png" alt="..." />
+                                        <img class="img-fluid rounded mb-5" src="assets/img/Lab8/pwm_flip.png" alt="..." />
                                       </div>
                                     </div>
                                     <div class="row align-content-center">
                                       <video width="320" height="240" controls>
-                                        <source src="assets\img\Lab7\kalman_car.mp4" type="video/mp4">
+                                        <source src="assets\img\Lab8\flip_1.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                      </video>
+                                    </div>
+                                    <div class="row align-content-center">
+                                      <video width="320" height="240" controls>
+                                        <source src="assets\img\Lab8\flip_2.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                      </video>
+                                    </div>
+                                    <div class="row align-content-center">
+                                      <video width="320" height="240" controls>
+                                        <source src="assets\img\Lab8\flip_3.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                      </video>
+                                    </div>
+                                    <div class="row align-content-center">
+                                      <video width="320" height="240" controls>
+                                        <source src="assets\img\Lab8\flip_blooper.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                       </video>
                                     </div>
