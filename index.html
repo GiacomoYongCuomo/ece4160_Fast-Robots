@@ -1485,57 +1485,91 @@
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Portfolio Modal - Text-->
-                                    <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Flip Stunt</h2> <br>
-                                    <p class="mb-4">For this lab, we were tasked to perform a stunt with our car using all the infrastructure we have built so far. The stunt I decided to perform is a flip.
-                                    The car would run forward full speed, with the ToF sensor and Kalman Filter outputting the current distance from teh wall we were. Thanks to that data, I would reverse at full speed to initiate the flip and come back to the starting point. <br>
-                                    The were different ways to complete this stunt, but I found the easiest and most straightforward to keep it open-loop for its entirety. So both going forward and backward would be at max speed, with a time constraint to avoid crashing into object when coming back.
-                                    I did plan to add PD control for the way back, but it resulted difficult to implement within the lab time. <br>
-                                    Here below is the code I used, with also graphs showing the Distance vs Time and PWM vs Time during the whole stunt. The first graph presents the same issue explained in Lab 7, which is the oscillating behavior of the Kalman Filter. The second graph shows perfectly when the flip occurs, as the negatuve PWM value represents the reverse motion after the flip. <br>
-                                    Most importantly, here are three well done flips and one blooper at the end for your enjoyment. By analysing the best run (the first one), my car travelled 1.8m (6ft) in 1.13sec for a speed of 1.59m/sec.</p>
-                                    <code>
-                                      &nbsp;void flip() { <br>
-                                      &nbsp;        if (TOF_one.checkForDataReady()) { <br>
-                                      &nbsp;&nbsp;          distance = TOF_one.getDistance(); <br>
-                                      &nbsp;&nbsp;          TOF_one.clearInterrupt(); <br>
-                                      &nbsp;&nbsp;          TOF_one.stopRanging(); <br>
-                                      &nbsp;&nbsp;          TOF_one.startRanging(); <br>
-                                      &nbsp;        } else { <br>
-                                      &nbsp;&nbsp;          distance = -1.0; <br>
-                                      &nbsp;        } <br>
-                                      &nbsp;        kf(mu, sigma, u, distance); <br>
-                                      &nbsp;        if (!flip_flag) { <br>
-                                      &nbsp;&nbsp;          if (mu(0,0) > flip_point) { <br>
-                                      &nbsp;&nbsp;&nbsp;            forward(flip_speed); <br>
-                                      &nbsp;&nbsp;&nbsp;            if (index_dist < array_size_data) { <br>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].time = (float) (millis() - start_time_flip); <br>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].sensor = mu(0,0); <br>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;              PID_dist[index_dist].speed = flip_speed; <br>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;              index_dist += 1; <br>
-                                      &nbsp;&nbsp;&nbsp;            } <br>
-                                      &nbsp;&nbsp;          } else { <br>
-                                      &nbsp;&nbsp;&nbsp;            flip_flag = 1; <br>
-                                      &nbsp;&nbsp;          } <br>
-                                      &nbsp;        } else { <br>
-                                      &nbsp;&nbsp;          reverse(255); <br>
-                                      &nbsp;&nbsp;          if (index_dist < array_size_data) { <br>
-                                      &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].time = (float) (millis() - start_time_flip); <br>
-                                      &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].sensor = mu(0,0); <br>
-                                      &nbsp;&nbsp;&nbsp;            PID_dist[index_dist].speed = -255; <br>
-                                      &nbsp;&nbsp;&nbsp;            index_dist += 1; <br>
-                                      &nbsp;&nbsp;          } <br>
-                                      &nbsp;&nbsp;          count_flip += 1; <br>
-                                      &nbsp;&nbsp;          if (count_flip == delay_n) { <br>
-                                      &nbsp;&nbsp;&nbsp;          motors_stop(); <br>
-                                      &nbsp;&nbsp;&nbsp;          send_PID_dist(); <br>
-                                      &nbsp;&nbsp;&nbsp;          flip_point; <br>
-                                      &nbsp;&nbsp;&nbsp;          flip_flag; <br>
-                                      &nbsp;&nbsp;&nbsp;          flip_speed, delay_n; <br>
-                                      &nbsp;&nbsp;&nbsp;          count_flip; <br>
-                                      &nbsp;&nbsp;&nbsp;          case_n = -1; <br>
-                                      &nbsp;&nbsp;          } <br>
-                                      &nbsp;        } <br>
-                                      &nbsp;} <br>
-                                    </code> <br>
+                                    <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Mapping an Environment</h2> <br>
+                                    <p class="mb-4">For this lab, we were tasked to map a world build within the lab. We were tasked to place our car in decided checkpoints and spin our car as slow as possible.
+                                    While spinning, the car would collect ToF measurements and by computing them later on Python we would construct our environment. </p>
+                                    <ul>
+                                      <h4 class="portfolio-modal-title text-primary mb-0">&#x2022;PD Orientation</h2> <br>
+                                      <p class="mb-4">To achieve the in place rotation, I decided to implement a PD control based on the yaw measurements from the DMP.
+                                      The PD control would check the current yaw angle and the desired angle, picked after we are done collecting distance measurements from a preset array, and set teh PWM value to turn accordingly. <br>
+                                      My robot was programmed to turn every 10 ToF measurements every 24 degree (0, 24, 48, etc.). The choice of using a preset array for the desired angles was to overcome the fact that the DMP wraps the angle around after passing 180 degrees.
+                                      The PD control is programmed to always turn clockwise with a minimum PWM value being the minimum limit found in Lab 6. <br>
+                                      Below here is the code used for the PD Orientation and a video showing the car moving. </p>
+                                      <code>
+                                        &nbsp;void mapping_process() {
+                                        &nbsp;&nbsp;if (!map_done) {
+                                        &nbsp;&nbsp;&nbsp;  icm_20948_DMP_data_t data;
+                                        &nbsp;&nbsp;&nbsp;  myICM.readDMPdataFromFIFO(&data);
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;  // Is valid data available?
+                                        &nbsp;&nbsp;&nbsp;  if ((myICM.status == ICM_20948_Stat_Ok) || (myICM.status == ICM_20948_Stat_FIFOMoreDataAvail)) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;      // We have asked for GRV data so we should receive Quat6
+                                        &nbsp;&nbsp;&nbsp;&nbsp;      if ((data.header & DMP_header_bitmap_Quat6) > 0) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        double q1 = ((double)data.Quat6.Data.Q1) / 1073741824.0; // Convert to double. Divide by 2^30
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        double q2 = ((double)data.Quat6.Data.Q2) / 1073741824.0; // Convert to double. Divide by 2^30
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        double q3 = ((double)data.Quat6.Data.Q3) / 1073741824.0; // Convert to double. Divide by 2^30
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        // Convert the quaternion to Euler angles
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        double q0 = sqrt(1.0 - ((q1 * q1) + (q2 * q2) + (q3 * q3)));
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        // yaw (z-axis rotation)
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        double t3 = +2.0 * (q0 * (-q3) + q2 * q1);
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        double t4 = +1.0 - 2.0 * (q1 * q1 + (-q3) * (-q3));
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        angle = atan2(t3, t4) * 180.0 / PI;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;      }
+                                        &nbsp;&nbsp;&nbsp;  }
+                                        &nbsp;&nbsp;&nbsp;  error_angle = set_point_angle - angle;
+                                        &nbsp;&nbsp;&nbsp;  Kd_error_angle = (last_error_angle - error_angle)/(last_time_angle - millis());
+                                        &nbsp;&nbsp;&nbsp;  last_error_angle = error_angle;
+                                        &nbsp;&nbsp;&nbsp;  last_time_angle = millis();
+                                        &nbsp;&nbsp;&nbsp;  speed_angle = Kp_angle*error_angle + Kd_angle*Kd_error_angle;
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;  if (speed_angle > 255) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    speed_angle = 255;   //limits speed output
+                                        &nbsp;&nbsp;&nbsp;  } else if (speed_angle < min_speed_turn) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    speed_angle = min_speed_turn;
+                                        &nbsp;&nbsp;&nbsp;  }
+                                        &nbsp;&nbsp;&nbsp;  if (int(error_angle) <= tol && int(error_angle) > (-tol)) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    motors_stop();
+                                        &nbsp;&nbsp;&nbsp;  } else {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    turn_right(speed_angle);
+                                        &nbsp;&nbsp;&nbsp;  }
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;  if (TOF_one.checkForDataReady()) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    map_dist = TOF_one.getDistance();
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    TOF_one.clearInterrupt();
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    TOF_one.stopRanging();
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    TOF_one.startRanging();
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    map_count += 1;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    if (map_count == 10) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      if (map_steps_index == 15) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        map_done = 1;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      } else {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        set_point_angle = map_steps[map_steps_index];
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        map_steps_index += 1;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        map_count = 0;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      }
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    }
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    if (index_map < array_size_data) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      map_data[index_map].time = (float) (millis() - start_time_map);
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      map_data[index_map].sensor = map_dist;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      if (angle > 0) {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        map_data[index_map].angle = angle;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      } else {
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        map_data[index_map].angle = 360.0 + angle;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      }
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      index_map += 1;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;    }
+                                        &nbsp;&nbsp;&nbsp;  }
+                                        &nbsp;&nbsp;} else {
+                                        &nbsp;&nbsp;&nbsp;  motors_stop();
+                                        &nbsp;&nbsp;&nbsp;  send_map_data();
+                                        &nbsp;&nbsp;&nbsp;  set_point_angle = 0.0;
+                                        &nbsp;&nbsp;&nbsp;  map_steps_index = 0;
+                                        &nbsp;&nbsp;&nbsp;  index_map, map_count, map_done;
+                                        &nbsp;&nbsp;&nbsp;  case_n = -1;
+                                        &nbsp;&nbsp;}
+                                        &nbsp;}
+                                      </code> <br>
+                                    </ul>
                                     <div class="row">
                                       <div class="col">
                                         <img class="img-fluid rounded mb-5" src="assets/img/Lab8/distance_flip.png" alt="..." />
