@@ -1489,7 +1489,7 @@
                                     <p class="mb-4">For this lab, we were tasked to map a world build within the lab. We were tasked to place our car in decided checkpoints and spin our car as slow as possible.
                                     While spinning, the car would collect ToF measurements and by computing them later on Python we would construct our environment. </p>
                                     <ul>
-                                      <h4 class="portfolio-modal-title text-primary mb-0">&#x2022;PD Orientation</h2> <br>
+                                      <li> <h4>PD Orientation </h4> </li>
                                       <p class="mb-4">To achieve the in place rotation, I decided to implement a PD control based on the yaw measurements from the DMP.
                                       The PD control would check the current yaw angle and the desired angle, picked after we are done collecting distance measurements from a preset array, and set teh PWM value to turn accordingly. <br>
                                       My robot was programmed to turn every 10 ToF measurements every 24 degree (0, 24, 48, etc.). The choice of using a preset array for the desired angles was to overcome the fact that the DMP wraps the angle around after passing 180 degrees.
@@ -1569,6 +1569,35 @@
                                         &nbsp;&nbsp;} <br>
                                         &nbsp;} <br>
                                       </code> <br>
+                                      <video width="320" height="240" controls>
+                                        <source src="assets\img\Lab8\flip_2.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                      </video>
+                                    </ul>
+                                    <ul>
+                                      <li> <h4>Python Mapping </h4> </li>
+                                      <p class="mb-4">Now that I have my data, I saved everything in CSV file divided by point of interest. I then processed both angle and distance measurements from each of the point in the same way. </p>
+                                      <ol type="1">
+                                        <li>Modify angle measurements by applying an offset and change in orientation (angle = 90 - angle). <br>
+                                        The -1 factor aligns with a counterclockwise rotation of the car (like in the example in Lecture 2) which is the opposite of the rotation of my car which is clockwise. <br>
+                                        The addition of 90 degrees offset is to align with the example in class, which we can see teh car is turned 90 degrees compared to the world frame. <br>
+                                        This step is fundamental for later steps as it aligns my car's gyroscope orientation with the example in Lecture 2 and allows me to use the exact same transformation matrix.</li>
+                                        <li>Compute the theta value (in radian) for each angle measurement.</li>
+                                        <li>Transform the distance measurements in the world frame using Transformation Matrices. Each point has different T Matrix, as the translation portion of it differs for each checkpoint. <br>
+                                        Here below is an example for the point (-3,-2) of the process I followed. It is the exact same method for each point, the only difference is the different offset applied in the T Matrix (last column first two entries). </li>
+                                        <code>
+                                          &nbsp;for i in range(len(dist_0)): <br>
+                                          &nbsp;  #Point (-3,-2) <br>
+                                          &nbsp;  T_2 = np.array([[math.cos(th_2), -math.sin(th_2), 0, -914.4], <br>
+                                          &nbsp;&nbsp;&nbsp;                [math.sin(th_2), math.cos(th_2), 0, -609.6], <br>
+                                          &nbsp;&nbsp;&nbsp;                [0, 0, 1, 0], <br>
+                                          &nbsp;&nbsp;&nbsp;                [0, 0, 0, 1]]) <br>
+                                          &nbsp;  global_2 = np.matmul(T_2,[[dist_2[i]],[0],[0],[1]]) <br>
+                                          &nbsp;  th_2 = theta_2[i] <br>
+                                          &nbsp;  x_2.append(global_2[0,0]) <br>
+                                          &nbsp;  y_2.append(global_2[1,0]) <br>
+                                        </code> <br>
+                                      </ol>
                                     </ul>
                                     <div class="row">
                                       <div class="col">
