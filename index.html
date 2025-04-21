@@ -1683,19 +1683,19 @@
                                     <ul>
                                       <li> <h4>Compute Control </h4> </li>
                                       <p class="mb-4">The first function was compute_control, used to extract the control information based on the odometry model by using both current and previous poses. Here is the implementation. </p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab9/plot_0.png" alt="..." />
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/compute_control.png" alt="..." />
                                       <li> <h4>Odometry Motion Model </h4> </li>
                                       <p class="mb-4">The next function was odom_motion_model, used to compute the probability associated to compute the new belief in the prediction step. It uses both current and previous poses (to use then in compute_control) and the previous control data. Here is the implementation. </p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab9/plot_0.png" alt="..." />
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/odom_motion_model.png" alt="..." />
                                       <li> <h4>Prediction Step </h4> </li>
                                       <p class="mb-4">The next function was prediction_step, used to calculate the belief after taking into consideration all cells before and all necessary cells after taking action. It updates poses and believes. Here is implementation. </p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab9/plot_0.png" alt="..." />
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/prediction_step.png" alt="..." />
                                       <li> <h4>Sensor Model </h4> </li>
                                       <p class="mb-4">The next function was sensor_model, used to create a gaussian probability for each angle observed by the sensor. This information is then used to update our new position in the space. Here is the implementation. </p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab9/plot_0.png" alt="..." />
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/sensor_model.png" alt="..." />
                                       <li> <h4>Update Step </h4> </li>
                                       <p class="mb-4">The last function was update_step, used to update our belief on where we are in the space based in sensor model measurements. Here is the implementation. </p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab9/plot_0.png" alt="..." />
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/update_step.png" alt="..." />
                                     </ul>
                                     <p class="mb-4"> I've been helped by many TAs and by looking at Mikayla Lahr Webpage. </p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
