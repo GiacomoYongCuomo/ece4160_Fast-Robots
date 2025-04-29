@@ -1765,44 +1765,13 @@
                                       <li> <h4>Simulation Results </h4> </li>
                                       <p class="mb-4">As the image shows, the simulation run for this lab is quite promising as the belief path (blue) follows well the trajectory path of the robot (green). </p>
                                       <img class="img-fluid rounded mb-5" src="assets/img/Lab11/sim_image.png" alt="..." />
-                                      <li> <h4>Odometry Motion Model </h4> </li>
-                                      <p class="mb-4">The next function was odom_motion_model, used to compute the probability associated to compute the new belief in the prediction step. It uses both current and previous poses (to use then in compute_control) and the previous control data. Here is the implementation. </p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/odom_motion_model.png" alt="..." />
-                                      <li> <h4>Prediction Step </h4> </li>
-                                      <p class="mb-4">The next function was prediction_step, used to calculate the belief after taking into consideration all cells before and all necessary cells after taking action. It updates poses and believes. Here is implementation. </p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/prediction_step.png" alt="..." />
-                                      <li> <h4>Sensor Model </h4> </li>
-                                      <p class="mb-4">The next function was sensor_model, used to create a gaussian probability for each angle observed by the sensor. This information is then used to update our new position in the space. Here is the implementation. </p>
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/sensor_model.png" alt="..." />
-                                      <li> <h4>Update Step </h4> </li>
-                                      <p class="mb-4">The last function was update_step, used to update our belief on where we are in the space based in sensor model measurements. Here is the implementation. </p>
-                                      <li> <h4>Threshold Value </h4> </li>
-                                      <p class="mb-4">As part of my testing process, I started testing with different thresholding parameters to see what its effect would be. I did 3 runs, one with 0.0001 (default value), one with 0.001 (higher value) and one with 0.00001 (lower value).
-                                      Although the belief traced in blue was fairly similar for all three, one critical difference was the amount of points traced along the path, dimishing as the threshold gets smaller. <br>
-                                      Here are the videos showing the simulation at work. </p>
-
-                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab10/update_step.png" alt="..." />
-                                      <div class="row align-content-center">
-                                        <video width="320" height="240" controls>
-                                          <source src="assets\img\Lab10\default_run_sim.mp4" type="video/mp4">
-                                          Your browser does not support the video tag.
-                                        </video>
-                                        <p class="mb-4">Default thresholding value. </p>
-                                      </div>
-                                      <div class="row align-content-center">
-                                        <video width="320" height="240" controls>
-                                          <source src="assets\img\Lab10\higher_run_sim.mp4" type="video/mp4">
-                                          Your browser does not support the video tag.
-                                        </video>
-                                        <p class="mb-4">Higher thresholding value. </p>
-                                      </div>
-                                      <div class="row align-content-center">
-                                        <video width="320" height="240" controls>
-                                          <source src="assets\img\Lab10\lower_run_sim.mp4" type="video/mp4">
-                                          Your browser does not support the video tag.
-                                        </video>
-                                        <p class="mb-4">Lower thresholding value. </p>
-                                      </div>
+                                      <li> <h4>Perform Observation Loop function </h4> </li>
+                                      <p class="mb-4">The next step was to apply the Bayes Filter to the real robot. And to do so, I needed to develop the function perform_observation_loop. <br>
+                                      The function, written below here, is the same I implemented in Lab 9 in which I make the robot spin in its place taking ToF measurements to establish where we are within the environment.
+                                      The major change I needed to implement was making sure the arrays were in the right dimensions using the tip given (np.array(array)[np.newaxis].T) where array is my angle data. <br>
+                                      To ensure that the Python program would still run despite getting data from the car, I used the async module to run it concurrently following the steps given in the handout. <br>
+                                      Additionally, my implementation of the car spinning accounted for a slockwise rotation, so I adjusted my angle data to be turned into counterclockwise. </p>
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab11/perform_obs_loop.png" alt="..." />
                                     </ul>
                                     <p class="mb-4"> I've been helped by many TAs and by looking at Mikayla Lahr Webpage. </p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
