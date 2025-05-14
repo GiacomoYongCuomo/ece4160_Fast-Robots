@@ -1848,7 +1848,17 @@
                                       The next step was to tune each function. I started with the PID Orientation and I noticed as I went on testing that each waypoint would use the same tuning except the last two waypoints. This difference it's because the last two are edge cases. From the top left corner, I needed to point in the -180 degrees, which implied the risk to overshoot the PID control and wrap around the yaw angle measures. This happened quite a lot, which is why I implemented this section (traj_now == 6) as shown in the image. Instead of targetting -180, I targetted -170 as the direction would be similar enough and changed the tuning parameters to allow a slower rotation. For the next waypoint (traj_now == 7) was a similar situation as from -170 degrees I would need to go to 90 degrees, which based on my code would be rotating clockwise with higher momemtum than by going counterclockwise.
                                       Additionally in both occasion I started the motors in the previous position so to avoid motor winding, which is a challenge I talk in the next section. </p>
                                       <img class="img-fluid rounded mb-5" src="assets/img/Lab12/python_while_loop.png" alt="..." />
-                                      <p class="mb-4"> </p>
+                                      <li> <h4>Challenges and Limitations </h4> </li>
+                                      <ul>
+                                        <li> <h4>Localization </h4> </li>
+                                        <p class="mb-4"> </p>
+                                        <li> <h4>Motor Wind up </h4> </li>
+                                        <p class="mb-4"> </p>
+                                        <li> <h4>Battery Dependency </h4> </li>
+                                        <p class="mb-4"> </p>
+                                        <li> <h4>I2C Hanging </h4> </li>
+                                        <p class="mb-4"> </p>
+                                      </ul>
                                     </ul>
                                     <p class="mb-4"> I've been helped by many TAs and by looking at Mikayla Lahr Webpage. </p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
