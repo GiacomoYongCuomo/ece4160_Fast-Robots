@@ -156,6 +156,13 @@
                           <h2 class="text-primary text-center mb-4">Lab 11</h2>
                       </div>
                   </div>
+                  <!-- Portfolio Item 12-->
+                  <div class="col-md-6 col-lg-4 align-content-center">
+                      <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#Lab12">
+                          <img class="img-fluid" src="assets/img/Lab11/lab_image.png" alt="..." />
+                          <h2 class="text-primary text-center mb-4">Lab 12</h2>
+                      </div>
+                  </div>
               </div>
           </div>
       </section>
@@ -1790,6 +1797,58 @@
                                           <p class="mb-4">Point (5, -3). </p>
                                         </div>
                                       </div>
+                                    </ul>
+                                    <p class="mb-4"> I've been helped by many TAs and by looking at Mikayla Lahr Webpage. </p>
+                                    <button class="btn btn-primary" data-bs-dismiss="modal">
+                                        <i class="fas fa-xmark fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio Modal 12-->
+        <div class="portfolio-modal modal fade" id="Lab12" tabindex="-1" aria-labelledby="Lab12" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-primary text-uppercase text-center mb-0">Lab 12</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <h2 class="portfolio-modal-title text-primary mb-0">&#x2022;Path Planning within the environment</h2> <br>
+                                    <p class="mb-4">For this lab, we were tasked to move through a world following specific waypoints which we were told beforehand. The nature of the lab was very open ended, so in the next sections I will explore the various strategies, challenges and further implementations related to this lab. </p>
+                                    <ul>
+                                      <li> <h4>Chosen Method </h4> </li>
+                                      <p class="mb-4">First thing I needed to consider was which method to use to develop my program. The first approach I had was to develop a while loop in Python in which I would call, in this order, Localization, PID Orientation and PID Linear. This method would work in my opinion because I would take into account where in the world my car would be to make the next moves in orienting it and direct it to the next waypoint.
+                                      This method allowed me to re use Lab 5, Lab 6 and Lab 11 functions and code I developed. Very soon in testing, this method resulted inefficient as my Lab 11 code for Localization never placed me anywhere near the physical location of the car. My suspicion was on a faulty ToF sensor, but due to the lack of time for other classes I just didn't have time to debug this issue which carried on from Lab 11.
+                                      I therefore decided to carry on with just the PID controls, which if tuned well would give me the best outcome to have a fully autonomous car running through each waypoint. I then started implementing the same while loop structure, skipping just the Localization aspect as not contributing in anyway to the path planning.</p>
+                                      <li> <h4>Code implementation </h4> </li>
+                                      <p class="mb-4">Decided with my strategy, I then started coding the necessary steps and, more importantly, variables needed for my program. The very first step I implemented was to code all the waypoints of the trajectory within Jupyter Lab. This was extremely useful to keep track for me were I needed to go in the right units (millimeters). Additionally, I used this information to code how many waypoints I needed to hit, to track at which of them I was and to calculate other variables useful for my functions like angles between them and distance from the walls. The next calculations were in fact for those parameters. Since we know what the points are, I calculated the line function passign through them and acquired their slopes. I then calculated the angles between them following this formula: </p>
+                                      <code>
+                                        angle = arctan(|(m_1 - m_2)/(1 + m_1*m_2)|) <br>
+                                      </code> <br>
+                                      <p class="mb-4"> where m_1 is the slope of the line where our car is currently and m_2 is the slope of the line where our car needs to face. Using then the real world map in lab, I roughly calculated the distance from each waypoint to the wall that would be in front of the car as it approached it. </p>
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab12/python_setup.png" alt="..." />
+                                      <li> <h4>While loop implementation, tuning and testing </h4> </li>
+                                      <p class="mb-4">Once all the parameteres were ready, it was the moment to implement and test the code. As the image below shows, the while loop run for as many waypoints as there are and runs the PID Orientation first to orient the car towards the next waypoint and then the PID Linear to get there.
+                                      The four main functions are the same used for Lab 5 and Lab 6. START_PID_STATIONARY and STOP_PID_STATIONARY respectively start and stop the PID Orientation use to get to a specific angle (taken from the ones I calculated) based on the yaw measured from the IMU and analysed by the DMP in the car code. PID_DISTANCE_AIM and STOP are functions that respectively start and stop the motors of the car to reach a set point calculated by me. This set point is the distance that the ToF should measure to indicate its distance from the wall. Throughout the code, I implemented many asyncio.sleep() with various times to allow the commands to operate without any interruptions from the other. Finally each of them were implemented using all PID parameters. Originally I also used the Integral term but as testing went on I realised it was not needed for efficient control, so I just set it to 0 throughout. <br>
+                                      The next step was to tune each function. I started with the PID Orientation and I noticed as I went on testing that each waypoint would use the same tuning except the last two waypoints. This difference it's because the last two are edge cases. From the top left corner, I needed to point in the -180 degrees, which implied the risk to overshoot the PID control and wrap around the yaw angle measures. This happened quite a lot, which is why I implemented this section (traj_now == 6) as shown in the image. Instead of targetting -180, I targetted -170 as the direction would be similar enough and changed the tuning parameters to allow a slower rotation. For the next waypoint (traj_now == 7) was a similar situation as from -170 degrees I would need to go to 90 degrees, which based on my code would be rotating clockwise with higher momemtum than by going counterclockwise.
+                                      Additionally in both occasion I started the motors in the previous position so to avoid motor winding, which is a challenge I talk in the next section. </p>
+                                      <img class="img-fluid rounded mb-5" src="assets/img/Lab12/python_while_loop.png" alt="..." />
+                                      <p class="mb-4"> </p>
                                     </ul>
                                     <p class="mb-4"> I've been helped by many TAs and by looking at Mikayla Lahr Webpage. </p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
