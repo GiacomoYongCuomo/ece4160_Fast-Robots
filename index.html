@@ -1855,6 +1855,11 @@
                                         <li> <h4>Motor Wind up </h4> </li>
                                         <p class="mb-4">One particular issue that this car has is the overclocking that the motors undergo anytime I send any high PWM. This wind up causes the car to spin on itself very rapidly before stabilising around the desired angle. Although I kept this feature for most of the waypoints as not impeding and actually useful for micro adjustment in position, this spin became very complicated to dela with for the very first point and the last points of the trajectory. These points needed a very controlled intia spin so to not drift too much apart from the desired position or even reset or corrupt the yaw readings from the IMU, leading to uncontrollable spins. To fix this issue, I learned from other students that I would need to send a small PWM value to the motors to "activate" them before changing the desired angle and therefore increase the PWM output.
                                         Within my code, I implemented this by adding START_PID_STATIONARY functions aiming to the angle the car is already oriented towards, therefore not changing anything within it but still activating the motors. This became extremely useful for the final points, as before doing that I would always overshoot and lose control of the orientation with even the smallest PID control parameters. </p>
+                                        <video width="320" height="240" controls>
+                                          <source src="assets\img\Lab12\motor_winding.mp4" type="video/mp4">
+                                          Your browser does not support the video tag.
+                                        </video>
+                                        <p class="mb-4">An example of the motor winding when overshooting the desired angle. The fast spin had the effect of "resetting" the zero position of the yaw as in the video the car should have stabilised at -90 degrees to respect the world zero. </p>
                                         <li> <h4>Drifting </h4> </li>
                                         <p class="mb-4">Another challenge I initially had with my car was drifting when switching from Orientation to Linear PID. This phenomenon was due to the carried momentum that teh car and motors had when switching commands. To avoid this effect, I added functions like STOP_PID_STATIONARY and STOP that would send a PWM value of 0 to the motors to allow to basically reset the car once in the correct orientation or position. </p>
                                         <li> <h4>Battery Dependency </h4> </li>
@@ -1862,10 +1867,37 @@
                                         This is because if I instead aimed for the actually center, my precision would have worked only for a limited window of battery charge. I decided to compromise total accuracy for more testing time and repeatability of the path. </p>
                                         <li> <h4>I2C Hanging </h4> </li>
                                         <p class="mb-4">One weird behavior I experienced was I2C from the IMU failing to send back information and therefore stopping the PID Orientation as if looping in an empty loop. I'm not sure if this was due to a timing issue within my code or a faulty physical connection in the car, but since I didn't experience it too often I didn't investigate too much. With more time, I would have investigate more teh issue and test further. </p>
+                                        <video width="320" height="240" controls>
+                                          <source src="assets\img\Lab12\i2c_fault.mp4" type="video/mp4">
+                                          Your browser does not support the video tag.
+                                        </video>
+                                        <p class="mb-4">An example of the I2C connection from the IMU faulting mid orientation. In the video, the car is about to orient itself at 0 degree but the orientation stops almost immediately due to loss of data transfer via I2C.. </p>
                                       </ul>
                                       <li> <h4>Results </h4> </li>
-                                      <p class="mb-4">At the end, the lab was a success. My code managed to successfully lead the car from teh start to the end independently. Here below are the videos of my best runs. It is important to notice that only one run was completely undisturbed and smooth, as the other were to some degree adjusted by me. This is again because of the battery dependency, as in fact the adjustments were of 1-2 degree in only one of the waypoint. Overall, the planning program is very accurate and repeatable in following the trajectory requested. Additionally between runs, each waypoint was reached and aimed very precisely, highlighting the precise tuning I landed on. </p>
-
+                                      <p class="mb-4">At the end, the lab was a success. My code managed to successfully lead the car from the start to the end independently. Here below are the videos of my three best runs. It is important to notice that only one run was completely undisturbed and smooth, as the other two were to some degree adjusted by me. This is again because of the battery dependency, as in fact the adjustments were of 1-2 degree in only one of the waypoint. Overall, the planning program is very accurate and repeatable in following the trajectory requested. Additionally between runs, each waypoint was reached and aimed very precisely, highlighting the precise tuning I landed on. </p>
+                                      <div class="row justify-content-center">
+                                        <div class="col">
+                                          <video width="320" height="240" controls>
+                                            <source src="assets\img\Lab12\run1.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                          </video>
+                                          <p class="mb-4">Best run. The smoothest and without any adjustment. </p>
+                                        </div>
+                                        <div class="col">
+                                          <video width="320" height="240" controls>
+                                            <source src="assets\img\Lab12\run2.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                          </video>
+                                          <p class="mb-4">Second best run. Almost perfect but a small adjustment needed due to a small angle misalignment. </p>
+                                        </div>
+                                        <div class="col">
+                                          <video width="320" height="240" controls>
+                                            <source src="assets\img\Lab12\run3.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                          </video>
+                                          <p class="mb-4">Third best run. Almost perfect but a small adjustment needed due to an overshoot towards the end. </p>
+                                        </div>
+                                      </div>
                                     </ul>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
